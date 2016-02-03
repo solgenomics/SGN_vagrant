@@ -7,7 +7,7 @@ Git clone this repo to your machine.
 cd github/vagrant_clone_dir/
 ```
 
-Add the basse image for Debian Jessie to your machine. Base images can be found here https://atlas.hashicorp.com/boxes/search
+Add the base image for Debian Jessie to your machine. Base images can be found here https://atlas.hashicorp.com/boxes/search
 ```
 vagrant box add ARTACK/debian-jessie
 ```
