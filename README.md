@@ -1,7 +1,16 @@
 # vagrant
 
+##Pre-reqs
+
 Install Vagrant from https://www.vagrantup.com/downloads.html
 
+There is a large database dump in this repo! Use Git LFS to be able to handle this https://git-lfs.github.com/!!
+
+Make sure you have VirtualBox AND the VirtualBox Extension Pack installed
+https://www.virtualbox.org/wiki/Downloads
+
+
+##Initializing SGN vagrant 
 
 Make a directory for vagrant on your machine
 ```
@@ -21,15 +30,10 @@ Add the base image for Debian Jessie to your machine. Base images can be found h
 vagrant box add ARTACK/debian-jessie
 ```
 
-
-Make sure you have VirtualBox AND the VirtualBox Extension Pack installed
-https://www.virtualbox.org/wiki/Downloads
-
-
-Add a database dump called database_dump.pgsql.gz into the config/ directory.
-Github did not allow me to package a database dump into the repo because of size limitations.
 All the database configuration happens on line 202 of config/provision.sh so feel free to adjust this to your needs.
 
+
+##Using vagrant
 
 Tell vagrant to configure the VM
 ```

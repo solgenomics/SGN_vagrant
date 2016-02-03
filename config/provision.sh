@@ -199,17 +199,17 @@
 	sudo service postgresql restart
 	yes sol@ley! | createuser -U postgres -P web_usr
 	
-	#Create sandbox_database db and load dump from shared config folder.
-	sudo -u postgres createdb -E UTF8 --locale en_US.utf8 -T template0 sandbox_database
-	gunzip -c /home/vagrant/cxgn/config/database_dump.pgsql.gz | sudo psql -U postgres sandbox_database
+	#Create sandbox_cassava db and load dump from shared config folder.
+	sudo -u postgres createdb -E UTF8 --locale en_US.utf8 -T template0 sandbox_cassava
+	gunzip -c /home/vagrant/cxgn/config/db3.cxgn_cassava.pgsql.gz | sudo psql -U postgres sandbox_cassava
 	#Create fixture db and load fixture.sql
 	sudo -u postgres createdb -E UTF8 --locale en_US.utf8 -T template0 fixture
 	sudo psql -U postgres -d fixture -f /home/vagrant/cxgn/fixture/cxgn_fixture.sql
 	#Apply db patches that are needed.
 	#00043
-	#printf '\nEise!Th9\n' | mx-run AddPublicListField -H localhost -D sandbox_cassava -u lam87@cornell.edu
+	printf '\nEise!Th9\n' | mx-run AddPublicListField -H localhost -D sandbox_cassava -u lam87@cornell.edu
 	#00044
-	#printf '\nEise!Th9\n' | mx-run AddJbrowseSrcField -H localhost -D sandbox_cassava -u lam87@cornell.edu
+	printf '\nEise!Th9\n' | mx-run AddJbrowseSrcField -H localhost -D sandbox_cassava -u lam87@cornell.edu
 	
 	
 	
