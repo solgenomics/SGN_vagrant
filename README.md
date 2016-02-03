@@ -17,11 +17,10 @@ Make a directory for vagrant on your machine
 mkdir vagrant/
 ```
 
-Git clone this repo to your machine.
 
-Go that the directory
+Git clone this repo to your machine into that directory.
 ```
-cd vagrant/SGN_vagrant/
+git clone https://github.com/solgenomics/SGN_vagrant.git
 ```
 
 
@@ -34,6 +33,11 @@ All the database configuration happens on line 202 of config/provision.sh so fee
 
 
 ##Using vagrant
+
+Go that the SGN_vagrant directory
+```
+cd vagrant/SGN_vagrant/
+```
 
 Tell vagrant to configure the VM
 ```
