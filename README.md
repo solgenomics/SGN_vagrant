@@ -7,21 +7,16 @@ Make a directory for vagrant on your machine
 mkdir vagrant/
 ```
 
-Init vagrant
+Git clone this repo to your machine.
+
+Go that the directory
 ```
-vagrant init
+cd vagrant/SGN_vagrant/
 ```
 
 Add the base image for Debian Jessie to your machine. Base images can be found here https://atlas.hashicorp.com/boxes/search
 ```
 vagrant box add ARTACK/debian-jessie
-```
-
-Git clone this repo to your machine.
-
-Go that the directory
-```
-cd vagrant/vagrant_clone
 ```
 
 Add a database dump called database_dump.pgsql.gz into the config/ directory.
