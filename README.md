@@ -2,16 +2,26 @@
 
 Install Vagrant from https://www.vagrantup.com/downloads.html
 
-Git clone this repo to your machine.
-
-Go that the directory
+Make a directory for vagrant on your machine
 ```
-cd github/vagrant_clone_dir/
+mkdir vagrant/
+```
+
+Init vagrant
+```
+vagrant init
 ```
 
 Add the base image for Debian Jessie to your machine. Base images can be found here https://atlas.hashicorp.com/boxes/search
 ```
 vagrant box add ARTACK/debian-jessie
+```
+
+Git clone this repo to your machine.
+
+Go that the directory
+```
+cd vagrant/vagrant_clone
 ```
 
 Add a database dump called database_dump.pgsql.gz into the config/ directory.
