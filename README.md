@@ -3,6 +3,8 @@
 Install Vagrant from https://www.vagrantup.com/downloads.html
 
 Git clone this repo to your machine.
+
+Go that the directory
 ```
 cd github/vagrant_clone_dir/
 ```
