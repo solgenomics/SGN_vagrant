@@ -45,6 +45,12 @@ This may take around an hour or two
 The VM will show up as a regular VM in Virtualbox from this point on. You can start/stop the VM through virtual box.
 Vagrant has its own start/stop/reload commands if you don't want to use virtualbox: https://www.vagrantup.com/docs/cli/
 
+User Info:
+```
+username: vagrant
+password: vagrant
+```
+
 
 Install the VirtualBox Guest Additions. This makes using the virtualbox much nicer by allowing copy/paste between host and VM, and allowing screen resizing
 ```
