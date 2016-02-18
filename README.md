@@ -10,7 +10,7 @@ Make sure you have VirtualBox AND the VirtualBox Extension Pack installed
 https://www.virtualbox.org/wiki/Downloads
 
 
-##Initializing SGN vagrant 
+##Initializing
 
 Make a directory for vagrant on your machine
 ```
@@ -23,13 +23,6 @@ Git clone this repo to your machine into that directory.
 git clone https://github.com/solgenomics/SGN_vagrant.git
 ```
 
-
-Add the base image for Debian Jessie to your machine. Base images can be found here https://atlas.hashicorp.com/boxes/search
-```
-vagrant box add ARTACK/debian-jessie
-```
-
-All the database configuration happens on line 202 of config/provision.sh so feel free to adjust this to your needs.
 
 
 ##Using vagrant
