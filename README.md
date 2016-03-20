@@ -63,3 +63,6 @@ To remove any trace of the VM
 ```
 vagrant destroy
 ```
+
+Machine is created with 20GB disk. To resize this to whatever size you need follow the instructions here https://gist.github.com/christopher-hopper/9755310
+
