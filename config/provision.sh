@@ -1,11 +1,17 @@
 	
 	#Update Aptitude
-    sudo apt-get update && sudo apt-get upgrade
-	sudo apt-get install gcc build-essential module-assistant
+	sudo apt-get update && sudo apt-get upgrade
+	sudo apt-get install -y gcc build-essential module-assistant
 	
 	#Install Emacs and gedit
 	sudo apt-get install emacs -y 
-	#sudo apt-get install gedit
+	sudo apt-get install gedit -y
+	
+	#Install Sublime text editor 
+	wget http://c758482.r82.cf2.rackcdn.com/sublime_text_3_build_3083_x64.tar.bz2
+	tar vxjf sublime_text_3_build_3083_x64.tar.bz2
+	sudo mv sublime_text_3 /opt/
+	sudo ln -s /opt/sublime_text_3/sublime_text /usr/bin/subl
 	
 	#Install Iceweasel
 	sudo apt-get install iceweasel -y
@@ -34,6 +40,9 @@
 	#Install graphviz
 	sudo apt-get install graphviz -y 
 	
+	#Install perl-docs
+	sudo apt-get install perl-doc -y 
+	
 	#Permit any user to start the GUI
 	sudo sed -i s/allowed_users=console/allowed_users=anybody/ /etc/X11/Xwrapper.config
 
@@ -46,7 +55,7 @@
 	#Set Superuser: vagrant user already NOPASSWD superuser
 	
 	#Make and populate cxgn directory
-	mkdir cxgn/
+	#sudo mkdir cxgn/ #cxgn/ directory already created from shared directories in VagrantFile
 	cd cxgn
 	git clone https://github.com/solgenomics/sgn.git
 	git clone https://github.com/solgenomics/cxgn-corelibs.git
@@ -57,16 +66,18 @@
 	git clone https://github.com/solgenomics/ITAG.git
 	git clone https://github.com/solgenomics/tomato_genome.git
 	git clone https://github.com/solgenomics/cassava.git
-	#git clone https://github.com/solgenomics/yambase.git
-	#git clone https://github.com/solgenomics/sweetpotatobase.git
-	#git clone https://github.com/solgenomics/ricebase.git
-	#git clone https://github.com/solgenomics/citrusgreening.git
-	#git clone https://github.com/solgenomics/Tea.git
-	#git clone https://github.com/solgenomics/coconut.git
-	#git clone https://github.com/solgenomics/cassbase.git
-	#git clone https://github.com/solgenomics/VIGS.git
-	#git clone https://github.com/solgenomics/musabase.git
-	#git clone https://github.com/solgenomics/potatobase.git
+	git clone https://github.com/GMOD/Chado.git
+	git clone https://github.com/solgenomics/art.git
+	git clone https://github.com/solgenomics/yambase.git
+	git clone https://github.com/solgenomics/sweetpotatobase.git
+	git clone https://github.com/solgenomics/ricebase.git
+	git clone https://github.com/solgenomics/citrusgreening.git
+	git clone https://github.com/solgenomics/Tea.git
+	git clone https://github.com/solgenomics/coconut.git
+	git clone https://github.com/solgenomics/cassbase.git
+	git clone https://github.com/solgenomics/VIGS.git
+	git clone https://github.com/solgenomics/musabase.git
+	git clone https://github.com/solgenomics/potatobase.git
 	
 	
 	#Install curl
@@ -106,7 +117,7 @@
 	sudo cpanm install Catalyst::View::Email
 	sudo cpanm install Catalyst::View::HTML::Mason
 	sudo cpanm install Catalyst::View::Bio::SeqIO
-	sudo cpanm install Catalyst::View::JavaScript::Minifier::XS
+	sudo cpanm install Catalyst::View::JavaScript::Minifier::XS@2.101001
 	sudo cpanm install Catalyst::View::Download::CSV
 	sudo cpanm install URI::FromHash
 	sudo cpanm install JSAN::ServerSide
@@ -146,6 +157,7 @@
 	sudo cpanm install Bio::GMOD::GenericGenePage
 	sudo cpanm install Number::Bytes::Human
 	sudo cpanm install AnyEvent --force 
+	sudo cpanm install IO::Event
 	sudo cpanm install File::Flock
 	sudo cpanm install Graph 
 	sudo cpanm install Bio::SeqFeature::Annotated
@@ -170,7 +182,7 @@
 	sudo cpanm install Test::Class
 	sudo cpanm install WWW::Mechanize::TreeBuilder
 	sudo cpanm install Data::UUID
-	sudo cpanm install HTML::Lint
+	sudo cpanm install HTML::Lint --force
 	sudo cpanm install Test::JSON
 	sudo cpanm install Test::MockObject
 	sudo cpanm install Test::WWW::Selenium
@@ -201,15 +213,11 @@
 	
 	#Create sandbox_cassava db and load dump from shared config folder.
 	sudo -u postgres createdb -E UTF8 --locale en_US.utf8 -T template0 sandbox_cassava
-	gunzip -c /home/vagrant/cxgn/config/db3.cxgn_cassava.pgsql.gz | sudo psql -U postgres sandbox_cassava
+	gunzip -c /home/vagrant/cxgn/config/sandbox_cassava.pgsql.gz | sudo psql -U postgres sandbox_cassava
 	#Create fixture db and load fixture.sql
 	sudo -u postgres createdb -E UTF8 --locale en_US.utf8 -T template0 fixture
 	sudo psql -U postgres -d fixture -f /home/vagrant/cxgn/fixture/cxgn_fixture.sql
-	#Apply db patches that are needed.
-	#00043
-	printf '\nEise!Th9\n' | mx-run AddPublicListField -H localhost -D sandbox_cassava -u lam87@cornell.edu
-	#00044
-	printf '\nEise!Th9\n' | mx-run AddJbrowseSrcField -H localhost -D sandbox_cassava -u lam87@cornell.edu
+	
 	
 	
 	
@@ -236,12 +244,12 @@
 	sudo apt-get install r-base -y
 	#Better performance on linear algebra ops
 	sudo apt-get install libatlas3-base -y 
-	#Install R Packages
-	sudo apt-get install libcurl4-openssl-dev -y 
-	sudo R
-	install.packages('data.table', dependencies=TRUE, repos='http://cran.rstudio.com/')
-	install.packages('agricolae', dependencies=TRUE, repos='http://cran.rstudio.com/')
-	quit(save='no')
+	sudo apt-get install libcurl4-openssl-dev -y --force-yes
+	#Install R Packages -- PROVISION NOT WORKING, INSTALL MANUALLY FOR NOW
+	#sudo R --vanilla
+	#install.packages('data.table', dependencies=TRUE, repos='http://cran.rstudio.com/')
+	#install.packages('agricolae', dependencies=TRUE, repos='http://cran.rstudio.com/')
+	#quit(save='no')
 	
 	
 	#Install VirtualBox guest tools in virtualbox, by clicking Devices->Insert Guest Additions CD, then:
@@ -250,3 +258,4 @@
 	# cd /mnt
 	# sudo ./VBoxLinuxAdditions.run
 	# Then restart virtualbox 
+	
