@@ -13,8 +13,9 @@ Vagrant.configure(2) do |config|
 
   # Every Vagrant development environment requires a box. You can search for
   # boxes at https://atlas.hashicorp.com/search.
-  # config.vm.box = "debian/jessie64"
-	config.vm.box = "ARTACK/debian-jessie"
+  # config.vm.box = "debian/jessie64"  ##Problem: No virtualbox guest additions installed
+  # config.vm.box = "debian/contrib-jessie64" ##Has guest additions installed. Problem: Only 10GB
+    config.vm.box = "ARTACK/debian-jessie"
   
   # Disable automatic box update checking. If you disable this, then
   # boxes will only be checked for updates when the user runs
@@ -35,11 +36,11 @@ Vagrant.configure(2) do |config|
   # your network.
   # config.vm.network "public_network"
 
-  # Share an additional folder to the guest VM. The first argument is
+  # Share an additional folder to the guest VM, other than /vagrant. The first argument is
   # the path on the host to the actual folder. The second argument is
   # the path on the guest to mount the folder. And the optional third
   # argument is a set of non-required options.
-  config.vm.synced_folder "config", "/home/vagrant/cxgn/config"
+    config.vm.synced_folder "shared", "/shared"
 
   # Provider-specific configuration so you can fine-tune various
   # backing providers for Vagrant. These expose provider-specific options.
@@ -51,8 +52,10 @@ Vagrant.configure(2) do |config|
     # Display the VirtualBox GUI when booting the machine
     vb.gui = true
  
-    # Customize the amount of memory on the VM:
-    vb.memory = "4096"
+    # Customize the amount of memory on the VM and number of CPUs:
+    vb.memory = 1024
+	vb.cpus = 1
+	# vb.customize ["modifyvm", :id, "--vram", "16"]
   end
   
   #
