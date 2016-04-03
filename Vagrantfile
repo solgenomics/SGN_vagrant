@@ -53,7 +53,7 @@ Vagrant.configure(2) do |config|
     vb.gui = true
  
     # Customize the amount of memory on the VM and number of CPUs:
-    vb.memory = 1024
+    vb.memory = 2048
 	vb.cpus = 1
 	# vb.customize ["modifyvm", :id, "--vram", "16"]
   end

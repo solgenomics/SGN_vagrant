@@ -16,6 +16,9 @@
 	#Install libreoffice
 	sudo apt-get install libreoffice -y
 	
+	#Install htop
+	sudo apt-get install htop -y
+	
 	#Install git 
 	sudo apt-get install git -y
 	
