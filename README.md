@@ -48,21 +48,11 @@ username: vagrant
 password: vagrant
 ```
 
-
-Install the VirtualBox Guest Additions. This makes using the virtualbox much nicer by allowing copy/paste between host and VM, and allowing screen resizing
-```
-While in the VirtualBox VM, Click Devices->Insert Guest Additions CD, then:
-sudo mount /dev/sr0 /mnt
-cd /mnt
-sudo ./VBoxLinuxAdditions.run
-Then restart virtualbox 
-```
+Follow the welcome.txt instructions to finish set up.
 
 
 To remove any trace of the VM
 ```
 vagrant destroy
 ```
-
-Machine is created with 20GB disk. To resize this to whatever size you need follow the instructions here https://gist.github.com/christopher-hopper/9755310
 
