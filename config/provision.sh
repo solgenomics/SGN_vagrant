@@ -5,7 +5,7 @@
 	sudo apt-get install -y gcc build-essential module-assistant
 	
 	#Install Emacs and gedit and vim 
-	sudo apt-get install -y emacs gedit vim
+	sudo apt-get install -y emacs gedit vim less
 	
 	#Install byobu terminal
 	#sudo apt-get install byobu -y
@@ -21,9 +21,22 @@
 	
 	#Install git 
 	sudo apt-get install git -y
+	git config --global push.default simple
 	
 	#Install Nginx
 	sudo apt-get install nginx -y
+	
+	#Install slurm-torque wrapper
+		#sudo apt-get install munge -y
+	
+		#Tutorial http://wildflower.diablonet.net/~scaron/slurmsetup.html
+		#dd if=/dev/urandom bs=1 count=1024 > /etc/munge/munge.key
+		#chown munge:munge /etc/munge/munge.key
+		#chmod 400 /etc/munge/munge.key
+		#/etc/init.d/munge start
+	
+		#sudo apt-get install slurm-wlm -y
+		#sudo apt-get install slurm-wlm-torque -y
 	
 	#Install postgres 9.4
 	#sudo apt-get install postgresql-9.4 -y
@@ -37,6 +50,7 @@
 	
 	#Install barebones gnome GUI
 	sudo apt-get install gnome-core -y
+	sudo apt-get install -y gnome-shell gnome-screensaver gnome-tweak-tool
 	
 	#Install full gnome (takes forever)
 	# sudo apt-get install gnome -y
@@ -53,7 +67,10 @@
 	#Permit any user to start the GUI
 	sudo sed -i s/allowed_users=console/allowed_users=anybody/ /etc/X11/Xwrapper.config
 
-	#Start GNOME3 GUI
+	#Enable automatic gnome login for vagrant user
+	sudo sed -i s/\#\ \ AutomaticLoginEnable\ =\ true/AutomaticLoginEnable\ =\ true/ /etc/gdm3/daemon.conf
+	sudo sed -i s/\#\ \ AutomaticLogin\ =\ user1/AutomaticLogin\ =\ vagrant/ /etc/gdm3/daemon.conf
+	#Start GNOME GUI
 	sudo /etc/init.d/gdm3 start
 	
 	#Set root user password to vagrant 
@@ -223,8 +240,7 @@
 	#Create web_usr role
 	yes sol@ley! | createuser -U postgres -P web_usr
 	#Change postgres role password
-	#echo "ALTER ROLE postgres WITH PASSWORD 'Eise!Th9';" | psql -U postgres 
-	#psql -U postgres -c "ALTER ROLE postgres WITH PASSWORD 'Eise!Th9';"
+	echo "ALTER ROLE postgres WITH PASSWORD 'sgn_test';" | psql -U postgres 
 	
 	#Create sandbox_cassava db and load dump from shared config folder.
 	sudo -u postgres createdb -E UTF8 --locale en_US.utf8 -T template0 sandbox_cassava
@@ -266,8 +282,10 @@
 	cd /home/vagrant/cxgn
 	
 	#Install Atom text editor and cleanup
+	sudo apt-get install xdg-utils -y
 	wget https://github.com/atom/atom/releases/download/v1.6.0/atom-amd64.deb
 	sudo dpkg --install atom-amd64.deb
+	sudo apt-get -f install -y
 	rm atom-amd64.deb
 	
 	#Install Chrome and cleanup
@@ -278,6 +296,9 @@
 	
 	#Download selenium 2.45.0
 	wget https://selenium-release.storage.googleapis.com/2.45/selenium-server-standalone-2.45.0.jar 
+	
+	#Show welcome message
+	sudo less /vagrant/config/welcome.txt
 	
 	#Install Sublime text editor 
 	#wget http://c758482.r82.cf2.rackcdn.com/sublime_text_3_build_3083_x64.tar.bz2
