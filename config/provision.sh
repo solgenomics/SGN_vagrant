@@ -212,8 +212,9 @@
 	#sudo cpanm install Test::WWW::Selenium
 	#sudo cpanm install Sort::Versions
 	#sudo cpanm install Term::ReadKey --force 
-	
 	#sudo cpanm install Spreadsheet::Read
+	
+	#Extract perl libs from vagrant shared config folder. Contains all of the sudo cpanm install commands above.
 	sudo tar -xf /vagrant/config/perl_lib.tar.gz -C /  ##/usr/local/share/perl/5.20.2/
 	sudo tar -xf /vagrant/config/perl_local_lib.tar.gz -C /  ##/usr/local/lib/x86_64-linux-gnu/perl/5.20.2/
 	
