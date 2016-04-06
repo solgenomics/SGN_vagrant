@@ -150,7 +150,7 @@
 	#sudo cpanm install Statistics::Descriptive
 	#sudo cpanm install String::Random
 	#sudo cpanm install MooseX::FollowPBP
-	#sudo apt-get install libgd2-xpm-dev -y
+	sudo apt-get install libgd2-xpm-dev -y
 	#sudo cpanm install GD
 	#sudo cpanm install Tie::Function
 	#sudo cpanm install Digest::Crc32
@@ -168,7 +168,7 @@
 	#sudo cpanm install Algorithm::Combinatorics
 	#sudo cpanm install Catalyst::Controller::HTML::FormFu
 	#sudo cpanm install String::Approx
-	#sudo apt-get install libcairo2-dev -y
+	sudo apt-get install libcairo2-dev -y
 	#sudo cpanm install Cairo
 	#sudo cpanm install Chart::Clicker
 	#sudo cpanm install Spreadsheet::ParseExcel
@@ -187,7 +187,7 @@
 	#sudo cpanm install Bio::SeqFeature::Annotated
 	#sudo cpanm install XML::Twig
 	#sudo cpanm install XML::Generator
-	#sudo apt-get install libpq-dev -y 
+	sudo apt-get install libpq-dev -y 
 	#sudo cpanm install DBD::Pg
 	#sudo cpanm install MooseX::Runnable 
 	#sudo cpanm install XML::Feed
