@@ -2,7 +2,10 @@
 
 ##Pre-reqs
 
-Install Vagrant from https://www.vagrantup.com/downloads.html
+Install Vagrant from https://www.vagrantup.com/downloads.html , or for Ubuntu or Debian, you can use the package manager to install vagrant and a couple of dependencies needed to set up the shared host/guest folder
+```
+sudo apt-get install vagrant nfs-common nfs-kernel-server
+```
 
 There is a large database dump in this repo! Use Git LFS to be able to handle this https://git-lfs.github.com/!!
 
