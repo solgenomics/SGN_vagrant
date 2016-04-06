@@ -17,7 +17,8 @@ https://www.virtualbox.org/wiki/Downloads
 
 Make a directory for vagrant on your machine
 ```
-mkdir vagrant/
+mkdir vagrant
+cd vagrant
 ```
 
 
@@ -32,7 +33,7 @@ git clone https://github.com/solgenomics/SGN_vagrant.git
 
 Go that the SGN_vagrant directory
 ```
-cd vagrant/SGN_vagrant/
+cd SGN_vagrant
 ```
 
 Tell vagrant to configure the VM
