@@ -30,7 +30,7 @@ This file found in config/welcome.txt
 
 	1) Shutdown guest VM
 	2) Go to VM settings and change CPU and RAM settings for better performance.
-	3) To change hard disk settings follow these instructions: https://gist.github.com/christopher-hopper/9755310
+	3) To change hard disk settings follow these instructions: https://gist.github.com/christopher-hopper/9755310 AND/OR https://medium.com/@phirschybar/resize-your-vagrant-virtualbox-disk-3c0fbc607817#.af5h53rji
 
 2. Install the VirtualBox Guest Additions on the VM. This is dependant on the version of virtual box you have on your host and so cannot be done through provisioning.
 	

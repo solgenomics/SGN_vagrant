@@ -26,17 +26,10 @@
 	#Install Nginx
 	sudo apt-get install nginx -y
 	
-	#Install slurm-torque wrapper
-		#sudo apt-get install munge -y
-	
-		#Tutorial http://wildflower.diablonet.net/~scaron/slurmsetup.html
-		#dd if=/dev/urandom bs=1 count=1024 > /etc/munge/munge.key
-		#chown munge:munge /etc/munge/munge.key
-		#chmod 400 /etc/munge/munge.key
-		#/etc/init.d/munge start
-	
-		#sudo apt-get install slurm-wlm -y
-		#sudo apt-get install slurm-wlm-torque -y
+	#Install slurm
+	sudo apt-get install slurm-llnl -y
+	#Copy slurm.conf from shared config folder to where it needs to go
+	sudo cp /vagrant/config/slurm.conf /etc/slurm-lnll/ 
 	
 	#Install postgres 9.4
 	#sudo apt-get install postgresql-9.4 -y
@@ -63,6 +56,9 @@
 	
 	#Install perl-docs
 	sudo apt-get install perl-doc -y 
+	
+	#Install ack-grep
+	sudo apt-get install ack-grep -y
 	
 	#Permit any user to start the GUI
 	sudo sed -i s/allowed_users=console/allowed_users=anybody/ /etc/X11/Xwrapper.config
@@ -91,17 +87,21 @@
 	git clone https://github.com/solgenomics/tomato_genome.git
 	git clone https://github.com/solgenomics/cassava.git
 	git clone https://github.com/GMOD/Chado.git
-	#git clone https://github.com/solgenomics/art.git
-	#git clone https://github.com/solgenomics/yambase.git
-	#git clone https://github.com/solgenomics/sweetpotatobase.git
-	#git clone https://github.com/solgenomics/ricebase.git
-	#git clone https://github.com/solgenomics/citrusgreening.git
-	#git clone https://github.com/solgenomics/Tea.git
-	#git clone https://github.com/solgenomics/coconut.git
-	#git clone https://github.com/solgenomics/cassbase.git
-	#git clone https://github.com/solgenomics/VIGS.git
-	#git clone https://github.com/solgenomics/musabase.git
-	#git clone https://github.com/solgenomics/potatobase.git
+	git clone https://github.com/solgenomics/sgn-devtools.git
+	git clone https://github.com/solgenomics/solGS.git
+	git clone https://github.com/solgenomics/Barcode-Code128.git
+	git clone https://github.com/solgenomics/Tea.git
+	git clone https://github.com/solgenomics/art.git
+	
+	git clone https://github.com/solgenomics/yambase.git
+	git clone https://github.com/solgenomics/sweetpotatobase.git
+	git clone https://github.com/solgenomics/ricebase.git
+	git clone https://github.com/solgenomics/citrusgreening.git
+	git clone https://github.com/solgenomics/coconut.git
+	git clone https://github.com/solgenomics/cassbase.git
+	git clone https://github.com/solgenomics/VIGS.git
+	git clone https://github.com/solgenomics/musabase.git
+	git clone https://github.com/solgenomics/potatobase.git
 	
 	#Install curl
 	sudo apt-get install curl -y
@@ -227,6 +227,11 @@
 	sudo mkdir /data
 	sudo mkdir /data/prod 
 	sudo mkdir /data/prod/archive
+	sudo mkdir /export/prod/public/images
+	sudo mkdir /export/prod/public/images/image_files
+	sudo mkdir /data/shared
+	sudo mkdir /data/shared/tmp
+	
 	
 	sudo chown -R vagrant:vagrant /data/prod/
 	sudo chown -R vagrant:vagrant /export/prod/
@@ -243,9 +248,11 @@
 	#Change postgres role password
 	echo "ALTER ROLE postgres WITH PASSWORD 'sgn_test';" | psql -U postgres 
 	
+	#NOT LOADING SANDBOX CASSAVA DATABASE, SO AS TO SAVE SPACE ON THE VM
 	#Create sandbox_cassava db and load dump from shared config folder.
-	sudo -u postgres createdb -E UTF8 --locale en_US.utf8 -T template0 sandbox_cassava
-	gunzip -c /vagrant/config/sandbox_cassava.pgsql.gz | sudo psql -U postgres sandbox_cassava
+	#sudo -u postgres createdb -E UTF8 --locale en_US.utf8 -T template0 sandbox_cassava
+	#gunzip -c /vagrant/config/sandbox_cassava.pgsql.gz | sudo psql -U postgres sandbox_cassava
+	
 	#Create fixture db and load fixture.sql
 	sudo -u postgres createdb -E UTF8 --locale en_US.utf8 -T template0 fixture
 	sudo psql -U postgres -d fixture -f /home/vagrant/cxgn/fixture/cxgn_fixture.sql
@@ -264,7 +271,7 @@
 	sed -i '$ a\unset color_prompt force_color_prompt' /home/vagrant/.bashrc
 	
 	#Add Perl paths 
-	sudo sed -i '$ a\export PERL5LIB="$PERL5LIB:/usr/local/lib/x86_64-linux-gnu/perl/5.20.2:/usr/local/share/perl/5.20.2:/home/vagrant/cxgn/sgn/lib:/home/vagrant/cxgn/cxgn-corelibs/lib:/home/vagrant/cxgn/Phenome/lib:/home/vagrant/cxgn/Cview/lib:/home/vagrant/cxgn/ITAG/lib:/home/vagrant/cxgn/biosource/lib:/home/vagrant/cxgn/tomato_genome/lib"' /home/vagrant/.bashrc
+	sudo sed -i '$ a\export PERL5LIB="$PERL5LIB:/usr/local/lib/x86_64-linux-gnu/perl/5.20.2:/usr/local/share/perl/5.20.2:/home/vagrant/cxgn/sgn/lib:/home/vagrant/cxgn/cxgn-corelibs/lib:/home/vagrant/cxgn/Phenome/lib:/home/vagrant/cxgn/Cview/lib:/home/vagrant/cxgn/ITAG/lib:/home/vagrant/cxgn/biosource/lib:/home/vagrant/cxgn/tomato_genome/lib:/home/vagrant/cxgn/Barcode-Code128/lib:/home/vagrant/cxgn/solGS/lib"' /home/vagrant/.bashrc
 	
 	#Install R 
 	sudo apt-get install apt-transport-https -y
@@ -298,6 +305,21 @@
 	#Download selenium 2.45.0
 	wget https://selenium-release.storage.googleapis.com/2.45/selenium-server-standalone-2.45.0.jar 
 	
+	#Jbrowse Setup
+	sudo cp /vagrant/config/sgn_forward /etc/nginx/sites-available/
+	sudo rm /etc/nginx/sites-enabled/default
+	sudo ln -s /etc/nginx/sites-available/sgn_forward /etc/nginx/sites-enabled/
+	sudo /etc/init.d/nginx restart
+	cd /var/www/ 
+	sudo mkdir jbrowse
+	cd jbrowse
+	sudo curl -O http://jbrowse.org/releases/JBrowse-1.12.1.zip
+	sudo unzip JBrowse-1.12.1.zip
+	sudo rm JBrowse-1.12.1.zip
+	cd JBrowse-1.12.1
+	sudo ./setup.sh
+	
+	
 	#Show welcome message
 	sudo less /vagrant/config/welcome.txt
 	
@@ -314,4 +336,5 @@
 	# sudo ./VBoxLinuxAdditions.run
 	# eject CD
 	# Then restart virtualbox 
+	
 	

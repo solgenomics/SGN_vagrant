@@ -1,4 +1,3 @@
-
 server { 
        listen 80;
        server_name localhost;
@@ -16,7 +15,7 @@ server {
                  }
         location /jbrowse { 
                     root /var/www/;
-                    rewrite ^/jbrowse/?$ /jbrowse_cassavabase/current;
+                    rewrite ^/jbrowse/?$ /jbrowse/current;
        }
 
 }

@@ -14,8 +14,9 @@ Vagrant.configure(2) do |config|
   # Every Vagrant development environment requires a box. You can search for
   # boxes at https://atlas.hashicorp.com/search.
   # config.vm.box = "debian/jessie64"  ##Problem: No virtualbox guest additions installed
-  # config.vm.box = "debian/contrib-jessie64" ##Has guest additions installed. Problem: Only 10GB
-    config.vm.box = "ARTACK/debian-jessie"
+   config.vm.box = "debian/contrib-jessie64" ##Has guest additions installed. Problem: Only 10GB
+  # config.vm.box = "ARTACK/debian-jessie" ##Problem: only 20GB
+  # config.vm.box = "hmaalmi/debian-jessie-100" ##Has 100GB. Problem: too slow
   
   # Disable automatic box update checking. If you disable this, then
   # boxes will only be checked for updates when the user runs
