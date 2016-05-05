@@ -2,7 +2,9 @@
 
 ##Pre-reqs
 
-Install Vagrant from https://www.vagrantup.com/downloads.html , or for Ubuntu or Debian, you can use the package manager to install vagrant and a couple of dependencies needed to set up the shared host/guest folder
+Install Vagrant from https://www.vagrantup.com/downloads.html 
+
+For Ubuntu or Debian, you can use the package manager to install vagrant and a couple of dependencies needed to set up the shared host/guest folder
 ```
 sudo apt-get install vagrant nfs-common nfs-kernel-server
 ```
@@ -27,6 +29,11 @@ Git clone this repo to your machine into that directory.
 git clone https://github.com/solgenomics/SGN_vagrant.git
 ```
 
+
+Use vagrant vbguest plugin to automatically sync the Virtualbox Guest Additions for you
+```
+vagrant plugin install vagrant-vbguest
+```
 
 
 ##Using vagrant
