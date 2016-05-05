@@ -1,14 +1,20 @@
 	
-	#Update Aptitude
-	sudo apt-get update -y
-	sudo DEBIAN_FRONTEND=noninteractive apt-get -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" dist-upgrade
-	sudo apt-get install -y gcc build-essential module-assistant
-	
-	#Install Emacs and gedit and vim 
-	sudo apt-get install -y emacs gedit vim less
-	
-	#Install byobu terminal
-	#sudo apt-get install byobu -y
+	#Change hostname to sgndev
+	old=$(hostname)
+	new="sgndev"
+	for file in \
+	   /etc/exim4/update-exim4.conf.conf \
+	   /etc/printcap \
+	   /etc/hostname \
+	   /etc/hosts \
+	   /etc/ssh/ssh_host_rsa_key.pub \
+	   /etc/ssh/ssh_host_dsa_key.pub \
+	   /etc/motd \
+	   /etc/ssmtp/ssmtp.conf
+	do
+	   sudo [ -f $file ] && sudo sed -i.old -e "s:$old:$new:g" $file
+	done
+	sudo hostname sgndev
 	
 	#Install Iceweasel
 	sudo apt-get install iceweasel -y
@@ -16,49 +22,24 @@
 	#Install libreoffice
 	sudo apt-get install libreoffice -y
 	
-	#Install htop
-	sudo apt-get install htop -y
-	
-	#Install git 
-	sudo apt-get install git -y
-	git config --global push.default simple
-	
 	#Install Nginx
 	sudo apt-get install nginx -y
 	
 	#Install slurm
 	sudo apt-get install slurm-llnl -y
 	#Copy slurm.conf from shared config folder to where it needs to go
-	sudo cp /vagrant/config/slurm.conf /etc/slurm-lnll/ 
-	
-	#Install postgres 9.4
-	#sudo apt-get install postgresql-9.4 -y
-	#sudo apt-get install postgresql-contrib-9.4 -y 
-	
-	#Install postgres 9.5
-	sudo su -c "echo 'deb http://apt.postgresql.org/pub/repos/apt/ jessie-pgdg main 9.5' > /etc/apt/sources.list.d/postgresql.list"
-	wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
-	sudo apt-get update -y 
-	sudo apt-get install postgresql-9.5 -y
-	
-	#Install barebones gnome GUI
-	sudo apt-get install gnome-core -y
-	sudo apt-get install -y gnome-shell gnome-screensaver gnome-tweak-tool
-	
-	#Install full gnome (takes forever)
-	# sudo apt-get install gnome -y
-	
-	#Install linux headers for good measure
-	sudo apt-get install linux-headers-$(uname -r) -y
+	sudo cp /vagrant/sgndev_config/slurm.conf /etc/slurm-lnll/ 
 	
 	#Install graphviz
 	sudo apt-get install graphviz -y 
 	
-	#Install perl-docs
-	sudo apt-get install perl-doc -y 
+	#Install barebones gnome GUI
+	sudo apt-get install gnome-core -y
+	sudo apt-get install gnome-terminal -y
+	sudo apt-get install -y gnome-shell gnome-screensaver gnome-tweak-tool
 	
-	#Install ack-grep
-	sudo apt-get install ack-grep -y
+	#Install full gnome (takes forever)
+	# sudo apt-get install gnome -y
 	
 	#Permit any user to start the GUI
 	sudo sed -i s/allowed_users=console/allowed_users=anybody/ /etc/X11/Xwrapper.config
@@ -69,45 +50,37 @@
 	#Start GNOME GUI
 	sudo /etc/init.d/gdm3 start
 	
-	#Set root user password to vagrant 
-	yes vagrant | sudo passwd root
-	
-	#Set Superuser: vagrant user already NOPASSWD superuser
 	
 	#Make and populate cxgn directory
-	sudo mkdir cxgn
-	cd cxgn
+	sudo mkdir /home/vagrant/cxgn
+	cd /home/vagrant/cxgn
 	git clone https://github.com/solgenomics/sgn.git
 	git clone https://github.com/solgenomics/cxgn-corelibs.git
-	git clone https://github.com/solgenomics/fixture.git
 	git clone https://github.com/solgenomics/Phenome.git
 	git clone https://github.com/solgenomics/biosource.git
 	git clone https://github.com/solgenomics/Cview.git
 	git clone https://github.com/solgenomics/ITAG.git
 	git clone https://github.com/solgenomics/tomato_genome.git
-	git clone https://github.com/solgenomics/cassava.git
 	git clone https://github.com/GMOD/Chado.git
 	git clone https://github.com/solgenomics/sgn-devtools.git
 	git clone https://github.com/solgenomics/solGS.git
 	git clone https://github.com/solgenomics/Barcode-Code128.git
 	git clone https://github.com/solgenomics/Tea.git
 	git clone https://github.com/solgenomics/art.git
+	git clone https://github.com/solgenomics/VIGS.git
+	git clone https://github.com/solgenomics/fixture.git
 	
+	#Mason website skins
+	git clone https://github.com/solgenomics/cassava.git
 	git clone https://github.com/solgenomics/yambase.git
 	git clone https://github.com/solgenomics/sweetpotatobase.git
 	git clone https://github.com/solgenomics/ricebase.git
 	git clone https://github.com/solgenomics/citrusgreening.git
 	git clone https://github.com/solgenomics/coconut.git
 	git clone https://github.com/solgenomics/cassbase.git
-	git clone https://github.com/solgenomics/VIGS.git
 	git clone https://github.com/solgenomics/musabase.git
 	git clone https://github.com/solgenomics/potatobase.git
-	
-	#Install curl
-	sudo apt-get install curl -y
-	
-	#Install cpanmin
-	curl -L https://cpanmin.us | perl - --sudo App::cpanminus
+
 	
 	#Install Perl Modules
 	#sudo cpanm install Catalyst::ScriptRunner
@@ -215,8 +188,8 @@
 	#sudo cpanm install Spreadsheet::Read
 	
 	#Extract perl libs from vagrant shared config folder. Contains all of the sudo cpanm install commands above.
-	sudo tar -xf /vagrant/config/perl_lib.tar.gz -C /  ##/usr/local/share/perl/5.20.2/
-	sudo tar -xf /vagrant/config/perl_local_lib.tar.gz -C /  ##/usr/local/lib/x86_64-linux-gnu/perl/5.20.2/
+	sudo tar -xf /vagrant/sgndev_config/perl_lib.tar.gz -C /  ##/usr/local/share/perl/5.20.2/
+	sudo tar -xf /vagrant/sgndev_config/perl_local_lib.tar.gz -C /  ##/usr/local/lib/x86_64-linux-gnu/perl/5.20.2/
 	
 	sudo mkdir /export
 	sudo mkdir /export/prod
@@ -237,39 +210,9 @@
 	sudo chown -R vagrant:vagrant /export/prod/
 	
 	#Add sgn_local.conf to sgn directory, copied from shared config directory 
-	sudo cp /vagrant/config/sgn_local.conf /home/vagrant/cxgn/sgn 
+	sudo cp /vagrant/sgndev_config/sgn_local.conf /home/vagrant/cxgn/sgn 
 	sudo chown -R vagrant:vagrant /home/vagrant/cxgn/
-	
-	#Configure trust connection for psql postgres user and create web_usr .
-	sudo sed -i s/peer/trust/ /etc/postgresql/9.5/main/pg_hba.conf 
-	sudo service postgresql restart
-	#Create web_usr role
-	yes sol@ley! | createuser -U postgres -P web_usr
-	#Change postgres role password
-	echo "ALTER ROLE postgres WITH PASSWORD 'sgn_test';" | psql -U postgres 
-	
-	#NOT LOADING SANDBOX CASSAVA DATABASE, SO AS TO SAVE SPACE ON THE VM
-	#Create sandbox_cassava db and load dump from shared config folder.
-	#sudo -u postgres createdb -E UTF8 --locale en_US.utf8 -T template0 sandbox_cassava
-	#gunzip -c /vagrant/config/sandbox_cassava.pgsql.gz | sudo psql -U postgres sandbox_cassava
-	
-	#Create fixture db and load fixture.sql
-	sudo -u postgres createdb -E UTF8 --locale en_US.utf8 -T template0 fixture
-	sudo psql -U postgres -d fixture -f /home/vagrant/cxgn/fixture/cxgn_fixture.sql
-	
-	#Bashrc customization
-	#Add git branch display 
-	sed -i s/#force_color_prompt=yes/force_color_prompt=yes/ /home/vagrant/.bashrc
-	sed -i '$ a\parse_git_branch(){' /home/vagrant/.bashrc
-	sed -i '$ a\git branch 2> /dev/null | sed -e \x27/^[^*]/d\x27 -e \x27s/* \\(.*\\)/(\\1)/\x27' /home/vagrant/.bashrc
-	sed -i '$ a\}' /home/vagrant/.bashrc
-	sed -i '$ a\if [ \x27$color_prompt\x27 = yes ]; then' /home/vagrant/.bashrc
-	sed -i '$ a\PS1=\x27${debian_chroot:+($debian_chroot)}\\[\\033[01;32m\\]\\u@\\h\\[\\033[00m\\]:\\[\\033[01;34m\\]\\w\\[\\033[01;31m\\]$(parse_git_branch)\\[\\033[00m\\]\\$ \x27' /home/vagrant/.bashrc
-	sed -i '$ a\else' /home/vagrant/.bashrc
-	sed -i '$ a\PS1=\x27${debian_chroot:+($debian_chroot)}\\u@\\h:\\w$(parse_git_branch)\\$ \x27' /home/vagrant/.bashrc
-	sed -i '$ a\fi' /home/vagrant/.bashrc
-	sed -i '$ a\unset color_prompt force_color_prompt' /home/vagrant/.bashrc
-	
+
 	#Add Perl paths 
 	sudo sed -i '$ a\export PERL5LIB="$PERL5LIB:/usr/local/lib/x86_64-linux-gnu/perl/5.20.2:/usr/local/share/perl/5.20.2:/home/vagrant/cxgn/sgn/lib:/home/vagrant/cxgn/cxgn-corelibs/lib:/home/vagrant/cxgn/Phenome/lib:/home/vagrant/cxgn/Cview/lib:/home/vagrant/cxgn/ITAG/lib:/home/vagrant/cxgn/biosource/lib:/home/vagrant/cxgn/tomato_genome/lib:/home/vagrant/cxgn/Barcode-Code128/lib:/home/vagrant/cxgn/solGS/lib"' /home/vagrant/.bashrc
 	
@@ -288,6 +231,23 @@
 	sudo R -e "install.packages('agricolae', dependencies=TRUE, repos='http://cran.rstudio.com/')"
 	
 	cd /home/vagrant/cxgn
+
+	#Download selenium 2.45.0
+	wget https://selenium-release.storage.googleapis.com/2.45/selenium-server-standalone-2.45.0.jar 
+	
+	#Jbrowse Setup
+	sudo cp /vagrant/sgndev_config/sgn_forward /etc/nginx/sites-available/
+	sudo rm /etc/nginx/sites-enabled/default
+	sudo ln -s /etc/nginx/sites-available/sgn_forward /etc/nginx/sites-enabled/
+	sudo /etc/init.d/nginx restart
+	cd /var/www/ 
+	sudo mkdir jbrowse
+	cd jbrowse
+	sudo curl -O http://jbrowse.org/releases/JBrowse-1.12.1.zip
+	sudo unzip JBrowse-1.12.1.zip
+	sudo rm JBrowse-1.12.1.zip
+	cd JBrowse-1.12.1
+	sudo ./setup.sh
 	
 	#Install Atom text editor and cleanup
 	sudo apt-get install xdg-utils -y
@@ -301,40 +261,4 @@
 	sudo dpkg --install google-chrome-stable_current_amd64.deb
 	sudo apt-get -f install -y
 	rm google-chrome-stable_current_amd64.deb
-	
-	#Download selenium 2.45.0
-	wget https://selenium-release.storage.googleapis.com/2.45/selenium-server-standalone-2.45.0.jar 
-	
-	#Jbrowse Setup
-	sudo cp /vagrant/config/sgn_forward /etc/nginx/sites-available/
-	sudo rm /etc/nginx/sites-enabled/default
-	sudo ln -s /etc/nginx/sites-available/sgn_forward /etc/nginx/sites-enabled/
-	sudo /etc/init.d/nginx restart
-	cd /var/www/ 
-	sudo mkdir jbrowse
-	cd jbrowse
-	sudo curl -O http://jbrowse.org/releases/JBrowse-1.12.1.zip
-	sudo unzip JBrowse-1.12.1.zip
-	sudo rm JBrowse-1.12.1.zip
-	cd JBrowse-1.12.1
-	sudo ./setup.sh
-	
-	
-	#Show welcome message
-	sudo less /vagrant/config/welcome.txt
-	
-	#Install Sublime text editor 
-	#wget http://c758482.r82.cf2.rackcdn.com/sublime_text_3_build_3083_x64.tar.bz2
-	#tar vxjf sublime_text_3_build_3083_x64.tar.bz2
-	#sudo mv sublime_text_3 /opt/
-	#sudo ln -s /opt/sublime_text_3/sublime_text /usr/bin/subl
-	
-	#Install VirtualBox guest tools in virtualbox, by clicking Devices->Insert Guest Additions CD, then:
-	#This will enable copy/paste from host to guest, guest window resizing, and other nice things
-	# sudo mount /dev/sr0 /mnt
-	# cd /mnt
-	# sudo ./VBoxLinuxAdditions.run
-	# eject CD
-	# Then restart virtualbox 
-	
 	
