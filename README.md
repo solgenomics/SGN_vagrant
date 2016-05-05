@@ -30,15 +30,9 @@ git clone https://github.com/solgenomics/SGN_vagrant.git
 ```
 
 
-Use vagrant vbguest plugin to automatically sync the Virtualbox Guest Additions for you
-```
-vagrant plugin install vagrant-vbguest
-```
-
-
 ##Using vagrant
 
-Go that the SGN_vagrant directory
+Go to the SGN_vagrant directory
 ```
 cd SGN_vagrant
 ```
