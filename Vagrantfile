@@ -11,6 +11,7 @@ Vagrant.configure(2) do |config|
 	# The most common configuration options are documented and commented below.
 	# For a complete reference, please see the online documentation at
 	# https://docs.vagrantup.com.
+	
 	# MULTIMACHINE SETUP: Will provision a SGN_Dev_Vagrant and a DB_Dev_Vagrant machine. This way the database is separate, but can communicate via the private network. This mirrors the production setup better.	
 	
 	config.vm.define "sgndev", primary: true do |sgndev|
@@ -20,7 +21,7 @@ Vagrant.configure(2) do |config|
 		# sgndev.vm.box = "debian/jessie64"  ##Problem: No virtualbox guest additions installed
 		sgndev.vm.box = "debian/contrib-jessie64" ##Has guest additions installed. Problem: Only 10GB
 		# sgndev.vm.box = "ARTACK/debian-jessie" ##Problem: only 20GB
-		# sgndev.vm.box = "hmaalmi/debian-jessie-100" ##Has 100GB. Problem: too slow
+		# sgndev.vm.box = "hmaalmi/debian-jessie-100" ##Has 100GB. Problem: too SLOW
 
 		# Create a forwarded port mapping which allows access to a specific port
 		# within the machine from a port on the host machine. In the example below,
@@ -51,7 +52,8 @@ Vagrant.configure(2) do |config|
 			# Customize the amount of memory on the VM and number of CPUs:
 			vb.memory = 2048
 			vb.cpus = 1
-			# vb.customize ["modifyvm", :id, "--vram", "16"]
+			vb.customize ["modifyvm", :id, "--vram", "32"]
+			vb.customize ["modifyvm", :id, "--clipboard", "bidirectional"]
 		end
 
 		#
@@ -68,7 +70,7 @@ Vagrant.configure(2) do |config|
 		# Enable provisioning with a shell script. Additional provisioners such as
 		# Puppet, Chef, Ansible, Salt, and Docker are also available. Please see the
 		# documentation for more information about their specific syntax and use.
-		sgndev.vm.provision "shell", path: "common_config.sh"
+		sgndev.vm.provision "shell", path: "common_config/common_config.sh"
 		sgndev.vm.provision "shell", path: "sgndev_config/provision.sh"
 		
 	end
@@ -91,16 +93,12 @@ Vagrant.configure(2) do |config|
 		dbdev.vm.provider "virtualbox" do |vb|
 			vb.name = "DB_Dev_Vagrant"
 
-			# Display the VirtualBox GUI when booting the machine
-			vb.gui = true
-
-			# Customize the amount of memory on the VM and number of CPUs:
+			vb.gui = false
 			vb.memory = 2048
 			vb.cpus = 1
-			# vb.customize ["modifyvm", :id, "--vram", "16"]
 		end
 
-		dbdev.vm.provision "shell", path: "common_config.sh"
+		dbdev.vm.provision "shell", path: "common_config/common_config.sh"
 		dbdev.vm.provision "shell", path: "dbdev_config/provision.sh"
 		
 		dbdev.vm.provision "shell", inline: "sudo less /vagrant/welcome.txt"

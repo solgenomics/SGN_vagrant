@@ -16,16 +16,6 @@
 	done
 	sudo hostname dbdev
 	
-	#Install postgres 9.4
-	#sudo apt-get install postgresql-9.4 -y
-	#sudo apt-get install postgresql-contrib-9.4 -y 
-	
-	#Install postgres 9.5
-	sudo su -c "echo 'deb http://apt.postgresql.org/pub/repos/apt/ jessie-pgdg main 9.5' > /etc/apt/sources.list.d/postgresql.list"
-	wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
-	sudo apt-get update -y 
-	sudo apt-get install postgresql-9.5 -y
-	
 	#Make and populate cxgn directory
 	sudo mkdir /home/vagrant/cxgn
 	cd /home/vagrant/cxgn
