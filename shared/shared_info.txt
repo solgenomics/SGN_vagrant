@@ -1,1 +1,0 @@
-The directory that this file is in is a shared folder that is found on /shared on the VM

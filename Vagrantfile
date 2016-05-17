@@ -12,8 +12,6 @@ Vagrant.configure(2) do |config|
 	# For a complete reference, please see the online documentation at
 	# https://docs.vagrantup.com.
 	
-	# MULTIMACHINE SETUP: Will provision a SGN_Dev_Vagrant and a DB_Dev_Vagrant machine. This way the database is separate, but can communicate via the private network. This mirrors the production setup better.	
-	
 	config.vm.define "sgndev", primary: true do |sgndev|
 		
 		# Every Vagrant development environment requires a box. You can search for
@@ -41,16 +39,16 @@ Vagrant.configure(2) do |config|
 		# the path on the host to the actual folder. The second argument is
 		# the path on the guest to mount the folder. And the optional third
 		# argument is a set of non-required options.
-		sgndev.vm.synced_folder "shared", "/shared", nfs: true
+		sgndev.vm.synced_folder "data", "/data", nfs: true
 
 		sgndev.vm.provider "virtualbox" do |vb|
-			vb.name = "SGN_Dev_Vagrant"
+			vb.name = "SGN Dev"
 
 			# Display the VirtualBox GUI when booting the machine
 			vb.gui = true
 
 			# Customize the amount of memory on the VM and number of CPUs:
-			vb.memory = 2048
+			vb.memory = 3072
 			vb.cpus = 1
 			vb.customize ["modifyvm", :id, "--vram", "32"]
 			vb.customize ["modifyvm", :id, "--clipboard", "bidirectional"]
@@ -70,38 +68,8 @@ Vagrant.configure(2) do |config|
 		# Enable provisioning with a shell script. Additional provisioners such as
 		# Puppet, Chef, Ansible, Salt, and Docker are also available. Please see the
 		# documentation for more information about their specific syntax and use.
-		sgndev.vm.provision "shell", path: "common_config/common_config.sh"
-		sgndev.vm.provision "shell", path: "sgndev_config/provision.sh"
-		
-	end
-
-	config.vm.define "dbdev" do |dbdev|
-		
-		# dbdev.vm.box = "debian/jessie64"  ##Problem: No virtualbox guest additions installed
-		dbdev.vm.box = "debian/contrib-jessie64" ##Has guest additions installed. Problem: Only 10GB
-		# dbdev.vm.box = "ARTACK/debian-jessie" ##Problem: only 20GB
-		# dbdev.vm.box = "hmaalmi/debian-jessie-100" ##Has 100GB. Problem: too SLOW
-
-		# dbdev.vm.network "forwarded_port", guest: 80, host: 8080
-
-		dbdev.vm.network "private_network", ip: "192.168.33.20"
-
-		# dbdev.vm.network "public_network"
-
-		dbdev.vm.synced_folder "shared", "/shared", nfs: true
-
-		dbdev.vm.provider "virtualbox" do |vb|
-			vb.name = "DB_Dev_Vagrant"
-
-			vb.gui = false
-			vb.memory = 2048
-			vb.cpus = 1
-		end
-
-		dbdev.vm.provision "shell", path: "common_config/common_config.sh"
-		dbdev.vm.provision "shell", path: "dbdev_config/provision.sh"
-		
-		dbdev.vm.provision "shell", inline: "sudo less /vagrant/welcome.txt"
+		sgndev.vm.provision "shell", path: "config/provision.sh"
+		sgndev.vm.provision "shell", inline: "sudo less /vagrant/welcome.txt"
 		
 	end
   
