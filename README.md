@@ -9,8 +9,6 @@ For Ubuntu or Debian, you can use the package manager to install vagrant and a c
 sudo apt-get install vagrant nfs-common nfs-kernel-server
 ```
 
-There is a large database dump in this repo! Use Git LFS to be able to handle this https://git-lfs.github.com/!!
-
 Make sure you have VirtualBox AND the VirtualBox Extension Pack installed
 https://www.virtualbox.org/wiki/Downloads
 
@@ -61,3 +59,19 @@ To remove any trace of the VM
 vagrant destroy
 ```
 
+##Staying Up to Date
+
+Destroy the old version of the VM. Note this is irreversible!
+```
+vagrant destroy
+```
+
+Pull in the latest changes
+```
+git pull
+```
+
+Provision the new machine
+```
+vagrant up
+```
