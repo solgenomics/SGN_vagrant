@@ -73,6 +73,9 @@
 	#Install graphviz
 	sudo apt-get install graphviz -y 
 	
+	#Install imagemagick
+	sudo apt-get install imagemagick -y
+	
 	#Install barebones gnome GUI
 	sudo apt-get install gnome-core -y
 	sudo apt-get install gnome-terminal -y
@@ -245,7 +248,6 @@
 	sudo mkdir /data/shared
 	sudo mkdir /data/shared/tmp
 	
-	
 	sudo chown -R vagrant:vagrant /data/prod/
 	sudo chown -R vagrant:vagrant /export/prod/
 	
@@ -279,7 +281,7 @@
 	#Create fixture db and load fixture.sql
 	sudo -u postgres createdb -E UTF8 --locale en_US.utf8 -T template0 fixture
 	sudo psql -U postgres -d fixture -f /home/vagrant/cxgn/fixture/cxgn_fixture.sql
-
+	echo "GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO web_usr;" | psql -U postgres -d fixture
 	
 	#Install R 
 	sudo apt-get install apt-transport-https -y
