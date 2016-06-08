@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 	
 	#Change hostname to sgndev
 	old=$(hostname)
@@ -64,11 +65,41 @@
 	#Install Nginx
 	sudo apt-get install nginx -y
 	
+	#NMAP
+	sudo apt-get install -y nmap
+	
+	#NCBI Blast (legacy blastall)
+	mkdir /home/vagrant/blast
+	cd /home/vagrant/blast
+
+	wget ftp://ftp.ncbi.nlm.nih.gov/blast/executables/legacy/2.2.9/blast-2.2.9-amd64-linux.tar.gz
+	tar zxvpf blast-2.2.9-amd64-linux.tar.gz
+	sudo sed -i '$ a\export PATH="$PATH:/home/vagrant/blast/"' /home/vagrant/.bashrc
+	rm blast-2.2.9-amd64-linux.tar.gz
+	
+	#sudo apt-get install ncbi-blast+ -y #latest relaese of BLAST
+	
 	#Install slurm
-	sudo apt-get install slurm-wlm -y
+	sudo apt-get install libmunge-dev libmunge2 munge -y
+	sudo apt-get install slurm-wlm slurmctld slurmd -y
 	sudo apt-get install libslurm-perl -y
 	#Copy slurm.conf from shared config folder to where it needs to go
-	echo vagrant | sudo -S cp /vagrant/config/slurm.conf /etc/slurm-lnll/ 
+	sudo touch /etc/slurm-llnl/slurm.conf
+	sudo cat /vagrant/config/slurm.conf >> /etc/slurm-llnl/slurm.conf
+	#sudo sh -c "cp /vagrant/config/slurm.conf /etc/slurm-lnll/ "
+	
+	sudo chmod 777 /var/spool/
+	sudo mkdir /var/spool/slurmstate
+	sudo chown slurm:slurm /var/spool/slurmstate/
+	sudo /usr/sbin/create-munge-key
+	sudo ln -s /var/lib/slurm-llnl /var/lib/slurm
+	
+	sudo systemctl enable slurmctld.service
+	sudo systemctl start slurmctld.service
+	sudo systemctl enable slurmd.service
+	sudo systemctl start slurmd.service
+	sudo systemctl enable munge.service
+	sudo systemctl restart munge.service
 	
 	#Install graphviz
 	sudo apt-get install graphviz -y 
@@ -285,6 +316,7 @@
 	sudo -u postgres createdb -E UTF8 --locale en_US.utf8 -T template0 fixture
 	sudo psql -U postgres -d fixture -f /home/vagrant/cxgn/fixture/cxgn_fixture.sql
 	echo "GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO web_usr;" | psql -U postgres -d fixture
+	echo "GRANT USAGE, SELECT ON ALL SEQUENCES IN SCHEMA public TO web_usr;" | psql -U postgres -d fixture
 	
 	#Install R 
 	sudo apt-get install apt-transport-https -y
