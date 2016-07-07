@@ -4,11 +4,6 @@
 
 Install Vagrant from https://www.vagrantup.com/downloads.html 
 
-For Ubuntu or Debian, you can use the package manager to install vagrant and a couple of dependencies needed to set up the shared host/guest folder
-```
-sudo apt-get install vagrant nfs-common nfs-kernel-server
-```
-
 Make sure you have VirtualBox AND the VirtualBox Extension Pack installed
 https://www.virtualbox.org/wiki/Downloads
 
