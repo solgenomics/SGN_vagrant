@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-	
+
 	#Change hostname to sgndev
 	old=$(hostname)
 	new="sgndev"
@@ -16,31 +16,31 @@
 	   sudo [ -f $file ] && sudo sed -i.old -e "s:$old:$new:g" $file
 	done
 	sudo hostname sgndev
-	
-	
+
+
 	#Update Aptitude
 	sudo apt-get update -y
 	sudo DEBIAN_FRONTEND=noninteractive apt-get -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" dist-upgrade
 	sudo apt-get install -y gcc build-essential module-assistant
-	
-	#Install Emacs and gedit and vim 
+
+	#Install Emacs and gedit and vim
 	sudo apt-get install -y emacs gedit vim less
-	
+
 	#Install htop
 	sudo apt-get install htop -y
-	
-	#Install git 
+
+	#Install git
 	sudo apt-get install git -y
-	
+
 	#Install linux headers for good measure
 	sudo apt-get install -y dkms linux-headers-$(uname -r)
-	
+
 	#Install perl-docs
-	sudo apt-get install perl-doc -y 
-	
+	sudo apt-get install perl-doc -y
+
 	#Install memtester
 	sudo apt-get install memtester -y
-	
+
 	#Install ack-grep
 	sudo apt-get install ack-grep -y
 	
@@ -51,28 +51,32 @@
 	sudo apt-get install mongodb -y
 	
 	#Set root user password to vagrant 
+
 	yes vagrant | sudo passwd root
-	
+
 	#Set Superuser: vagrant user already NOPASSWD superuser
 
 	#Install curl
 	sudo apt-get install curl -y
-	
+
 	#Install cpanmin
 	curl -L https://cpanmin.us | perl - --sudo App::cpanminus
-	
+
 	#Install Iceweasel
 	sudo apt-get install iceweasel -y
-	
+
 	#Install libreoffice
 	sudo apt-get install libreoffice -y
-	
+
 	#Install Nginx
 	sudo apt-get install nginx -y
-	
+
 	#NMAP
 	sudo apt-get install -y nmap
-	
+
+	#For headless selenium testing
+	sudo apt-get install -y xvfb
+
 	#NCBI Blast (legacy blastall)
 	mkdir /home/vagrant/blast
 	cd /home/vagrant/blast
@@ -81,9 +85,9 @@
 	tar zxvpf blast-2.2.9-amd64-linux.tar.gz
 	sudo sed -i '$ a\export PATH="$PATH:/home/vagrant/blast/"' /home/vagrant/.bashrc
 	rm blast-2.2.9-amd64-linux.tar.gz
-	
+
 	#sudo apt-get install ncbi-blast+ -y #latest relaese of BLAST
-	
+
 	#Install slurm
 	sudo apt-get install libmunge-dev libmunge2 munge -y
 	sudo apt-get install slurm-wlm slurmctld slurmd -y
@@ -92,34 +96,34 @@
 	sudo touch /etc/slurm-llnl/slurm.conf
 	sudo cat /vagrant/config/slurm.conf >> /etc/slurm-llnl/slurm.conf
 	#sudo sh -c "cp /vagrant/config/slurm.conf /etc/slurm-lnll/ "
-	
+
 	sudo chmod 777 /var/spool/
 	sudo mkdir /var/spool/slurmstate
 	sudo chown slurm:slurm /var/spool/slurmstate/
 	sudo /usr/sbin/create-munge-key
 	sudo ln -s /var/lib/slurm-llnl /var/lib/slurm
-	
+
 	sudo systemctl enable slurmctld.service
 	sudo systemctl start slurmctld.service
 	sudo systemctl enable slurmd.service
 	sudo systemctl start slurmd.service
 	sudo systemctl enable munge.service
 	sudo systemctl restart munge.service
-	
+
 	#Install graphviz
-	sudo apt-get install graphviz -y 
-	
+	sudo apt-get install graphviz -y
+
 	#Install imagemagick
 	sudo apt-get install imagemagick -y
-	
+
 	#Install barebones gnome GUI
 	sudo apt-get install gnome-core -y
 	sudo apt-get install gnome-terminal -y
 	sudo apt-get install -y gnome-shell gnome-screensaver gnome-tweak-tool gnome-shell-extensions
-	
+
 	#Install full gnome (takes forever)
 	# sudo apt-get install gnome -y
-	
+
 	#Permit any user to start the GUI
 	sudo sed -i s/allowed_users=console/allowed_users=anybody/ /etc/X11/Xwrapper.config
 
@@ -128,8 +132,8 @@
 	sudo sed -i s/\#\ \ AutomaticLogin\ =\ user1/AutomaticLogin\ =\ vagrant/ /etc/gdm3/daemon.conf
 	#Start GNOME GUI
 	sudo /etc/init.d/gdm3 start
-	
-	
+
+
 	#Make and populate cxgn directory
 	sudo mkdir /home/vagrant/cxgn
 	cd /home/vagrant/cxgn
@@ -148,7 +152,7 @@
 	git clone https://github.com/solgenomics/art.git
 	git clone https://github.com/solgenomics/VIGS.git
 	git clone https://github.com/solgenomics/fixture.git
-	
+
 	#Mason website skins
 	git clone https://github.com/solgenomics/cassava.git
 	git clone https://github.com/solgenomics/yambase.git
@@ -160,7 +164,7 @@
 	git clone https://github.com/solgenomics/musabase.git
 	git clone https://github.com/solgenomics/potatobase.git
 
-	
+
 	#Install Perl Modules
 	sudo cpanm install Catalyst::ScriptRunner
 	sudo cpanm install Catalyst::Restarter
@@ -233,14 +237,14 @@
 	sudo cpanm install GD::Graph::Map
 	sudo cpanm install Bio::GMOD::GenericGenePage
 	sudo cpanm install Number::Bytes::Human
-	sudo cpanm install AnyEvent --force 
+	sudo cpanm install AnyEvent --force
 	sudo cpanm install IO::Event --force
 	sudo cpanm install File::Flock
-	sudo cpanm install Graph 
+	sudo cpanm install Graph
 	sudo cpanm install Bio::SeqFeature::Annotated
 	sudo cpanm install XML::Twig
 	sudo cpanm install XML::Generator
-	sudo apt-get install libpq-dev -y 
+	sudo apt-get install libpq-dev -y
 	sudo cpanm install DBD::Pg
 	sudo cpanm install MooseX::Runnable@0.09
 	sudo cpanm install XML::Feed
@@ -264,15 +268,15 @@
 	sudo cpanm install Test::MockObject
 	sudo cpanm install Test::WWW::Selenium
 	sudo cpanm install Sort::Versions
-	sudo cpanm install Term::ReadKey --force 
+	sudo cpanm install Term::ReadKey --force
 	sudo cpanm install Spreadsheet::Read
 	sudo cpanm install Sort::Maker
 
-	
+
 	#Extract perl libs from vagrant shared config folder. Contains all of the sudo cpanm install commands above.
 	#sudo tar -xf /vagrant/config/perl_lib.tar.gz -C /  ##/usr/local/share/perl/5.20.2/
 	#sudo tar -xf /vagrant/config/perl_local_lib.tar.gz -C /  ##/usr/local/lib/x86_64-linux-gnu/perl/5.20.2/
-	
+
 	sudo mkdir /export
 	sudo mkdir /export/prod
 	sudo mkdir /export/prod/public
@@ -280,50 +284,50 @@
 	sudo mkdir /export/prod/tmp
 	sudo mkdir /export/prod/tmp/solgs
 	sudo mkdir /data
-	sudo mkdir /data/prod 
+	sudo mkdir /data/prod
 	sudo mkdir /data/prod/archive
 	sudo mkdir /export/prod/public/images
 	sudo mkdir /export/prod/public/images/image_files
 	sudo mkdir /data/shared
 	sudo mkdir /data/shared/tmp
-	
+
 	sudo chown -R vagrant:vagrant /data/prod/
 	sudo chown -R vagrant:vagrant /export/prod/
-	
-	#Add sgn_local.conf to sgn directory, copied from shared config directory 
-	sudo cp /vagrant/config/sgn_local.conf /home/vagrant/cxgn/sgn 
+
+	#Add sgn_local.conf to sgn directory, copied from shared config directory
+	sudo cp /vagrant/config/sgn_local.conf /home/vagrant/cxgn/sgn
 	sudo chown -R vagrant:vagrant /home/vagrant/cxgn/
-	
+
 	#Install postgres 9.4
 	#sudo apt-get install postgresql-9.4 -y
-	#sudo apt-get install postgresql-contrib-9.4 -y 
-	
+	#sudo apt-get install postgresql-contrib-9.4 -y
+
 	#Install postgres 9.5
 	sudo su -c "echo 'deb http://apt.postgresql.org/pub/repos/apt/ jessie-pgdg main 9.5' > /etc/apt/sources.list.d/postgresql.list"
 	wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
-	sudo apt-get update -y 
+	sudo apt-get update -y
 	sudo apt-get install postgresql-9.5 -y
-	
+
 	#Configure trust connection for psql postgres user and create web_usr .
-	sudo sed -i s/peer/trust/ /etc/postgresql/9.5/main/pg_hba.conf 
+	sudo sed -i s/peer/trust/ /etc/postgresql/9.5/main/pg_hba.conf
 	sudo /etc/init.d/postgresql restart
 	#Create web_usr role with password web_usr
 	yes web_usr | createuser -U postgres -P web_usr
 	#Change postgres role password to postgres
-	echo "ALTER ROLE postgres WITH PASSWORD 'postgres';" | psql -U postgres 
+	echo "ALTER ROLE postgres WITH PASSWORD 'postgres';" | psql -U postgres
 	sudo /etc/init.d/postgresql restart
-	
+
 	#Create sandbox_cassava db and load dump from shared config folder.
 	#sudo -u postgres createdb -E UTF8 --locale en_US.utf8 -T template0 sandbox_cassava
 	#gunzip -c /vagrant/config/sandbox_cassava.pgsql.gz | sudo psql -U postgres sandbox_cassava
-	
+
 	#Create fixture db and load fixture.sql
 	sudo -u postgres createdb -E UTF8 --locale en_US.utf8 -T template0 fixture
 	sudo psql -U postgres -d fixture -f /home/vagrant/cxgn/fixture/cxgn_fixture.sql
 	echo "GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO web_usr;" | psql -U postgres -d fixture
 	echo "GRANT USAGE, SELECT ON ALL SEQUENCES IN SCHEMA public TO web_usr;" | psql -U postgres -d fixture
-	
-	#Install R 
+
+	#Install R
 	sudo apt-get install apt-transport-https -y
 	sudo sed -i "\$adeb https://cran.cnr.berkeley.edu/bin/linux/debian jessie-cran3/" /etc/apt/sources.list
 	sudo apt-key adv --keyserver keys.gnupg.net --recv-key 381BA480
@@ -331,23 +335,23 @@
 	sudo DEBIAN_FRONTEND=noninteractive apt-get -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" dist-upgrade
 	sudo apt-get install r-base r-base-dev -y
 	#Better performance on linear algebra ops
-	sudo apt-get install libatlas3-base -y 
+	sudo apt-get install libatlas3-base -y
 	sudo apt-get install libcurl4-openssl-dev -y --force-yes
-	#Install R packages 
+	#Install R packages
 	sudo R -e "install.packages('data.table', dependencies=TRUE, repos='http://cran.rstudio.com/')"
 	sudo R -e "install.packages('agricolae', dependencies=TRUE, repos='http://cran.rstudio.com/')"
-	
+
 	cd /home/vagrant/cxgn
 
-	#Download selenium 2.45.0
-	wget https://selenium-release.storage.googleapis.com/2.45/selenium-server-standalone-2.45.0.jar 
-	
+	#Download selenium 2.53.0
+	wget https://selenium-release.storage.googleapis.com/2.53/selenium-server-standalone-2.53.0.jar
+
 	#Jbrowse Setup
 	sudo cp /vagrant/config/sgn_forward /etc/nginx/sites-available/
 	sudo rm /etc/nginx/sites-enabled/default
 	sudo ln -s /etc/nginx/sites-available/sgn_forward /etc/nginx/sites-enabled/
 	sudo /etc/init.d/nginx restart
-	cd /var/www/ 
+	cd /var/www/
 	sudo mkdir jbrowse
 	cd jbrowse
 	sudo curl -O http://jbrowse.org/releases/JBrowse-1.12.1.zip
@@ -355,22 +359,22 @@
 	sudo rm JBrowse-1.12.1.zip
 	cd JBrowse-1.12.1
 	sudo ./setup.sh
-	
+
 	#Install Atom text editor and cleanup
 	sudo apt-get install xdg-utils -y
 	wget https://github.com/atom/atom/releases/download/v1.6.0/atom-amd64.deb
 	sudo dpkg --install atom-amd64.deb
 	sudo apt-get -f install -y
 	rm atom-amd64.deb
-	
+
 	#Install Chrome and cleanup
 	wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
 	sudo dpkg --install google-chrome-stable_current_amd64.deb
 	sudo apt-get -f install -y
 	rm google-chrome-stable_current_amd64.deb
-	
+
 	#Bashrc customization
-	#Add git branch display 
+	#Add git branch display
 	sed -i s/#force_color_prompt=yes/force_color_prompt=yes/ /home/vagrant/.bashrc
 	sed -i '$ a\parse_git_branch(){' /home/vagrant/.bashrc
 	sed -i '$ a\git branch 2> /dev/null | sed -e \x27/^[^*]/d\x27 -e \x27s/* \\(.*\\)/(\\1)/\x27' /home/vagrant/.bashrc
@@ -381,6 +385,6 @@
 	sed -i '$ a\PS1=\x27${debian_chroot:+($debian_chroot)}\\u@\\h:\\w$(parse_git_branch)\\$ \x27' /home/vagrant/.bashrc
 	sed -i '$ a\fi' /home/vagrant/.bashrc
 	sed -i '$ a\unset color_prompt force_color_prompt' /home/vagrant/.bashrc
-	
-	#Add Perl paths 
+
+	#Add Perl paths
 	sudo sed -i '$ a\export PERL5LIB="$PERL5LIB:/usr/local/lib/x86_64-linux-gnu/perl/5.20.2:/usr/local/share/perl/5.20.2:/home/vagrant/cxgn/sgn/lib:/home/vagrant/cxgn/cxgn-corelibs/lib:/home/vagrant/cxgn/Phenome/lib:/home/vagrant/cxgn/Cview/lib:/home/vagrant/cxgn/ITAG/lib:/home/vagrant/cxgn/biosource/lib:/home/vagrant/cxgn/tomato_genome/lib:/home/vagrant/cxgn/Barcode-Code128/lib:/home/vagrant/cxgn/solGS/lib"' /home/vagrant/.bashrc
