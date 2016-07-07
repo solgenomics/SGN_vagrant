@@ -17,8 +17,8 @@ Vagrant.configure(2) do |config|
 		# Every Vagrant development environment requires a box. You can search for
 		# boxes at https://atlas.hashicorp.com/search.
 		# sgndev.vm.box = "debian/jessie64"  #Use vagrant up --provider virtualbox  #Use vagrant box update --provider virtualbox  #Available providers are libvert, lxc, and virtualbox
-		sgndev.vm.box = "debian/contrib-jessie64" ##PREFERRED BOX: Has latest version of guest additions installed. Problem: Only 10GB disk
-		# sgndev.vm.box = "ARTACK/debian-jessie" #Has old version of guest additions and 20GB disk
+		# sgndev.vm.box = "debian/contrib-jessie64" ##PREFERRED BOX: Has latest version of guest additions installed. Problem: Only 10GB disk
+		sgndev.vm.box = "ARTACK/debian-jessie" #Has old version of guest additions and 20GB disk
 
 		# Create a forwarded port mapping which allows access to a specific port
 		# within the machine from a port on the host machine. In the example below,
