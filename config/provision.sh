@@ -48,7 +48,7 @@
 	sudo apt-get install xutils-dev -y
 	
 	#install mongodb
-	sudo apt-get install mongodb -y
+	#sudo apt-get install mongodb -y
 	
 	#Set root user password to vagrant 
 
