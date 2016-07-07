@@ -31,7 +31,6 @@
 	
 	#Install git 
 	sudo apt-get install git -y
-	git config --global push.default simple
 	
 	#Install linux headers for good measure
 	sudo apt-get install -y dkms linux-headers-$(uname -r)
@@ -44,6 +43,12 @@
 	
 	#Install ack-grep
 	sudo apt-get install ack-grep -y
+	
+	#makefile installer
+	sudo apt-get install xutils-dev -y
+	
+	#install mongodb
+	sudo apt-get install mongodb -y
 	
 	#Set root user password to vagrant 
 	yes vagrant | sudo passwd root
