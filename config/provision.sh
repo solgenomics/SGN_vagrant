@@ -271,6 +271,7 @@
 	sudo cpanm install Term::ReadKey --force
 	sudo cpanm install Spreadsheet::Read
 	sudo cpanm install Sort::Maker
+	sudo cpanm install Term::Size::Any
 
 
 	#Extract perl libs from vagrant shared config folder. Contains all of the sudo cpanm install commands above.
