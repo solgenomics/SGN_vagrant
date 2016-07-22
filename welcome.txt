@@ -30,7 +30,7 @@ This file found in config/welcome.txt
 
 	1) Shutdown guest VM
 	2) Go to VM settings and change CPU and RAM settings for better performance.
-	3) To change hard disk settings follow these instructions: 
+	3) To change hard disk size follow these instructions: 
 		a) Turn off VM
 		b) On Host: cd ~/Virtualbox VMs/   Find the .vmdk file for the machine you want to resize.
 		c) VBoxManage clonehd box-disk1.vmdk box-disk1.vdi --format vdi
