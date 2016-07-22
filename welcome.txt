@@ -30,7 +30,18 @@ This file found in config/welcome.txt
 
 	1) Shutdown guest VM
 	2) Go to VM settings and change CPU and RAM settings for better performance.
-	3) To change hard disk settings follow these instructions: https://gist.github.com/christopher-hopper/9755310 AND/OR https://medium.com/@phirschybar/resize-your-vagrant-virtualbox-disk-3c0fbc607817#.af5h53rji
+	3) To change hard disk settings follow these instructions: 
+		a) Turn off VM
+		b) On Host: cd ~/Virtualbox VMs/   Find the .vmdk file for the machine you want to resize.
+		c) VBoxManage clonehd box-disk1.vmdk box-disk1.vdi --format vdi
+		d) VBoxManage modifyhd box-disk1.vdi --resize 40960
+		e) Open virtualbox manager, click New->Expert Mode
+		f) Enter a name, Linux, and Debian 64, amount of RAM, and select the .vdi file as an existing virtual hard disk. Click Create
+		g) Download amd64.iso GParted from here https://sourceforge.net/projects/gparted/files/gparted-live-stable/0.26.1-3/
+		h) In Virtualbox Manager, go to settings for the machine you just created. Click Storage->Attach Optical Drive and select the GParted iso as the CD.
+		i) Boot the VM. GParted will boot. Expand the main partition into the new space https://www.rootusers.com/use-gparted-to-increase-disk-size-of-a-linux-native-partition/
+		j) Remove the GParted CD from the VM, and reboot your machine. You're done!
+		
 
 2. Install the VirtualBox Guest Additions on the VM. This is dependant on the version of virtual box you have on your host and so cannot be done through provisioning.
 	
