@@ -272,7 +272,7 @@
 	sudo cpanm install Spreadsheet::Read
 	sudo cpanm install Sort::Maker
 	sudo cpanm install Term::Size::Any
-
+	sudo cpanm install Proc::ProcessTable
 
 	#Extract perl libs from vagrant shared config folder. Contains all of the sudo cpanm install commands above.
 	#sudo tar -xf /vagrant/config/perl_lib.tar.gz -C /  ##/usr/local/share/perl/5.20.2/
