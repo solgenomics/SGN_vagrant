@@ -339,6 +339,28 @@
 	sudo apt-get install libatlas3-base -y
 	sudo apt-get install libcurl4-openssl-dev -y --force-yes
 	#Install R packages
+	#qtl (>= 1.24-9), gplots (>= 2.10.1), ltm (>= 0.9-7), RColorBrewer (>= 1.0.5), rrBLUP (>= 3.8), plyr (>= 1.7.1), mail(>= 1.0), rjson(>= 0.2.12), agricolae (>= 1.2-1),  gtools (>= 2.6.2), gdata (>= 2.8.2), bitops (>= 1.0-4.1), caTools (>= 1.13), KernSmooth (>= 2.23-7), msm (>= 1.1.1), mvtnorm (>= 0.9.9992), polycor (>= 0.7-8), sfsmisc (>= 1.0-24), nlme (>= 3.1-103), irlba (>= 1.0.3), lme4 (>= 1.1-7), randomForest (>= 4.6-10), data.table (>= 1.9.6)
+	sudo R -e "install.packages('qtl', dependencies=TRUE, repos='http://cran.rstudio.com/')"
+	sudo R -e "install.packages('randomForest', dependencies=TRUE, repos='http://cran.rstudio.com/')"
+	sudo R -e "install.packages('lme4', dependencies=TRUE, repos='http://cran.rstudio.com/')"
+	sudo R -e "install.packages('irlba', dependencies=TRUE, repos='http://cran.rstudio.com/')"
+	sudo R -e "install.packages('nlme', dependencies=TRUE, repos='http://cran.rstudio.com/')"
+	sudo R -e "install.packages('sfsmisc', dependencies=TRUE, repos='http://cran.rstudio.com/')"
+	sudo R -e "install.packages('polycor', dependencies=TRUE, repos='http://cran.rstudio.com/')"
+	sudo R -e "install.packages('mvtnorm', dependencies=TRUE, repos='http://cran.rstudio.com/')"
+	sudo R -e "install.packages('msm', dependencies=TRUE, repos='http://cran.rstudio.com/')"
+	sudo R -e "install.packages('KernSmooth', dependencies=TRUE, repos='http://cran.rstudio.com/')"
+	sudo R -e "install.packages('caTools', dependencies=TRUE, repos='http://cran.rstudio.com/')"
+	sudo R -e "install.packages('bitops', dependencies=TRUE, repos='http://cran.rstudio.com/')"
+	sudo R -e "install.packages('gdata', dependencies=TRUE, repos='http://cran.rstudio.com/')"
+	sudo R -e "install.packages('gtools', dependencies=TRUE, repos='http://cran.rstudio.com/')"
+	sudo R -e "install.packages('rjson', dependencies=TRUE, repos='http://cran.rstudio.com/')"
+	sudo R -e "install.packages('mail', dependencies=TRUE, repos='http://cran.rstudio.com/')"
+	sudo R -e "install.packages('plyr', dependencies=TRUE, repos='http://cran.rstudio.com/')"
+	sudo R -e "install.packages('rrBLUP', dependencies=TRUE, repos='http://cran.rstudio.com/')"
+	sudo R -e "install.packages('RColorBrewer', dependencies=TRUE, repos='http://cran.rstudio.com/')"
+	sudo R -e "install.packages('ltm', dependencies=TRUE, repos='http://cran.rstudio.com/')"
+	sudo R -e "install.packages('gplots', dependencies=TRUE, repos='http://cran.rstudio.com/')"
 	sudo R -e "install.packages('data.table', dependencies=TRUE, repos='http://cran.rstudio.com/')"
 	sudo R -e "install.packages('agricolae', dependencies=TRUE, repos='http://cran.rstudio.com/')"
 
