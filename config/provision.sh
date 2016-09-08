@@ -410,4 +410,4 @@
 	sed -i '$ a\unset color_prompt force_color_prompt' /home/vagrant/.bashrc
 
 	#Add Perl paths
-	sudo sed -i '$ a\export PERL5LIB="$PERL5LIB:/usr/local/lib/x86_64-linux-gnu/perl/5.20.2:/usr/local/share/perl/5.20.2:/home/vagrant/cxgn/sgn/lib:/home/vagrant/cxgn/cxgn-corelibs/lib:/home/vagrant/cxgn/Phenome/lib:/home/vagrant/cxgn/Cview/lib:/home/vagrant/cxgn/ITAG/lib:/home/vagrant/cxgn/biosource/lib:/home/vagrant/cxgn/tomato_genome/lib:/home/vagrant/cxgn/Barcode-Code128/lib:/home/vagrant/cxgn/solGS/lib"' /home/vagrant/.bashrc
+	sudo sed -i '$ a\export PERL5LIB="$PERL5LIB:/usr/local/lib/x86_64-linux-gnu/perl/5.20.2:/usr/local/share/perl/5.20.2:/home/vagrant/cxgn/sgn/lib:/home/vagrant/cxgn/cxgn-corelibs/lib:/home/vagrant/cxgn/Phenome/lib:/home/vagrant/cxgn/Cview/lib:/home/vagrant/cxgn/ITAG/lib:/home/vagrant/cxgn/biosource/lib:/home/vagrant/cxgn/tomato_genome/lib:/home/vagrant/cxgn/Barcode-Code128/lib:/home/vagrant/cxgn/solGS/lib:/home/vagrant/cxgn/Chado/chado/lib/"' /home/vagrant/.bashrc
