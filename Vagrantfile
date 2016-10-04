@@ -38,7 +38,7 @@ Vagrant.configure(2) do |config|
 		# the path on the host to the actual folder. The second argument is
 		# the path on the guest to mount the folder. And the optional third
 		# argument is a set of non-required options.
-		sgndev.vm.synced_folder "data", "/data", nfs: true
+		sgndev.vm.synced_folder "shared_data", "/shared_data", nfs: true
 
 		sgndev.vm.provider "virtualbox" do |vb|
 			vb.name = "SGN Dev"
