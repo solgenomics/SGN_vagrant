@@ -4,8 +4,8 @@
 
 This git repository serves TWO purposes:
 
-1) Stores a working virtualbox virtual machine that can be imported to Virtualbox for immediate use.
-2) Stores scripts for the generation of a brand new virtual machine.
+1 ) Stores a working virtualbox virtual machine that can be imported to Virtualbox for immediate use.
+2 ) Stores scripts for the generation of a brand new virtual machine.
 
 For Logging In:
 ```
