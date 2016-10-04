@@ -17,6 +17,9 @@ password: vagrant
 
 ##Purpose 1 Tutorial
 
+Make sure you have VirtualBox AND the VirtualBox Extension Pack installed
+https://www.virtualbox.org/wiki/Downloads
+
 Step 1: Download the VirtualBox virtual machine from here: ftp://solgenomics.net/virtualbox/SGN%20Dev.ova .<br/>
 Step 2: Open VirtualBox and click File->Import Appliance. Select 'SGN Dev.ova'.<br/>
 Step 3: Start the virtual machine.<br/>
