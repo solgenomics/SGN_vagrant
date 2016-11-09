@@ -163,118 +163,121 @@
 	git clone https://github.com/solgenomics/cassbase.git
 	git clone https://github.com/solgenomics/musabase.git
 	git clone https://github.com/solgenomics/potatobase.git
+	git clone https://github.com/solgenomics/cea.git
 
 
 	#Install Perl Modules
 	sudo cpanm install Catalyst::ScriptRunner
-	sudo cpanm install Catalyst::Restarter
-	sudo cpanm install HTML::Mason::Interp
-	sudo cpanm install Selenium::Remote::Driver
-	sudo cpanm install DBI
-	sudo cpanm install Hash::Merge
-	sudo cpanm install DBIx::Connector
-	sudo cpanm install Catalyst::Plugin::Authorization::Roles
-	sudo cpanm install Bio::PrimarySeq
-	sudo cpanm install Class::DBI
-	sudo cpanm install Tie::UrlEncoder
-	sudo cpanm install Data::BitMask
-	sudo cpanm install enum
-	sudo cpanm install File::NFSLock
-	sudo cpanm install Class::MethodMaker
-	sudo cpanm install Bio::BLAST::Database
-	sudo cpanm install Catalyst::Plugin::SmartURI
-	sudo cpanm install Modern::Perl
-	sudo cpanm install List::Compare
-	sudo cpanm install Cache::File
-	sudo cpanm install Config::JFDI
-	sudo cpanm install CatalystX::GlobalContext
-	sudo cpanm install DBIx::Class::Schema
-	sudo cpanm install Bio::Chado::Schema
-	sudo cpanm install Array::Utils
-	sudo cpanm install JSON::Any
-	sudo cpanm install Math::Round
-	sudo cpanm install Math::Round::Var
-	sudo cpanm install Catalyst::View::Email
-	sudo cpanm install Catalyst::View::HTML::Mason
-	sudo cpanm install Catalyst::View::Bio::SeqIO
-	sudo cpanm install Catalyst::View::JavaScript::Minifier::XS@2.101001
-	sudo cpanm install Catalyst::View::Download::CSV
-	sudo cpanm install URI::FromHash
-	sudo cpanm install JSAN::ServerSide
-	sudo cpanm install Config::INI::Reader
-	sudo cpanm install Bio::GFF3::LowLevel
-	sudo cpanm install Statistics::Descriptive
-	sudo cpanm install String::Random
-	sudo cpanm install MooseX::FollowPBP
+	sudo cpanm  Catalyst::Restarter
+	sudo cpanm  HTML::Mason::Interp
+	sudo cpanm  Selenium::Remote::Driver
+	sudo cpanm  DBI
+	sudo cpanm  Hash::Merge
+	sudo cpanm  DBIx::Connector
+	sudo cpanm  Catalyst::Plugin::Authorization::Roles
+	sudo cpanm  Bio::PrimarySeq
+	sudo cpanm  Class::DBI
+	sudo cpanm  Tie::UrlEncoder
+	sudo cpanm  Data::BitMask
+	sudo cpanm  enum
+	sudo cpanm  File::NFSLock
+	sudo cpanm  Class::MethodMaker
+	sudo cpanm  Bio::BLAST::Database
+	sudo cpanm  Catalyst::Plugin::SmartURI
+	sudo cpanm  Modern::Perl
+	sudo cpanm  List::Compare
+	sudo cpanm  Cache::File
+	sudo cpanm  Config::JFDI
+	sudo cpanm  CatalystX::GlobalContext
+	sudo cpanm  DBIx::Class::Schema
+	sudo cpanm  Bio::Chado::Schema
+	sudo cpanm  Array::Utils
+	sudo cpanm  JSON::Any
+	sudo cpanm  Math::Round
+	sudo cpanm  Math::Round::Var
+	sudo cpanm  Catalyst::View::Email
+	sudo cpanm  Catalyst::View::HTML::Mason
+	sudo cpanm  Catalyst::View::Bio::SeqIO
+	sudo cpanm  Catalyst::View::JavaScript::Minifier::XS@2.101001
+	sudo cpanm  Catalyst::View::Download::CSV
+	sudo cpanm  URI::FromHash
+	sudo cpanm  JSAN::ServerSide
+	sudo cpanm  Config::INI::Reader
+	sudo cpanm  Bio::GFF3::LowLevel
+	sudo cpanm  Statistics::Descriptive
+	sudo cpanm  String::Random
+	sudo cpanm  MooseX::FollowPBP
 	sudo apt-get install libgd2-xpm-dev -y
-	sudo cpanm install GD
-	sudo cpanm install Tie::Function
-	sudo cpanm install Digest::Crc32
-	sudo cpanm install Barcode::Code128
-	sudo cpanm install Math::Base36
-	sudo cpanm install Captcha::reCAPTCHA
-	sudo cpanm install Test::Aggregate::Nested --force
-	sudo cpanm install HTML::FormFu
-	sudo cpanm install SVG
-	sudo cpanm install IPC::Run3
-	sudo cpanm install Spreadsheet::WriteExcel
-	sudo cpanm install MooseX::Object::Pluggable
-	sudo cpanm install R::YapRI::Base
-	sudo cpanm install PDF::Create
-	sudo cpanm install String::CRC
-	sudo cpanm install Algorithm::Combinatorics
-	sudo cpanm install Catalyst::Controller::HTML::FormFu
-	sudo cpanm install String::Approx
+	sudo cpanm  GD
+	sudo cpanm  Tie::Function
+	sudo cpanm  Digest::Crc32
+	sudo cpanm  Barcode::Code128
+	sudo cpanm  Math::Base36
+	sudo cpanm  Captcha::reCAPTCHA
+	sudo cpanm  Test::Aggregate::Nested --force
+	sudo cpanm  HTML::FormFu
+	sudo cpanm  SVG
+	sudo cpanm  IPC::Run3
+	sudo cpanm  Spreadsheet::WriteExcel
+	sudo cpanm  MooseX::Object::Pluggable
+	sudo cpanm  R::YapRI::Base
+	sudo cpanm  PDF::Create
+	sudo cpanm  String::CRC
+	sudo cpanm  Algorithm::Combinatorics
+	sudo cpanm  Catalyst::Controller::HTML::FormFu
+	sudo cpanm  String::Approx
 	sudo apt-get install libcairo2-dev -y
-	sudo cpanm install Cairo
-	sudo cpanm install Chart::Clicker
-	sudo cpanm install Spreadsheet::ParseExcel
-	sudo cpanm install MooseX::Types::URI
-	sudo cpanm install Bio::Graphics::FeatureFile --force
-	sudo cpanm install Mail::Sendmail
-	sudo cpanm install Array::Compare
-	sudo cpanm install GD::Graph::lines
-	sudo cpanm install GD::Graph::Map
-	sudo cpanm install Bio::GMOD::GenericGenePage
-	sudo cpanm install Number::Bytes::Human
-	sudo cpanm install AnyEvent --force
-	sudo cpanm install IO::Event --force
-	sudo cpanm install File::Flock
-	sudo cpanm install Graph
-	sudo cpanm install Bio::SeqFeature::Annotated
-	sudo cpanm install XML::Twig
-	sudo cpanm install XML::Generator
+	sudo cpanm  Cairo
+	sudo cpanm  Chart::Clicker
+	sudo cpanm  Spreadsheet::ParseExcel
+	sudo cpanm  MooseX::Types::URI
+	sudo cpanm  Bio::Graphics::FeatureFile --force
+	sudo cpanm  Mail::Sendmail
+	sudo cpanm  Array::Compare
+	sudo cpanm  GD::Graph::lines
+	sudo cpanm  GD::Graph::Map
+	sudo cpanm  Bio::GMOD::GenericGenePage
+	sudo cpanm  Number::Bytes::Human
+	sudo cpanm  AnyEvent --force
+	sudo cpanm  IO::Event --force
+	sudo cpanm  File::Flock
+	sudo cpanm  Graph
+	sudo cpanm  Bio::SeqFeature::Annotated
+	sudo cpanm  XML::Twig
+	sudo cpanm  XML::Generator
 	sudo apt-get install libpq-dev -y
-	sudo cpanm install DBD::Pg
-	sudo cpanm install MooseX::Runnable@0.09
-	sudo cpanm install XML::Feed
-	sudo cpanm install Parse::Deb::Control
-	sudo cpanm install Bio::GMOD::Blast::Graph
-	sudo cpanm install Catalyst::DispatchType::Regex
-	sudo cpanm install DateTime::Format::Flexible
-	sudo cpanm install DateTime::Format::Pg
-	sudo cpanm install HTML::TreeBuilder::XPath
-	sudo cpanm install JSON::XS
-	sudo cpanm install Lingua::EN::Inflect
-	sudo cpanm install List::AllUtils
-	sudo cpanm install MooseX::Declare
-	sudo cpanm install MooseX::Singleton
-	sudo cpanm install SOAP::Transport::HTTP
-	sudo cpanm install Test::Class
-	sudo cpanm install WWW::Mechanize::TreeBuilder
-	sudo cpanm install Data::UUID
-	sudo cpanm install HTML::Lint --force
-	sudo cpanm install Test::JSON
-	sudo cpanm install Test::MockObject
-	sudo cpanm install Test::WWW::Selenium
-	sudo cpanm install Sort::Versions
-	sudo cpanm install Term::ReadKey --force
-	sudo cpanm install Spreadsheet::Read
-	sudo cpanm install Sort::Maker
-	sudo cpanm install Term::Size::Any
-	sudo cpanm install Proc::ProcessTable
-	sudo cpanm install URI::Encode
-	sudo cpanm install Archive::Zip
+	sudo cpanm  DBD::Pg
+	sudo cpanm  MooseX::Runnable@0.09
+	sudo cpanm  XML::Feed
+	sudo cpanm  Parse::Deb::Control
+	sudo cpanm  Bio::GMOD::Blast::Graph
+	sudo cpanm  Catalyst::DispatchType::Regex
+	sudo cpanm  DateTime::Format::Flexible
+	sudo cpanm  DateTime::Format::Pg
+	sudo cpanm  HTML::TreeBuilder::XPath
+	sudo cpanm  JSON::XS
+	sudo cpanm  Lingua::EN::Inflect
+	sudo cpanm  List::AllUtils
+	sudo cpanm  MooseX::Declare
+	sudo cpanm  MooseX::Singleton
+	sudo cpanm  SOAP::Transport::HTTP
+	sudo cpanm  Test::Class
+	sudo cpanm  WWW::Mechanize::TreeBuilder
+	sudo cpanm  Data::UUID
+	sudo cpanm  HTML::Lint --force
+	sudo cpanm  Test::JSON
+	sudo cpanm  Test::MockObject
+	sudo cpanm  Test::WWW::Selenium
+	sudo cpanm  Sort::Versions
+	sudo cpanm  Term::ReadKey --force
+	sudo cpanm  Spreadsheet::Read
+	sudo cpanm  Sort::Maker
+	sudo cpanm  Term::Size::Any
+	sudo cpanm  Proc::ProcessTable
+	sudo cpanm  URI::Encode
+	sudo cpanm  Archive::Zip
+	sudo cpanm  Statistics::R
+	sudo cpanm  Lucy::Simple
 
 	#Extract perl libs from vagrant shared config folder. Contains all of the sudo cpanm install commands above.
 	#sudo tar -xf /vagrant/config/perl_lib.tar.gz -C /  ##/usr/local/share/perl/5.20.2/
