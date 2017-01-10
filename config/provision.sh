@@ -44,7 +44,7 @@
 	#Install ack-grep
 	sudo apt-get install ack-grep -y
 	
-	#makefile installer
+	#filezilla installer
 	sudo apt-get install xutils-dev -y
 	
 	#makefile installer
