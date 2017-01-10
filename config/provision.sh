@@ -47,6 +47,9 @@
 	#makefile installer
 	sudo apt-get install xutils-dev -y
 	
+	#makefile installer
+	#sudo apt-get install filezilla -y
+	
 	#install mongodb
 	#sudo apt-get install mongodb -y
 	
