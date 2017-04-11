@@ -191,7 +191,7 @@
 	sudo cpanm List::Compare
 	sudo cpanm Cache::File
 	sudo cpanm Config::JFDI
-	sudo cpanm CatalystX::GlobalContext
+	sudo cpanm CatalystX::GlobalContext --force
 	sudo cpanm DBIx::Class::Schema
 	sudo cpanm Bio::Chado::Schema
 	sudo cpanm Array::Utils
@@ -281,6 +281,11 @@
 	sudo cpanm Archive::Zip
 	sudo cpanm Statistics::R
 	sudo cpanm Lucy::Simple
+	sudo cpanm DBIx::Class::Schema::Loader
+	sudo cpanm Text::CSV
+	sudo cpanm Imager::QRCode
+	sudo cpanm GD::Barcode::QRcode
+	sudo cpanm LWP::UserAgent
 
 	#Extract perl libs from vagrant shared config folder. Contains all of the sudo cpanm install commands above.
 	#sudo tar -xf /vagrant/config/perl_lib.tar.gz -C /  ##/usr/local/share/perl/5.20.2/
@@ -372,6 +377,8 @@
 	sudo R -e "install.packages('data.table', dependencies=TRUE, repos='http://cran.rstudio.com/')"
 	sudo R -e "install.packages('agricolae', dependencies=TRUE, repos='http://cran.rstudio.com/')"
 	sudo R -e "install.packages('d3heatmap', dependencies=TRUE, repos='http://cran.rstudio.com/')"
+	sudo R -e "install.packages('tidyr', dependencies=TRUE, repos='http://cran.rstudio.com/')"
+	sudo R -e "install.packages('ggplot2', dependencies=TRUE, repos='http://cran.rstudio.com/')"
 
 	cd /home/vagrant/cxgn
 
