@@ -43,17 +43,17 @@
 
 	#Install ack-grep
 	sudo apt-get install ack-grep -y
-	
+
 	#filezilla installer
 	sudo apt-get install xutils-dev -y
-	
+
 	#makefile installer
 	#sudo apt-get install filezilla -y
-	
+
 	#install mongodb
 	#sudo apt-get install mongodb -y
-	
-	#Set root user password to vagrant 
+
+	#Set root user password to vagrant
 
 	yes vagrant | sudo passwd root
 
@@ -407,6 +407,7 @@
 	rm atom-amd64.deb
 	#Install Atom Plugins
 	apm install minimap
+
 
 	#Install Chrome and cleanup
 	wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
