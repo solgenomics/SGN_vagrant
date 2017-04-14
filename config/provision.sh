@@ -407,6 +407,8 @@
 	rm atom-amd64.deb
 	#Install Atom Plugins
 	apm install minimap
+    # configure indent settings
+    sed -i 's/invisibles: {}/invisibles: {}\n\    showIndentGuide: true\n\    tabLength: 4\n\    tabType: "soft"/g' ~/.atom/config.cson
 
 
 	#Install Chrome and cleanup
