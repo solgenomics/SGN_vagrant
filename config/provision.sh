@@ -286,6 +286,7 @@
 	sudo cpanm Imager::QRCode
 	sudo cpanm GD::Barcode::QRcode
 	sudo cpanm LWP::UserAgent
+	sudo cpanm Set::Product
 
 	#Extract perl libs from vagrant shared config folder. Contains all of the sudo cpanm install commands above.
 	#sudo tar -xf /vagrant/config/perl_lib.tar.gz -C /  ##/usr/local/share/perl/5.20.2/
