@@ -356,7 +356,7 @@
 	sudo apt-key adv --keyserver keys.gnupg.net --recv-key 381BA480
 	sudo apt-get update -y
 	sudo DEBIAN_FRONTEND=noninteractive apt-get -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" dist-upgrade
-	sudo apt-get install r-base r-base-dev -y
+	sudo apt-get install r-base r-base-dev libxml2-dev -y
 	#Better performance on linear algebra ops
 	sudo apt-get install libatlas3-base -y
 	sudo apt-get install libcurl4-openssl-dev -y --force-yes
