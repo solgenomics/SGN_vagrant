@@ -21,7 +21,7 @@ Make sure you have VirtualBox AND the VirtualBox Extension Pack installed
 https://www.virtualbox.org/wiki/Downloads
 
 Step 1: Download the VirtualBox virtual machine from here: <br/>
-* For 20GB Machine: ftp://solgenomics.net/virtualbox/SGNDev20.ova 
+* For 10GB Machine: ftp://solgenomics.net/virtualbox/SGNDev10.ova 
 * For 120GB Machine: ftp://solgenomics.net/virtualbox/SGNDev120.ova 
 
 Step 2: Open VirtualBox and click File->Import Appliance. Select the downloaded OVA file.<br/>
