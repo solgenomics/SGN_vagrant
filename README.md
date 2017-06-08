@@ -1,11 +1,11 @@
 # SGN Development Vagrant
 
-##Intro
+## Intro
 
 This git repository serves TWO purposes:
 
-####Purpose 1) Do you need a virtual machine for immediate use?<br/>
-####Purpose 2) Do you want to generate a brand new virtual machine?<br/>
+#### Purpose 1) Do you need a virtual machine for immediate use?<br/>
+#### Purpose 2) Do you want to generate a brand new virtual machine?<br/>
 <br/>
 
 For Logging In:
@@ -15,19 +15,19 @@ password: vagrant
 ```
 <br/>
 
-##Purpose 1 Tutorial
+## Purpose 1 Tutorial
 
 Make sure you have VirtualBox AND the VirtualBox Extension Pack installed
 https://www.virtualbox.org/wiki/Downloads
 
-Step 1: Download the VirtualBox virtual machine from here: 
-  For 20GB Machine: ftp://solgenomics.net/virtualbox/SGN%20Dev.ova .<br/>
-  For 120GB Machine: ftp://solgenomics.net/virtualbox/SGN%20120Dev.ova .<br/>
-Step 2: Open VirtualBox and click File->Import Appliance. Select 'SGN Dev.ova'.<br/>
+Step 1: Download the VirtualBox virtual machine from here: <br/>
+* For 20GB Machine: ftp://solgenomics.net/virtualbox/SGN%20Dev.ova 
+* For 120GB Machine: ftp://solgenomics.net/virtualbox/SGN%20120Dev.ova 
+
+Step 2: Open VirtualBox and click File->Import Appliance. Select the downloaded OVA file.<br/>
 Step 3: Start the virtual machine.<br/>
 
-<br/>
-##Purpose 2 Tutorial
+## Purpose 2 Tutorial
 
 Install Vagrant from https://www.vagrantup.com/downloads.html 
 
