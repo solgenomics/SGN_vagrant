@@ -44,10 +44,10 @@
 	#Install ack-grep
 	sudo apt-get install ack-grep -y
 
-	#filezilla installer
-	sudo apt-get install xutils-dev -y
+	#make installer
+	sudo apt-get install make xutils-dev -y
 
-	#makefile installer
+	#filezilla installer
 	#sudo apt-get install filezilla -y
 
 	#install mongodb
@@ -71,6 +71,13 @@
 	#Install libreoffice
 	sudo apt-get install libreoffice -y
 
+	#Install Docker
+	sudo apt-get install -y apt-transport-https ca-certificates curl gnupg2 software-properties-common
+	curl -fsSL https://download.docker.com/linux/debian/gpg | sudo apt-key add -
+	sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/debian $(lsb_release -cs) stable"
+	sudo apt-get update
+	sudo apt-get install docker-ce -y
+	
 	#Install Nginx
 	sudo apt-get install nginx -y
 
@@ -155,6 +162,7 @@
 	git clone https://github.com/solgenomics/art.git
 	git clone https://github.com/solgenomics/VIGS.git
 	git clone https://github.com/solgenomics/fixture.git
+	git clone https://github.com/solgenomics/SGN_vagrant.git
 
 	#Mason website skins
 	git clone https://github.com/solgenomics/cassava.git
@@ -380,6 +388,9 @@
 	sudo R -e "install.packages('d3heatmap', dependencies=TRUE, repos='http://cran.rstudio.com/')"
 	sudo R -e "install.packages('tidyr', dependencies=TRUE, repos='http://cran.rstudio.com/')"
 	sudo R -e "install.packages('ggplot2', dependencies=TRUE, repos='http://cran.rstudio.com/')"
+	sudo R -e "install.packages('devtools', dependencies=TRUE, repos='http://cran.rstudio.com/')"
+	sudo R -e 'source("http://bioconductor.org/biocLite.R");biocLite("gdsfmt");biocLite("SNPRelate")'
+	sudo R -e 'library("devtools");install_github("solgenomics/rPackages/genoDataFilter");install_github("solgenomics/rPackages/phenoAnalysis")'
 
 	cd /home/vagrant/cxgn
 
