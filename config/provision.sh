@@ -295,6 +295,8 @@
 	sudo cpanm GD::Barcode::QRcode
 	sudo cpanm LWP::UserAgent
 	sudo cpanm Set::Product
+	sudo cpanm Server::Starter
+	sudo cpanm Net::Server::SS::PreFork
 
 	#Extract perl libs from vagrant shared config folder. Contains all of the sudo cpanm install commands above.
 	#sudo tar -xf /vagrant/config/perl_lib.tar.gz -C /  ##/usr/local/share/perl/5.20.2/
@@ -389,6 +391,7 @@
 	sudo R -e "install.packages('tidyr', dependencies=TRUE, repos='http://cran.rstudio.com/')"
 	sudo R -e "install.packages('ggplot2', dependencies=TRUE, repos='http://cran.rstudio.com/')"
 	sudo R -e "install.packages('devtools', dependencies=TRUE, repos='http://cran.rstudio.com/')"
+	sudo R -e "install.packages('caret', dependencies=TRUE, repos='http://cran.rstudio.com/')"
 	sudo R -e 'source("http://bioconductor.org/biocLite.R");biocLite("gdsfmt");biocLite("SNPRelate")'
 	sudo R -e 'library("devtools");install_github("solgenomics/rPackages/genoDataFilter");install_github("solgenomics/rPackages/phenoAnalysis")'
 
@@ -443,4 +446,4 @@
 	sed -i '$ a\unset color_prompt force_color_prompt' /home/vagrant/.bashrc
 
 	#Add Perl paths
-	sudo sed -i '$ a\export PERL5LIB="$PERL5LIB:/usr/local/lib/x86_64-linux-gnu/perl/5.20.2:/usr/local/share/perl/5.20.2:/home/vagrant/cxgn/sgn/lib:/home/vagrant/cxgn/cxgn-corelibs/lib:/home/vagrant/cxgn/Phenome/lib:/home/vagrant/cxgn/Cview/lib:/home/vagrant/cxgn/ITAG/lib:/home/vagrant/cxgn/biosource/lib:/home/vagrant/cxgn/tomato_genome/lib:/home/vagrant/cxgn/Barcode-Code128/lib:/home/vagrant/cxgn/solGS/lib:/home/vagrant/cxgn/Chado/chado/lib:/home/vagrant/cxgn/Tea/lib:/home/production/cxgn/Tea"' /home/vagrant/.bashrc
+	sudo sed -i '$ a\export PERL5LIB="$PERL5LIB:/usr/local/lib/x86_64-linux-gnu/perl/5.20.2:/usr/local/share/perl/5.20.2:/home/production/cxgn/sgn/lib:/home/production/cxgn/cxgn-corelibs/lib:/home/production/cxgn/Phenome/lib:/home/production/cxgn/Cview/lib:/home/production/cxgn/ITAG/lib:/home/production/cxgn/biosource/lib:/home/production/cxgn/tomato_genome/lib:/home/production/cxgn/Barcode-Code128/lib:/home/production/cxgn/solGS/lib:/home/production/cxgn/Chado/chado/lib:/home/production/cxgn/Tea/lib:/home/production/cxgn/Tea"' /home/production/.bashrc
