@@ -123,6 +123,9 @@
 	#Install graphviz
 	sudo apt-get install graphviz -y
 
+	#Install lsof for viewing open file connections
+	sudo apt-get install lsof -y
+	
 	#Install imagemagick
 	sudo apt-get install imagemagick -y
 
@@ -163,6 +166,7 @@
 	git clone https://github.com/solgenomics/VIGS.git
 	git clone https://github.com/solgenomics/fixture.git
 	git clone https://github.com/solgenomics/SGN_vagrant.git
+	git clone https://github.com/solgenomics/starmachine.git
 
 	#Mason website skins
 	git clone https://github.com/solgenomics/cassava.git
@@ -176,6 +180,9 @@
 	git clone https://github.com/solgenomics/potatobase.git
 	git clone https://github.com/solgenomics/cea.git
 
+	#This would be the preferred way to install Perl and R dependencies but I can't get it to work...
+		#perl Build manifest
+		#sudo perl Build.pl
 
 	#Install Perl Modules
 	sudo cpanm install Catalyst::ScriptRunner
@@ -298,10 +305,6 @@
 	sudo cpanm Server::Starter
 	sudo cpanm Net::Server::SS::PreFork
 
-	#Extract perl libs from vagrant shared config folder. Contains all of the sudo cpanm install commands above.
-	#sudo tar -xf /vagrant/config/perl_lib.tar.gz -C /  ##/usr/local/share/perl/5.20.2/
-	#sudo tar -xf /vagrant/config/perl_local_lib.tar.gz -C /  ##/usr/local/lib/x86_64-linux-gnu/perl/5.20.2/
-
 	sudo mkdir /export
 	sudo mkdir /export/prod
 	sudo mkdir /export/prod/public
@@ -315,10 +318,15 @@
 	sudo mkdir /export/prod/public/images/image_files
 	sudo mkdir /data/shared
 	sudo mkdir /data/shared/tmp
+	sudo mkdir /etc/starmachine
+	sudo mkdir /var/log/sgn
 
 	sudo chown -R vagrant:vagrant /data/prod/
 	sudo chown -R vagrant:vagrant /export/prod/
 
+	#Add starmachine.conf to /etc/starmachine/, copied from shared config directory
+	sudo cp /vagrant/config/starmachine.conf /etc/starmachine
+	
 	#Add sgn_local.conf to sgn directory, copied from shared config directory
 	sudo cp /vagrant/config/sgn_local.conf /home/vagrant/cxgn/sgn
 	sudo chown -R vagrant:vagrant /home/vagrant/cxgn/
@@ -349,8 +357,8 @@
 	#Create fixture db and load fixture.sql
 	sudo -u postgres createdb -E UTF8 --locale en_US.utf8 -T template0 fixture
 	sudo psql -U postgres -d fixture -f /home/vagrant/cxgn/fixture/cxgn_fixture.sql
-	echo "GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO web_usr;" | psql -U postgres -d fixture
-	echo "GRANT USAGE, SELECT ON ALL SEQUENCES IN SCHEMA public TO web_usr;" | psql -U postgres -d fixture
+	#echo "GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO web_usr;" | psql -U postgres -d fixture
+	#echo "GRANT USAGE, SELECT ON ALL SEQUENCES IN SCHEMA public TO web_usr;" | psql -U postgres -d fixture
 
 	#Install R
 	sudo apt-get install apt-transport-https -y
@@ -391,8 +399,9 @@
 	sudo R -e "install.packages('tidyr', dependencies=TRUE, repos='http://cran.rstudio.com/')"
 	sudo R -e "install.packages('ggplot2', dependencies=TRUE, repos='http://cran.rstudio.com/')"
 	sudo R -e "install.packages('devtools', dependencies=TRUE, repos='http://cran.rstudio.com/')"
+	sudo R -e "install.packages('bioconductor', dependencies=TRUE, repos='http://cran.rstudio.com/')"
 	sudo R -e "install.packages('caret', dependencies=TRUE, repos='http://cran.rstudio.com/')"
-	sudo R -e 'source("http://bioconductor.org/biocLite.R");biocLite("gdsfmt");biocLite("SNPRelate")'
+	sudo R -e 'source("http://bioconductor.org/biocLite.R");biocLite();biocLite("gdsfmt");biocLite("SNPRelate")'
 	sudo R -e 'library("devtools");install_github("solgenomics/rPackages/genoDataFilter");install_github("solgenomics/rPackages/phenoAnalysis")'
 
 	cd /home/vagrant/cxgn
@@ -447,3 +456,8 @@
 
 	#Add Perl paths
 	sudo sed -i '$ a\export PERL5LIB="$PERL5LIB:/usr/local/lib/x86_64-linux-gnu/perl/5.20.2:/usr/local/share/perl/5.20.2:/home/vagrant/cxgn/sgn/lib:/home/vagrant/cxgn/cxgn-corelibs/lib:/home/vagrant/cxgn/Phenome/lib:/home/vagrant/cxgn/Cview/lib:/home/vagrant/cxgn/ITAG/lib:/home/vagrant/cxgn/biosource/lib:/home/vagrant/cxgn/tomato_genome/lib:/home/vagrant/cxgn/Barcode-Code128/lib:/home/vagrant/cxgn/solGS/lib:/home/vagrant/cxgn/Chado/chado/lib:/home/vagrant/cxgn/Tea/lib:/home/vagrant/cxgn/Tea"' /home/vagrant/.bashrc
+
+	#Register starmachine init as a service
+	sudo ln -s /home/vagrant/cxgn/starmachine/bin/starmachine_init.d /etc/init.d/sgn
+	sudo service sgn start
+	
