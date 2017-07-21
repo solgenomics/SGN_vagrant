@@ -149,6 +149,7 @@
 
 	#Make and populate cxgn directory
 	sudo mkdir /home/vagrant/cxgn
+	sudo mkdir /home/vagrant/cxgn/local-lib
 	cd /home/vagrant/cxgn
 	git clone https://github.com/solgenomics/sgn.git
 	git clone https://github.com/solgenomics/cxgn-corelibs.git
@@ -184,126 +185,129 @@
 		#perl Build manifest
 		#sudo perl Build.pl
 
+	cd /home/vagrant/cxgn/sgn
 	#Install Perl Modules
-	sudo cpanm install Catalyst::ScriptRunner
-	sudo cpanm Catalyst::Restarter
-	sudo cpanm HTML::Mason::Interp
-	sudo cpanm Selenium::Remote::Driver
-	sudo cpanm DBI
-	sudo cpanm Hash::Merge
-	sudo cpanm DBIx::Connector
-	sudo cpanm Catalyst::Plugin::Authorization::Roles
-	sudo cpanm Bio::PrimarySeq
-	sudo cpanm Class::DBI
-	sudo cpanm Tie::UrlEncoder
-	sudo cpanm Data::BitMask
-	sudo cpanm enum
-	sudo cpanm File::NFSLock
-	sudo cpanm Class::MethodMaker
-	sudo cpanm Bio::BLAST::Database
-	sudo cpanm Catalyst::Plugin::SmartURI
-	sudo cpanm Modern::Perl
-	sudo cpanm List::Compare
-	sudo cpanm Cache::File
-	sudo cpanm Config::JFDI
-	sudo cpanm CatalystX::GlobalContext --force
-	sudo cpanm DBIx::Class::Schema
-	sudo cpanm Bio::Chado::Schema
-	sudo cpanm Array::Utils
-	sudo cpanm JSON::Any
-	sudo cpanm Math::Round
-	sudo cpanm Math::Round::Var
-	sudo cpanm Catalyst::View::Email
-	sudo cpanm Catalyst::View::HTML::Mason
-	sudo cpanm Catalyst::View::Bio::SeqIO
-	sudo cpanm Catalyst::View::JavaScript::Minifier::XS@2.101001
-	sudo cpanm Catalyst::View::Download::CSV
-	sudo cpanm URI::FromHash
-	sudo cpanm JSAN::ServerSide
-	sudo cpanm Config::INI::Reader
-	sudo cpanm Bio::GFF3::LowLevel
-	sudo cpanm Statistics::Descriptive
-	sudo cpanm String::Random
-	sudo cpanm MooseX::FollowPBP
+	sudo cpanm -L ../local-lib/ install Catalyst::ScriptRunner
+	sudo cpanm -L ../local-lib/ local::lib
+	sudo cpanm -L ../local-lib/ Catalyst::Restarter
+	sudo cpanm -L ../local-lib/ HTML::Mason::Interp
+	sudo cpanm -L ../local-lib/ Selenium::Remote::Driver
+	sudo cpanm -L ../local-lib/ DBI
+	sudo cpanm -L ../local-lib/ Hash::Merge
+	sudo cpanm -L ../local-lib/ DBIx::Connector
+	sudo cpanm -L ../local-lib/ Catalyst::Plugin::Authorization::Roles
+	sudo cpanm -L ../local-lib/ Bio::PrimarySeq
+	sudo cpanm -L ../local-lib/ Class::DBI
+	sudo cpanm -L ../local-lib/ Tie::UrlEncoder
+	sudo cpanm -L ../local-lib/ Data::BitMask
+	sudo cpanm -L ../local-lib/ enum
+	sudo cpanm -L ../local-lib/ File::NFSLock
+	sudo cpanm -L ../local-lib/ Class::MethodMaker
+	sudo cpanm -L ../local-lib/ Bio::BLAST::Database
+	sudo cpanm -L ../local-lib/ Catalyst::Plugin::SmartURI
+	sudo cpanm -L ../local-lib/ Modern::Perl
+	sudo cpanm -L ../local-lib/ List::Compare
+	sudo cpanm -L ../local-lib/ Cache::File
+	sudo cpanm -L ../local-lib/ Config::JFDI
+	sudo cpanm -L ../local-lib/ CatalystX::GlobalContext --force
+	sudo cpanm -L ../local-lib/ DBIx::Class::Schema
+	sudo cpanm -L ../local-lib/ Bio::Chado::Schema
+	sudo cpanm -L ../local-lib/ Array::Utils
+	sudo cpanm -L ../local-lib/ JSON::Any
+	sudo cpanm -L ../local-lib/ Math::Round
+	sudo cpanm -L ../local-lib/ Math::Round::Var
+	sudo cpanm -L ../local-lib/ Catalyst::View::Email
+	sudo cpanm -L ../local-lib/ Catalyst::View::HTML::Mason
+	sudo cpanm -L ../local-lib/ Catalyst::View::Bio::SeqIO
+	sudo cpanm -L ../local-lib/ Catalyst::View::JavaScript::Minifier::XS@2.101001
+	sudo cpanm -L ../local-lib/ Catalyst::View::Download::CSV
+	sudo cpanm -L ../local-lib/ URI::FromHash
+	sudo cpanm -L ../local-lib/ JSAN::ServerSide
+	sudo cpanm -L ../local-lib/ Config::INI::Reader
+	sudo cpanm -L ../local-lib/ Bio::GFF3::LowLevel
+	sudo cpanm -L ../local-lib/ Statistics::Descriptive
+	sudo cpanm -L ../local-lib/ String::Random
+	sudo cpanm -L ../local-lib/ MooseX::FollowPBP
 	sudo apt-get install libgd2-xpm-dev -y
-	sudo cpanm GD
-	sudo cpanm Tie::Function
-	sudo cpanm Digest::Crc32
-	sudo cpanm Barcode::Code128
-	sudo cpanm Math::Base36
-	sudo cpanm Captcha::reCAPTCHA
-	sudo cpanm Test::Aggregate::Nested --force
-	sudo cpanm HTML::FormFu
-	sudo cpanm SVG
-	sudo cpanm IPC::Run3
-	sudo cpanm Spreadsheet::WriteExcel
-	sudo cpanm MooseX::Object::Pluggable
-	sudo cpanm R::YapRI::Base
-	sudo cpanm PDF::Create
-	sudo cpanm String::CRC
-	sudo cpanm Algorithm::Combinatorics
-	sudo cpanm Catalyst::Controller::HTML::FormFu
-	sudo cpanm String::Approx
+	sudo cpanm -L ../local-lib/ GD
+	sudo cpanm -L ../local-lib/ Tie::Function
+	sudo cpanm -L ../local-lib/ Digest::Crc32
+	sudo cpanm -L ../local-lib/ Barcode::Code128
+	sudo cpanm -L ../local-lib/ Math::Base36
+	sudo cpanm -L ../local-lib/ Captcha::reCAPTCHA
+	sudo cpanm -L ../local-lib/ Test::Aggregate::Nested --force
+	sudo cpanm -L ../local-lib/ HTML::FormFu
+	sudo cpanm -L ../local-lib/ SVG
+	sudo cpanm -L ../local-lib/ IPC::Run3
+	sudo cpanm -L ../local-lib/ Spreadsheet::WriteExcel
+	sudo cpanm -L ../local-lib/ MooseX::Object::Pluggable
+	sudo cpanm -L ../local-lib/ R::YapRI::Base
+	sudo cpanm -L ../local-lib/ PDF::Create
+	sudo cpanm -L ../local-lib/ String::CRC
+	sudo cpanm -L ../local-lib/ Algorithm::Combinatorics
+	sudo cpanm -L ../local-lib/ Catalyst::Controller::HTML::FormFu
+	sudo cpanm -L ../local-lib/ String::Approx
 	sudo apt-get install libcairo2-dev -y
-	sudo cpanm Cairo
-	sudo cpanm Chart::Clicker
-	sudo cpanm Spreadsheet::ParseExcel
-	sudo cpanm MooseX::Types::URI
-	sudo cpanm Bio::Graphics::FeatureFile --force
-	sudo cpanm Mail::Sendmail
-	sudo cpanm Array::Compare
-	sudo cpanm GD::Graph::lines
-	sudo cpanm GD::Graph::Map
-	sudo cpanm Bio::GMOD::GenericGenePage
-	sudo cpanm Number::Bytes::Human
-	sudo cpanm AnyEvent --force
-	sudo cpanm IO::Event --force
-	sudo cpanm File::Flock
-	sudo cpanm Graph
-	sudo cpanm Bio::SeqFeature::Annotated
-	sudo cpanm XML::Twig
-	sudo cpanm XML::Generator
+	sudo cpanm -L ../local-lib/ Cairo
+	sudo cpanm -L ../local-lib/ Chart::Clicker
+	sudo cpanm -L ../local-lib/ Spreadsheet::ParseExcel
+	sudo cpanm -L ../local-lib/ MooseX::Types::URI
+	sudo cpanm -L ../local-lib/ Bio::Graphics::FeatureFile --force
+	sudo cpanm -L ../local-lib/ Mail::Sendmail
+	sudo cpanm -L ../local-lib/ Array::Compare
+	sudo cpanm -L ../local-lib/ GD::Graph::lines
+	sudo cpanm -L ../local-lib/ GD::Graph::Map
+	sudo cpanm -L ../local-lib/ Bio::GMOD::GenericGenePage
+	sudo cpanm -L ../local-lib/ Number::Bytes::Human
+	sudo cpanm -L ../local-lib/ AnyEvent --force
+	sudo cpanm -L ../local-lib/ IO::Event --force
+	sudo cpanm -L ../local-lib/ File::Flock
+	sudo cpanm -L ../local-lib/ Graph
+	sudo cpanm -L ../local-lib/ Bio::SeqFeature::Annotated
+	sudo cpanm -L ../local-lib/ XML::Twig
+	sudo cpanm -L ../local-lib/ XML::Generator
 	sudo apt-get install libpq-dev -y
-	sudo cpanm DBD::Pg
-	sudo cpanm MooseX::Runnable@0.09
-	sudo cpanm XML::Feed
-	sudo cpanm Parse::Deb::Control
-	sudo cpanm Bio::GMOD::Blast::Graph
-	sudo cpanm Catalyst::DispatchType::Regex
-	sudo cpanm DateTime::Format::Flexible
-	sudo cpanm DateTime::Format::Pg
-	sudo cpanm HTML::TreeBuilder::XPath
-	sudo cpanm JSON::XS
-	sudo cpanm Lingua::EN::Inflect
-	sudo cpanm List::AllUtils
-	sudo cpanm MooseX::Declare
-	sudo cpanm MooseX::Singleton
-	sudo cpanm SOAP::Transport::HTTP
-	sudo cpanm Test::Class
-	sudo cpanm WWW::Mechanize::TreeBuilder
-	sudo cpanm Data::UUID
-	sudo cpanm HTML::Lint --force
-	sudo cpanm Test::JSON
-	sudo cpanm Test::MockObject
-	sudo cpanm Test::WWW::Selenium
-	sudo cpanm Sort::Versions
-	sudo cpanm Term::ReadKey --force
-	sudo cpanm Spreadsheet::Read
-	sudo cpanm Sort::Maker
-	sudo cpanm Term::Size::Any
-	sudo cpanm Proc::ProcessTable
-	sudo cpanm URI::Encode
-	sudo cpanm Archive::Zip
-	sudo cpanm Statistics::R
-	sudo cpanm Lucy::Simple
-	sudo cpanm DBIx::Class::Schema::Loader
-	sudo cpanm Text::CSV
-	sudo cpanm Imager::QRCode
-	sudo cpanm GD::Barcode::QRcode
-	sudo cpanm LWP::UserAgent
-	sudo cpanm Set::Product
-	sudo cpanm Server::Starter
-	sudo cpanm Net::Server::SS::PreFork
+	sudo cpanm -L ../local-lib/ DBD::Pg
+	sudo cpanm -L ../local-lib/ MooseX::Runnable@0.09
+	sudo cpanm -L ../local-lib/ XML::Feed
+	sudo cpanm -L ../local-lib/ Parse::Deb::Control
+	sudo cpanm -L ../local-lib/ Bio::GMOD::Blast::Graph
+	sudo cpanm -L ../local-lib/ Catalyst::DispatchType::Regex
+	sudo cpanm -L ../local-lib/ DateTime::Format::Flexible
+	sudo cpanm -L ../local-lib/ DateTime::Format::Pg
+	sudo cpanm -L ../local-lib/ HTML::TreeBuilder::XPath
+	sudo cpanm -L ../local-lib/ JSON::XS
+	sudo cpanm -L ../local-lib/ Lingua::EN::Inflect
+	sudo cpanm -L ../local-lib/ List::AllUtils
+	sudo cpanm -L ../local-lib/ MooseX::Declare
+	sudo cpanm -L ../local-lib/ MooseX::Singleton
+	sudo cpanm -L ../local-lib/ SOAP::Transport::HTTP
+	sudo cpanm -L ../local-lib/ Test::Class
+	sudo cpanm -L ../local-lib/ WWW::Mechanize::TreeBuilder
+	sudo cpanm -L ../local-lib/ Data::UUID
+	sudo cpanm -L ../local-lib/ HTML::Lint --force
+	sudo cpanm -L ../local-lib/ Test::JSON
+	sudo cpanm -L ../local-lib/ Test::MockObject
+	sudo cpanm -L ../local-lib/ Test::WWW::Selenium
+	sudo cpanm -L ../local-lib/ Sort::Versions
+	sudo cpanm -L ../local-lib/ Term::ReadKey --force
+	sudo cpanm -L ../local-lib/ Spreadsheet::Read
+	sudo cpanm -L ../local-lib/ Sort::Maker
+	sudo cpanm -L ../local-lib/ Term::Size::Any
+	sudo cpanm -L ../local-lib/ Proc::ProcessTable
+	sudo cpanm -L ../local-lib/ URI::Encode
+	sudo cpanm -L ../local-lib/ Archive::Zip
+	sudo cpanm -L ../local-lib/ Statistics::R
+	sudo cpanm -L ../local-lib/ Lucy::Simple
+	sudo cpanm -L ../local-lib/ DBIx::Class::Schema::Loader
+	sudo cpanm -L ../local-lib/ Text::CSV
+	sudo cpanm -L ../local-lib/ Imager::QRCode
+	sudo cpanm -L ../local-lib/ GD::Barcode::QRcode
+	sudo cpanm -L ../local-lib/ LWP::UserAgent
+	sudo cpanm -L ../local-lib/ Set::Product
+	sudo cpanm -L ../local-lib/ Server::Starter
+	sudo cpanm -L ../local-lib/ Net::Server::SS::PreFork
+	sudo cpanm -L ../local-lib/ Catalyst::Plugin::Assets --force
 
 	sudo mkdir /export
 	sudo mkdir /export/prod
@@ -455,9 +459,15 @@
 	sed -i '$ a\unset color_prompt force_color_prompt' /home/vagrant/.bashrc
 
 	#Add Perl paths
-	sudo sed -i '$ a\export PERL5LIB="$PERL5LIB:/usr/local/lib/x86_64-linux-gnu/perl/5.20.2:/usr/local/share/perl/5.20.2:/home/vagrant/cxgn/sgn/lib:/home/vagrant/cxgn/cxgn-corelibs/lib:/home/vagrant/cxgn/Phenome/lib:/home/vagrant/cxgn/Cview/lib:/home/vagrant/cxgn/ITAG/lib:/home/vagrant/cxgn/biosource/lib:/home/vagrant/cxgn/tomato_genome/lib:/home/vagrant/cxgn/Barcode-Code128/lib:/home/vagrant/cxgn/solGS/lib:/home/vagrant/cxgn/Chado/chado/lib:/home/vagrant/cxgn/Tea/lib:/home/vagrant/cxgn/Tea"' /home/vagrant/.bashrc
+	sudo sed -i '$ a\export PERL5LIB="$PERL5LIB:/usr/local/lib/x86_64-linux-gnu/perl/5.20.2:/home/vagrant/cxgn/local-lib:/usr/local/share/perl/5.20.2:/home/vagrant/cxgn/sgn/lib:/home/vagrant/cxgn/cxgn-corelibs/lib:/home/vagrant/cxgn/Phenome/lib:/home/vagrant/cxgn/Cview/lib:/home/vagrant/cxgn/ITAG/lib:/home/vagrant/cxgn/biosource/lib:/home/vagrant/cxgn/tomato_genome/lib:/home/vagrant/cxgn/Barcode-Code128/lib:/home/vagrant/cxgn/solGS/lib:/home/vagrant/cxgn/Chado/chado/lib:/home/vagrant/cxgn/Tea/lib:/home/vagrant/cxgn/Tea"' /home/vagrant/.bashrc
 
 	#Register starmachine init as a service
 	sudo ln -s /home/vagrant/cxgn/starmachine/bin/starmachine_init.d /etc/init.d/sgn
-	sudo service sgn start
+	sudo /etc/init.d/sgn start
+	sudo mkdir /tmp
+	sudo mkdir /tmp/vagrant
+	sudo mkdir /tmp/vagrant/SGN-site
+	cd /tmp/vagrant
+	sudo chown -R www-data:www-data SGN-site
+	
 	
