@@ -21,11 +21,10 @@ Make sure you have VirtualBox AND the VirtualBox Extension Pack installed
 https://www.virtualbox.org/wiki/Downloads
 
 Step 1: Download the VirtualBox virtual machine from here: <br/>
-* For 10GB Machine: ftp://solgenomics.net/virtualbox/SGNDev10.ova 
-* For 120GB Machine: ftp://solgenomics.net/virtualbox/SGNDev120.ova 
+* ftp://solgenomics.net/virtualbox/SGNDev140.ova 
 
 Step 2: Open VirtualBox and click File->Import Appliance. Select the downloaded OVA file.<br/>
-Step 3: Start the virtual machine.<br/>
+Step 3: Start the virtual machine. The website is running on localhost:8080<br/>
 
 ## Purpose 2 Tutorial
 
