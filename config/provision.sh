@@ -1,5 +1,11 @@
 #!/usr/bin/env bash
 
+        USERNAME=vagrant
+        if [ $1 = "production" ]
+	then
+            USERNAME=production
+	fi
+
 	#Change hostname to sgndev
 	old=$(hostname)
 	new="sgndev"
@@ -53,9 +59,12 @@
 	#install mongodb
 	#sudo apt-get install mongodb -y
 
-	#Set root user password to vagrant
+	#Set root user password to vagrant unless production install
 
-	yes vagrant | sudo passwd root
+	if [ $USERNAME != production ]
+	then
+	    yes vagrant | sudo passwd root
+	fi
 
 	#Set Superuser: vagrant user already NOPASSWD superuser
 
@@ -88,12 +97,12 @@
 	sudo apt-get install -y xvfb
 
 	#NCBI Blast (legacy blastall)
-	mkdir /home/vagrant/blast
-	cd /home/vagrant/blast
+	mkdir /home/$USERNAME/blast
+	cd /home/$USERNAME/blast
 
 	wget ftp://ftp.ncbi.nlm.nih.gov/blast/executables/legacy/2.2.9/blast-2.2.9-amd64-linux.tar.gz
 	tar zxvpf blast-2.2.9-amd64-linux.tar.gz
-	sudo sed -i '$ a\export PATH="$PATH:/home/vagrant/blast/"' /home/vagrant/.bashrc
+	sudo sed -i '$ a\export PATH="$PATH:/home/$USERNAME/blast/"' /home/$USERNAME/.bashrc
 	rm blast-2.2.9-amd64-linux.tar.gz
 
 	#sudo apt-get install ncbi-blast+ -y #latest relaese of BLAST
@@ -104,9 +113,15 @@
 	sudo apt-get install libslurm-perl -y
 	#Copy slurm.conf from shared config folder to where it needs to go
 	sudo touch /etc/slurm-llnl/slurm.conf
-	sudo cat /vagrant/config/slurm.conf >> /etc/slurm-llnl/slurm.conf
-	#sudo sh -c "cp /vagrant/config/slurm.conf /etc/slurm-lnll/ "
 
+	if [ $USERNAME != "production" ]
+	then
+	    sudo cat /vagrant/config/slurm.conf >> /etc/slurm-llnl/slurm.conf
+	else
+	    echo "SKIPPING slurm CONFIG FOR production user"
+	fi
+	#sudo sh -c "cp /vagrant/config/slurm.conf /etc/slurm-lnll/ "
+	    
 	sudo chmod 777 /var/spool/
 	sudo mkdir /var/spool/slurmstate
 	sudo chown slurm:slurm /var/spool/slurmstate/
@@ -140,17 +155,21 @@
 	#Permit any user to start the GUI
 	sudo sed -i s/allowed_users=console/allowed_users=anybody/ /etc/X11/Xwrapper.config
 
+	if [ $USERNAME != 'production' ]
+	then
 	#Enable automatic gnome login for vagrant user
-	sudo sed -i s/\#\ \ AutomaticLoginEnable\ =\ true/AutomaticLoginEnable\ =\ true/ /etc/gdm3/daemon.conf
-	sudo sed -i s/\#\ \ AutomaticLogin\ =\ user1/AutomaticLogin\ =\ vagrant/ /etc/gdm3/daemon.conf
+	    sudo sed -i s/\#\ \ AutomaticLoginEnable\ =\ true/AutomaticLoginEnable\ =\ true/ /etc/gdm3/daemon.conf
+	    sudo sed -i s/\#\ \ AutomaticLogin\ =\ user1/AutomaticLogin\ =\ vagrant/ /etc/gdm3/daemon.conf
+	fi
+
 	#Start GNOME GUI
 	sudo /etc/init.d/gdm3 start
 
 
 	#Make and populate cxgn directory
-	sudo mkdir /home/vagrant/cxgn
-	sudo mkdir /home/vagrant/cxgn/local-lib
-	cd /home/vagrant/cxgn
+	sudo mkdir /home/$USERNAME/cxgn
+	sudo mkdir /home/$USERNAME/cxgn/local-lib
+	cd /home/$USERNAME/cxgn
 	git clone https://github.com/solgenomics/sgn.git
 	git clone https://github.com/solgenomics/cxgn-corelibs.git
 	git clone https://github.com/solgenomics/Phenome.git
@@ -185,7 +204,7 @@
 		#perl Build manifest
 		#sudo perl Build.pl
 
-	cd /home/vagrant/cxgn/sgn
+	cd /home/$USERNAME/cxgn/sgn
 	#Install Perl Modules
 	sudo cpanm -L ../local-lib/ install Catalyst::ScriptRunner
 	sudo cpanm -L ../local-lib/ local::lib
@@ -325,15 +344,18 @@
 	sudo mkdir /etc/starmachine
 	sudo mkdir /var/log/sgn
 
-	sudo chown -R vagrant:vagrant /data/prod/
-	sudo chown -R vagrant:vagrant /export/prod/
+	sudo chown -R $USERNAME:$USERNAME /data/prod/
+	sudo chown -R $USERNAME:$USERNAME /export/prod/
 
+	if [ $USERNAME != "production" ]
+	then
 	#Add starmachine.conf to /etc/starmachine/, copied from shared config directory
-	sudo cp /vagrant/config/starmachine.conf /etc/starmachine
-	
+	    sudo cp /vagrant/config/starmachine.conf /etc/starmachine
 	#Add sgn_local.conf to sgn directory, copied from shared config directory
-	sudo cp /vagrant/config/sgn_local.conf /home/vagrant/cxgn/sgn
-	sudo chown -R vagrant:vagrant /home/vagrant/cxgn/
+	    sudo cp /vagrant/config/sgn_local.conf /home/vagrant/cxgn/sgn
+	fi
+	
+	sudo chown -R $USERNAME:$USERNAME /home/$USERNAME/cxgn/
 
 	#Install postgres 9.4
 	#sudo apt-get install postgresql-9.4 -y
@@ -360,7 +382,7 @@
 
 	#Create fixture db and load fixture.sql
 	sudo -u postgres createdb -E UTF8 --locale en_US.utf8 -T template0 fixture
-	sudo psql -U postgres -d fixture -f /home/vagrant/cxgn/fixture/cxgn_fixture.sql
+	sudo psql -U postgres -d fixture -f /home/$USERNAME/cxgn/fixture/cxgn_fixture.sql
 	#echo "GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO web_usr;" | psql -U postgres -d fixture
 	#echo "GRANT USAGE, SELECT ON ALL SEQUENCES IN SCHEMA public TO web_usr;" | psql -U postgres -d fixture
 
@@ -408,24 +430,30 @@
 	sudo R -e 'source("http://bioconductor.org/biocLite.R");biocLite();biocLite("gdsfmt");biocLite("SNPRelate")'
 	sudo R -e 'library("devtools");install_github("solgenomics/rPackages/genoDataFilter");install_github("solgenomics/rPackages/phenoAnalysis")'
 
-	cd /home/vagrant/cxgn
+	cd /home/$USERNAME/cxgn
 
 	#Download selenium 2.53.0
 	wget https://selenium-release.storage.googleapis.com/2.53/selenium-server-standalone-2.53.0.jar
 
+	if [ $USERNAME != "production" ]
+	then
+	    
 	#Jbrowse Setup
-	sudo cp /vagrant/config/sgn_forward /etc/nginx/sites-available/
-	sudo rm /etc/nginx/sites-enabled/default
-	sudo ln -s /etc/nginx/sites-available/sgn_forward /etc/nginx/sites-enabled/
-	sudo /etc/init.d/nginx restart
-	cd /var/www/
-	sudo mkdir jbrowse
-	cd jbrowse
-	sudo curl -O http://jbrowse.org/releases/JBrowse-1.12.1.zip
-	sudo unzip JBrowse-1.12.1.zip
-	sudo rm JBrowse-1.12.1.zip
-	cd JBrowse-1.12.1
-	sudo ./setup.sh
+	    sudo cp /vagrant/config/sgn_forward /etc/nginx/sites-available/
+	    sudo rm /etc/nginx/sites-enabled/default
+	    sudo ln -s /etc/nginx/sites-available/sgn_forward /etc/nginx/sites-enabled/
+	    sudo /etc/init.d/nginx restart
+	    cd /var/www/
+	    sudo mkdir jbrowse
+	    cd jbrowse
+	    sudo curl -O http://jbrowse.org/releases/JBrowse-1.12.1.zip
+	    sudo unzip JBrowse-1.12.1.zip
+	    sudo rm JBrowse-1.12.1.zip
+	    cd JBrowse-1.12.1
+	    sudo ./setup.sh
+	else
+	    echo "SKIPPING NGINX AND JBROWSE CONFIG FOR production USER."
+	fi
 
 	#Install Atom text editor and cleanup
 	sudo apt-get install xdg-utils -y
@@ -447,27 +475,27 @@
 
 	#Bashrc customization
 	#Add git branch display
-	sed -i s/#force_color_prompt=yes/force_color_prompt=yes/ /home/vagrant/.bashrc
-	sed -i '$ a\parse_git_branch(){' /home/vagrant/.bashrc
-	sed -i '$ a\git branch 2> /dev/null | sed -e \x27/^[^*]/d\x27 -e \x27s/* \\(.*\\)/(\\1)/\x27' /home/vagrant/.bashrc
-	sed -i '$ a\}' /home/vagrant/.bashrc
-	sed -i '$ a\if [ \x27$color_prompt\x27 = yes ]; then' /home/vagrant/.bashrc
-	sed -i '$ a\PS1=\x27${debian_chroot:+($debian_chroot)}\\[\\033[01;32m\\]\\u@\\h\\[\\033[00m\\]:\\[\\033[01;34m\\]\\w\\[\\033[01;31m\\]$(parse_git_branch)\\[\\033[00m\\]\\$ \x27' /home/vagrant/.bashrc
-	sed -i '$ a\else' /home/vagrant/.bashrc
-	sed -i '$ a\PS1=\x27${debian_chroot:+($debian_chroot)}\\u@\\h:\\w$(parse_git_branch)\\$ \x27' /home/vagrant/.bashrc
-	sed -i '$ a\fi' /home/vagrant/.bashrc
-	sed -i '$ a\unset color_prompt force_color_prompt' /home/vagrant/.bashrc
+	sed -i s/#force_color_prompt=yes/force_color_prompt=yes/ /home/$USERNAME/.bashrc
+	sed -i '$ a\parse_git_branch(){' /home/$USERNAME/.bashrc
+	sed -i '$ a\git branch 2> /dev/null | sed -e \x27/^[^*]/d\x27 -e \x27s/* \\(.*\\)/(\\1)/\x27' /home/$USERNAME/.bashrc
+	sed -i '$ a\}' /home/$USERNAME/.bashrc
+	sed -i '$ a\if [ \x27$color_prompt\x27 = yes ]; then' /home/$USERNAME/.bashrc
+	sed -i '$ a\PS1=\x27${debian_chroot:+($debian_chroot)}\\[\\033[01;32m\\]\\u@\\h\\[\\033[00m\\]:\\[\\033[01;34m\\]\\w\\[\\033[01;31m\\]$(parse_git_branch)\\[\\033[00m\\]\\$ \x27' /home/$USERNAME/.bashrc
+	sed -i '$ a\else' /home/$USERNAME/.bashrc
+	sed -i '$ a\PS1=\x27${debian_chroot:+($debian_chroot)}\\u@\\h:\\w$(parse_git_branch)\\$ \x27' /home/$USERNAME/.bashrc
+	sed -i '$ a\fi' /home/$USERNAME/.bashrc
+	sed -i '$ a\unset color_prompt force_color_prompt' /home/$USERNAME/.bashrc
 
 	#Add Perl paths
-	sudo sed -i '$ a\export PERL5LIB="$PERL5LIB:/usr/local/lib/x86_64-linux-gnu/perl/5.20.2:/home/vagrant/cxgn/local-lib:/home/vagrant/cxgn/local-lib/lib/perl5:/usr/local/share/perl/5.20.2:/home/vagrant/cxgn/sgn/lib:/home/vagrant/cxgn/cxgn-corelibs/lib:/home/vagrant/cxgn/Phenome/lib:/home/vagrant/cxgn/Cview/lib:/home/vagrant/cxgn/ITAG/lib:/home/vagrant/cxgn/biosource/lib:/home/vagrant/cxgn/tomato_genome/lib:/home/vagrant/cxgn/Barcode-Code128/lib:/home/vagrant/cxgn/solGS/lib:/home/vagrant/cxgn/Chado/chado/lib:/home/vagrant/cxgn/Tea/lib:/home/vagrant/cxgn/Tea"' /home/vagrant/.bashrc
+	sudo sed -i '$ a\export PERL5LIB="$PERL5LIB:/usr/local/lib/x86_64-linux-gnu/perl/5.20.2:/home/$USERNAME/cxgn/local-lib:/home/$USERNAME/cxgn/local-lib/lib/perl5:/usr/local/share/perl/5.20.2:/home/$USERNAME/cxgn/sgn/lib:/home/$USERNAME/cxgn/cxgn-corelibs/lib:/home/$USERNAME/cxgn/Phenome/lib:/home/$USERNAME/cxgn/Cview/lib:/home/$USERNAME/cxgn/ITAG/lib:/home/$USERNAME/cxgn/biosource/lib:/home/$USERNAME/cxgn/tomato_genome/lib:/home/$USERNAME/cxgn/Barcode-Code128/lib:/home/$USERNAME/cxgn/solGS/lib:/home/$USERNAME/cxgn/Chado/chado/lib:/home/$USERNAME/cxgn/Tea/lib:/home/$USERNAME/cxgn/Tea"' /home/$USERNAME/.bashrc
 
 	#Register starmachine init as a service
-	sudo ln -s /home/vagrant/cxgn/starmachine/bin/starmachine_init.d /etc/init.d/sgn
+	sudo ln -s /home/$USERNAME/cxgn/starmachine/bin/starmachine_init.d /etc/init.d/sgn
 	sudo /etc/init.d/sgn start
 	sudo mkdir /tmp
-	sudo mkdir /tmp/vagrant
-	sudo mkdir /tmp/vagrant/SGN-site
-	cd /tmp/vagrant
+	sudo mkdir /tmp/$USERNAME
+	sudo mkdir /tmp/$USERNAME/SGN-site
+	cd /tmp/$USERNAME
 	sudo chown -R www-data:www-data SGN-site
 	
 	
