@@ -1,4 +1,7 @@
 #!/usr/bin/env bash
+	
+	#Pre-reqs
+	apt-get install -y sudo
 
         USERNAME=vagrant
         if [ $1 = "production" ]
@@ -31,6 +34,9 @@
 
 	#Install Emacs and gedit and vim
 	sudo apt-get install -y emacs gedit vim less
+
+	#XML
+	sudo apt-get install -y libxml2-dev
 
 	#Install htop
 	sudo apt-get install htop -y
