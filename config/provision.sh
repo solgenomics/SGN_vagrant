@@ -306,7 +306,7 @@
 	sudo cpanm -L ../local-lib/ LWP::UserAgent
 	sudo cpanm -L ../local-lib/ Set::Product
 	sudo cpanm -L ../local-lib/ Server::Starter
-	sudo cpanm -L ../local-lib/ Net::Server::SS::PreFork
+	sudo cpanm -L ../local-lib/ Net::Server::SS::PreFork --force
 	sudo cpanm -L ../local-lib/ Catalyst::Plugin::Assets --force
 
 	sudo mkdir /export
