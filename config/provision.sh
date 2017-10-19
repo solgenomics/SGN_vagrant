@@ -339,14 +339,14 @@
 	#sudo apt-get install postgresql-9.4 -y
 	#sudo apt-get install postgresql-contrib-9.4 -y
 
-	#Install postgres 9.5
-	sudo su -c "echo 'deb http://apt.postgresql.org/pub/repos/apt/ jessie-pgdg main 9.5' > /etc/apt/sources.list.d/postgresql.list"
+	#Install postgres 9.6
+	sudo su -c "echo 'deb http://apt.postgresql.org/pub/repos/apt/ jessie-pgdg main' >> /etc/apt/sources.list.d/postgresql.list"
 	wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
 	sudo apt-get update -y
-	sudo apt-get install postgresql-9.5 -y
+	sudo apt-get install postgresql-9.6 -y
 
 	#Configure trust connection for psql postgres user and create web_usr .
-	sudo sed -i s/peer/trust/ /etc/postgresql/9.5/main/pg_hba.conf
+	sudo sed -i s/peer/trust/ /etc/postgresql/9.6/main/pg_hba.conf
 	sudo /etc/init.d/postgresql restart
 	#Create web_usr role with password web_usr
 	yes web_usr | createuser -U postgres -P web_usr
@@ -405,8 +405,9 @@
 	sudo R -e "install.packages('devtools', dependencies=TRUE, repos='http://cran.rstudio.com/')"
 	sudo R -e "install.packages('bioconductor', dependencies=TRUE, repos='http://cran.rstudio.com/')"
 	sudo R -e "install.packages('caret', dependencies=TRUE, repos='http://cran.rstudio.com/')"
+	sudo R -e "install.packages('R.oo', dependencies=TRUE, repos='http://cran.rstudio.com/')"
 	sudo R -e 'source("http://bioconductor.org/biocLite.R");biocLite();biocLite("gdsfmt");biocLite("SNPRelate")'
-	sudo R -e 'library("devtools");install_github("solgenomics/rPackages/genoDataFilter");install_github("solgenomics/rPackages/phenoAnalysis")'
+	sudo R -e 'library("devtools");install_github("cran/R.methodsS3");install_github("solgenomics/rPackages/genoDataFilter");install_github("solgenomics/rPackages/phenoAnalysis")'
 
 	cd /home/vagrant/cxgn
 
