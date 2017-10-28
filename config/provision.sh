@@ -1,7 +1,18 @@
 #!/usr/bin/env bash
+
+
+        # check what type of install we are doing, quit if no
+        # parameter was provided (either production or devel)
+        #
+	if [[ $1 != "production" && $1 != "devel" ]] 
+	then
+	    echo "provide parameter, either 'production' or 'devel'";
+	    exit;
+        fi
 	
 	#Pre-reqs
 	apt-get install -y sudo
+
 
         USERNAME=vagrant
         if [ $1 = "production" ]
