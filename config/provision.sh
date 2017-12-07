@@ -77,7 +77,7 @@
 	sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/debian $(lsb_release -cs) stable"
 	sudo apt-get update
 	sudo apt-get install docker-ce -y
-	
+
 	#Install Nginx
 	sudo apt-get install nginx -y
 
@@ -125,7 +125,7 @@
 
 	#Install lsof for viewing open file connections
 	sudo apt-get install lsof -y
-	
+
 	#Install imagemagick
 	sudo apt-get install imagemagick -y
 
@@ -330,7 +330,7 @@
 
 	#Add starmachine.conf to /etc/starmachine/, copied from shared config directory
 	sudo cp /vagrant/config/starmachine.conf /etc/starmachine
-	
+
 	#Add sgn_local.conf to sgn directory, copied from shared config directory
 	sudo cp /vagrant/config/sgn_local.conf /home/vagrant/cxgn/sgn
 	sudo chown -R vagrant:vagrant /home/vagrant/cxgn/
@@ -430,12 +430,13 @@
 
 	#Install Atom text editor and cleanup
 	sudo apt-get install xdg-utils -y
-	wget https://github.com/atom/atom/releases/download/v1.6.0/atom-amd64.deb
+	wget https://github.com/atom/atom/releases/download/v1.13.0/atom-amd64.deb
 	sudo dpkg --install atom-amd64.deb
 	sudo apt-get -f install -y
 	rm atom-amd64.deb
 	#Install Atom Plugins
 	apm install minimap
+    apm install language-mason
     # configure indent settings
     sed -i 's/invisibles: {}/invisibles: {}\n\    showIndentGuide: true\n\    tabLength: 4\n\    tabType: "soft"/g' ~/.atom/config.cson
 
@@ -470,5 +471,3 @@
 	sudo mkdir /tmp/vagrant/SGN-site
 	cd /tmp/vagrant
 	sudo chown -R www-data:www-data SGN-site
-	
-	
