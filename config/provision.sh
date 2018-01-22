@@ -308,6 +308,8 @@
 	sudo cpanm -L ../local-lib/ Server::Starter
 	sudo cpanm -L ../local-lib/ Net::Server::SS::PreFork --force
 	sudo cpanm -L ../local-lib/ Catalyst::Plugin::Assets --force
+	sudo cpanm -L ../local-lib/ PDF::API2
+	sudo cpanm -L ../local-lib/ CAM::PDF
 
 	sudo mkdir /export
 	sudo mkdir /export/prod
