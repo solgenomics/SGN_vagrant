@@ -311,6 +311,15 @@
 	sudo cpanm -L ../local-lib/ PDF::API2
 	sudo cpanm -L ../local-lib/ CAM::PDF
 
+	#ISSUE WITH module..... not sure why cpanm wont work
+	wget http://search.cpan.org/CPAN/authors/id/K/KA/KAZUHO/Net-Server-SS-PreFork-0.05.tar.gz
+	tar -zxvf Net-Server-SS-PreFork-0.05.tar.gz
+	cd Net-Server-SS-PreFork-0.05
+	perl Makefile.PL
+	sudo make
+	sudo make install
+	
+
 	sudo mkdir /export
 	sudo mkdir /export/prod
 	sudo mkdir /export/prod/public
