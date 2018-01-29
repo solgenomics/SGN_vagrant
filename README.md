@@ -21,10 +21,13 @@ Make sure you have VirtualBox AND the VirtualBox Extension Pack installed
 https://www.virtualbox.org/wiki/Downloads
 
 Step 1: Download the VirtualBox virtual machine from here: <br/>
-* ftp://solgenomics.net/virtualbox/SGNDev140.ova 
+* ftp://solgenomics.net/virtualbox/SGNDev160.ova 
 
 Step 2: Open VirtualBox and click File->Import Appliance. Select the downloaded OVA file.<br/>
-Step 3: Start the virtual machine. The website is running on localhost:8080<br/>
+Step 3: Start the virtual machine.<br/>
+Step 4: In a terminal enter: sudo chown -R www-data:www-data /tmp/vagrant/SGN-site/; sudo service sgn start
+The site will be available on localhost:8080
+
 
 ## Purpose 2 Tutorial
 
