@@ -268,6 +268,7 @@
 	sudo cpanm -L ../local-lib/ XML::Generator
 	sudo apt-get install libpq-dev -y
 	sudo cpanm -L ../local-lib/ DBD::Pg
+	sudo apt-get install libmoosex-runnable-perl -y
 	sudo cpanm -L ../local-lib/ MooseX::Runnable@0.09
 	sudo cpanm -L ../local-lib/ XML::Feed
 	sudo cpanm -L ../local-lib/ Parse::Deb::Control
