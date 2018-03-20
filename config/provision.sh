@@ -371,6 +371,14 @@
 	sudo psql -U postgres -d fixture -f /home/vagrant/cxgn/fixture/cxgn_fixture.sql
 	#echo "GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO web_usr;" | psql -U postgres -d fixture
 	#echo "GRANT USAGE, SELECT ON ALL SEQUENCES IN SCHEMA public TO web_usr;" | psql -U postgres -d fixture
+	#echo "GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA sgn TO web_usr;" | psql -U postgres -d fixture
+	#echo "GRANT USAGE, SELECT ON ALL SEQUENCES IN SCHEMA sgn TO web_usr;" | psql -U postgres -d fixture
+	#echo "GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA phenome TO web_usr;" | psql -U postgres -d fixture
+	#echo "GRANT USAGE, SELECT ON ALL SEQUENCES IN SCHEMA phenome TO web_usr;" | psql -U postgres -d fixture
+	#echo "GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA metadata TO web_usr;" | psql -U postgres -d fixture
+	#echo "GRANT USAGE, SELECT ON ALL SEQUENCES IN SCHEMA metadata TO web_usr;" | psql -U postgres -d fixture
+	#echo "GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA sgn_people TO web_usr;" | psql -U postgres -d fixture
+	#echo "GRANT USAGE, SELECT ON ALL SEQUENCES IN SCHEMA sgn_people TO web_usr;" | psql -U postgres -d fixture
 
 	#Install R
 	sudo apt-get install apt-transport-https -y
