@@ -424,7 +424,7 @@
 	sudo R -e "install.packages('caret', dependencies=TRUE, repos='http://cran.rstudio.com/')"
 	sudo R -e "install.packages('R.oo', dependencies=TRUE, repos='http://cran.rstudio.com/')"
 	sudo R -e 'source("http://bioconductor.org/biocLite.R");biocLite();biocLite("gdsfmt");biocLite("SNPRelate")'
-	sudo R -e 'library("devtools");install_github("cran/R.methodsS3");install_github("solgenomics/rPackages/genoDataFilter");install_github("solgenomics/rPackages/phenoAnalysis")'
+	sudo R -e 'library("devtools");install_github("cran/R.methodsS3");install_github("solgenomics/rPackages/genoDataFilter");install_github("solgenomics/rPackages/phenoAnalysis");install_github("reyzaguirre/st4gi")'
 
 	cd /home/vagrant/cxgn
 
