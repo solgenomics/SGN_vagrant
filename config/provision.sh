@@ -446,7 +446,8 @@
 
 	#Install Atom text editor and cleanup
 	sudo apt-get install xdg-utils -y
-	wget https://github.com/atom/atom/releases/download/v1.13.0/atom-amd64.deb
+	wget https://github.com/atom/atom/releases/download/v1.25.1/atom-amd64.deb
+	
 	sudo dpkg --install atom-amd64.deb
 	sudo apt-get -f install -y
 	rm atom-amd64.deb
