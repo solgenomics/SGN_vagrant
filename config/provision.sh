@@ -454,6 +454,7 @@
 	#Install Atom Plugins
 	apm install minimap
     apm install language-mason
+	apm install markdown-preview-enhanced
     # configure indent settings
     sed -i 's/invisibles: {}/invisibles: {}\n\    showIndentGuide: true\n\    tabLength: 4\n\    tabType: "soft"/g' ~/.atom/config.cson
 
