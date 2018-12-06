@@ -4,16 +4,16 @@
 	old=$(hostname)
 	new="sgndev"
 	for file in \
-	   /etc/exim4/update-exim4.conf.conf \
-	   /etc/printcap \
-	   /etc/hostname \
-	   /etc/hosts \
-	   /etc/ssh/ssh_host_rsa_key.pub \
-	   /etc/ssh/ssh_host_dsa_key.pub \
-	   /etc/motd \
-	   /etc/ssmtp/ssmtp.conf
+		/etc/exim4/update-exim4.conf.conf \
+		/etc/printcap \
+		/etc/hostname \
+		/etc/hosts \
+		/etc/ssh/ssh_host_rsa_key.pub \
+		/etc/ssh/ssh_host_dsa_key.pub \
+		/etc/motd \
+		/etc/ssmtp/ssmtp.conf
 	do
-	   sudo [ -f $file ] && sudo sed -i.old -e "s:$old:$new:g" $file
+		sudo [ -f $file ] && sudo sed -i.old -e "s:$old:$new:g" $file
 	done
 	sudo hostname sgndev
 
@@ -183,6 +183,9 @@
 	#This would be the preferred way to install Perl and R dependencies but I can't get it to work...
 		#perl Build manifest
 		#sudo perl Build.pl
+
+	#XML::Simple dependency
+	sudo apt-get install libexpat1-dev -y
 
 	cd /home/vagrant/cxgn/sgn
 	#Install Perl Modules
@@ -453,10 +456,10 @@
 	rm atom-amd64.deb
 	#Install Atom Plugins
 	apm install minimap
-    apm install language-mason
+	apm install language-mason
 	apm install markdown-preview-enhanced
-    # configure indent settings
-    sed -i 's/invisibles: {}/invisibles: {}\n\    showIndentGuide: true\n\    tabLength: 4\n\    tabType: "soft"/g' ~/.atom/config.cson
+	# configure indent settings
+	sed -i 's/invisibles: {}/invisibles: {}\n\    showIndentGuide: true\n\    tabLength: 4\n\    tabType: "soft"/g' ~/.atom/config.cson
 
 
 	#Install Chrome and cleanup
