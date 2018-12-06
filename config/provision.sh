@@ -91,7 +91,7 @@
 	mkdir /home/vagrant/blast
 	cd /home/vagrant/blast
 
-	wget ftp://ftp.ncbi.nlm.nih.gov/blast/executables/legacy/2.2.9/blast-2.2.9-amd64-linux.tar.gz
+	wget ftp://ftp.ncbi.nlm.nih.gov/blast/executables/legacy.NOTSUPPORTED/2.2.9/blast-2.2.9-amd64-linux.tar.gz
 	tar zxvpf blast-2.2.9-amd64-linux.tar.gz
 	sudo sed -i '$ a\export PATH="$PATH:/home/vagrant/blast/"' /home/vagrant/.bashrc
 	rm blast-2.2.9-amd64-linux.tar.gz
