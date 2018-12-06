@@ -449,7 +449,7 @@
 	#Install R
 	sudo apt-get install apt-transport-https -y
 	sudo sed -i "\$adeb https://cran.cnr.berkeley.edu/bin/linux/debian stretch-cran35/" /etc/apt/sources.list
-	sudo apt-key adv --keyserver keys.gnupg.net --recv-key 381BA480
+	sudo apt-key adv --keyserver keys.gnupg.net --recv-key 'E19F5F87128899B192B1A2C2AD5F960A256A04AF'
 	sudo apt-get update -y
 	sudo DEBIAN_FRONTEND=noninteractive apt-get -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" dist-upgrade
 	sudo apt-get install r-base r-base-dev -y
