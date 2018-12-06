@@ -39,7 +39,7 @@
 		done
 		sudo hostname sgndev
 	else
-		echo "SKIPPING change of hostname to sgndev for production user"
+		echo "SKIPPING CHANGE OF HOSTNAME TO sgndev FOR PRODUCTION USER"
 	fi
 
 	#Update Aptitude
@@ -112,7 +112,7 @@
 		#Install full gnome (takes forever)
 		# sudo apt-get install gnome -y
 	else
-		echo "SKIPPING install of iceweasel, libreoffice, and gnome GUI for production user"
+		echo "SKIPPING INSTALL OF ICEWEASEL, LIBREOFFICE, AND GNOME GUI FOR PRODUCTION USER"
 	fi
 
 	#Install Docker
@@ -150,7 +150,7 @@
 	then
 	    sudo cat /vagrant/config/slurm.conf >> /etc/slurm-llnl/slurm.conf
 	else
-	    echo "SKIPPING slurm CONFIG FOR production user"
+	    echo "SKIPPING COPY OF SLURM CONFIG FOR PRODUCTION USER"
 	fi
 	    
 	sudo chmod 777 /var/spool/
@@ -187,7 +187,7 @@
 		#Start GNOME GUI
 		sudo /etc/init.d/gdm3 start
 	else
-		echo "SKIPPING gnome GUI login setup and GUI start for production user"
+		echo "SKIPPING GNOME GUI LOGIN SETUP AND GUI START FOR PRODUCTION USER"
 	fi
 
 	#Make and populate cxgn directory
@@ -381,7 +381,7 @@
 		sudo chown -R $USERNAME:$USERNAME /data/prod/
 		sudo chown -R $USERNAME:$USERNAME /export/prod/
 	else
-		echo "SKIPPING creation of export and data directories for production user, because these shold be mounted"
+		echo "SKIPPING CREATION OF /export AND /data DIRS FOR PRODUCTION USER"
 	fi
 
 	sudo mkdir /etc/starmachine
@@ -394,7 +394,7 @@
 		#Add sgn_local.conf to sgn directory, copied from shared config directory
 	    sudo cp /vagrant/config/sgn_local.conf /home/vagrant/cxgn/sgn
 	else
-		echo "SKIPPING adding starmachine.conf and sgn_local.conf for production user"
+		echo "SKIPPING COPYING starmachine.conf AND sgn_local.conf FOR PRODUCTION USER"
 	fi
 	
 	sudo chown -R $USERNAME:$USERNAME /home/$USERNAME/cxgn/
@@ -434,7 +434,7 @@
 		#echo "GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA sgn_people TO web_usr;" | psql -U postgres -d fixture
 		#echo "GRANT USAGE, SELECT ON ALL SEQUENCES IN SCHEMA sgn_people TO web_usr;" | psql -U postgres -d fixture
 	else
-	    echo "SKIPPING fixture database creation production user"
+	    echo "SKIPPING fixture DATABASE CREATION FOR PRODUCTION USER"
 	fi
 
 	#Install R
@@ -505,7 +505,7 @@
 	    cd JBrowse-1.12.1
 	    sudo ./setup.sh
 	else
-	    echo "SKIPPING NGINX AND JBROWSE CONFIG FOR production USER."
+	    echo "SKIPPING NGINX AND JBROWSE CONFIG FOR PRODUCTION USER."
 	fi
 
 	if [ $USERNAME != "production" ]
@@ -530,7 +530,7 @@
 		sudo apt-get -f install -y
 		rm google-chrome-stable_current_amd64.deb
 	else
-	    echo "SKIPPING Atom and chrome install for production USER."
+	    echo "SKIPPING ATOM AND CHROME INSTALL FOR PRODUCTION USER."
 	fi
 
 	#Bashrc customization
