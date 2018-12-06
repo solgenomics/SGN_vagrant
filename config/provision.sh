@@ -413,12 +413,12 @@
 	wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
 	sudo apt-get update -y
 	sudo apt-get install postgresql-10 -y
+	#Configure trust connection for psql postgres user
+	sudo sed -i s/peer/trust/ /etc/postgresql/10/main/pg_hba.conf
+	sudo /etc/init.d/postgresql restart
 
 	if [ $USERNAME != "production" ]
 	then
-		#Configure trust connection for psql postgres user and create web_usr .
-		sudo sed -i s/peer/trust/ /etc/postgresql/10/main/pg_hba.conf
-		sudo /etc/init.d/postgresql restart
 		#Create web_usr role with password web_usr
 		yes web_usr | createuser -U postgres -P web_usr
 		#Change postgres role password to postgres
@@ -448,6 +448,7 @@
 
 	#Install R
 	sudo apt-get install apt-transport-https -y
+	sudo apt-get install dirmngr --install-recommends
 	sudo sed -i "\$adeb https://cran.cnr.berkeley.edu/bin/linux/debian stretch-cran35/" /etc/apt/sources.list
 	sudo apt-key adv --keyserver keys.gnupg.net --recv-key 'E19F5F87128899B192B1A2C2AD5F960A256A04AF'
 	sudo apt-get update -y
