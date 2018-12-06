@@ -235,6 +235,9 @@
 	#XML::Simple dependency
 	sudo apt-get install libexpat1-dev -y
 
+	#HTML::FormFu
+	libcatalyst-controller-html-formfu-perl
+
 	cd /home/$USERNAME/cxgn/sgn
 	#Install Perl Modules
 	sudo cpanm -L ../local-lib/ install Catalyst::ScriptRunner
@@ -286,7 +289,6 @@
 	sudo cpanm -L ../local-lib/ Math::Base36
 	sudo cpanm -L ../local-lib/ Captcha::reCAPTCHA
 	sudo cpanm -L ../local-lib/ Test::Aggregate::Nested --force
-	sudo cpanm -L ../local-lib/ HTML::FormFu
 	sudo cpanm -L ../local-lib/ SVG
 	sudo cpanm -L ../local-lib/ IPC::Run3
 	sudo cpanm -L ../local-lib/ Spreadsheet::WriteExcel
@@ -295,7 +297,6 @@
 	sudo cpanm -L ../local-lib/ PDF::Create
 	sudo cpanm -L ../local-lib/ String::CRC
 	sudo cpanm -L ../local-lib/ Algorithm::Combinatorics
-	sudo cpanm -L ../local-lib/ Catalyst::Controller::HTML::FormFu
 	sudo cpanm -L ../local-lib/ String::Approx
 	sudo apt-get install libcairo2-dev -y
 	sudo cpanm -L ../local-lib/ Cairo
