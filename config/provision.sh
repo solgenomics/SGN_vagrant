@@ -8,35 +8,39 @@
 	then
 	    echo "provide parameter, either 'production' or 'devel'";
 	    exit;
-        fi
+    fi
 	
 	#Pre-reqs
 	apt-get install -y sudo
 
 
-        USERNAME=vagrant
-        if [ $1 = "production" ]
+    USERNAME=vagrant
+    if [ $1 = "production" ]
 	then
-            USERNAME=production
+        USERNAME=production
 	fi
 
-	#Change hostname to sgndev
-	old=$(hostname)
-	new="sgndev"
-	for file in \
-	   /etc/exim4/update-exim4.conf.conf \
-	   /etc/printcap \
-	   /etc/hostname \
-	   /etc/hosts \
-	   /etc/ssh/ssh_host_rsa_key.pub \
-	   /etc/ssh/ssh_host_dsa_key.pub \
-	   /etc/motd \
-	   /etc/ssmtp/ssmtp.conf
-	do
-	   sudo [ -f $file ] && sudo sed -i.old -e "s:$old:$new:g" $file
-	done
-	sudo hostname sgndev
-
+	if [ $1 != "production" ]
+	then
+		#Change hostname to sgndev
+		old=$(hostname)
+		new="sgndev"
+		for file in \
+		   /etc/exim4/update-exim4.conf.conf \
+		   /etc/printcap \
+		   /etc/hostname \
+		   /etc/hosts \
+		   /etc/ssh/ssh_host_rsa_key.pub \
+		   /etc/ssh/ssh_host_dsa_key.pub \
+		   /etc/motd \
+		   /etc/ssmtp/ssmtp.conf
+		do
+		   sudo [ -f $file ] && sudo sed -i.old -e "s:$old:$new:g" $file
+		done
+		sudo hostname sgndev
+	else
+		echo "SKIPPING change of hostname to sgndev for production user"
+	fi
 
 	#Update Aptitude
 	sudo apt-get update -y
@@ -77,13 +81,11 @@
 	#sudo apt-get install mongodb -y
 
 	#Set root user password to vagrant unless production install
-
 	if [ $USERNAME != production ]
 	then
+		#Set Superuser: vagrant user already NOPASSWD superuser
 	    yes vagrant | sudo passwd root
 	fi
-
-	#Set Superuser: vagrant user already NOPASSWD superuser
 
 	#Install curl
 	sudo apt-get install curl -y
@@ -91,11 +93,27 @@
 	#Install cpanmin
 	curl -L https://cpanmin.us | perl - --sudo App::cpanminus
 
-	#Install Iceweasel
-	sudo apt-get install iceweasel -y
+	if [ $USERNAME != production ]
+	then
+		#Install Iceweasel
+		sudo apt-get install iceweasel -y
 
-	#Install libreoffice
-	sudo apt-get install libreoffice -y
+		#Install libreoffice
+		sudo apt-get install libreoffice -y
+
+		#For headless selenium testing
+		sudo apt-get install -y xvfb
+
+		#Install barebones gnome GUI
+		sudo apt-get install gnome-core -y
+		sudo apt-get install gnome-terminal -y
+		sudo apt-get install -y gnome-shell gnome-screensaver gnome-tweak-tool gnome-shell-extensions
+
+		#Install full gnome (takes forever)
+		# sudo apt-get install gnome -y
+	else
+		echo "SKIPPING install of iceweasel, libreoffice, and gnome GUI for production user"
+	fi
 
 	#Install Docker
 	sudo apt-get install -y apt-transport-https ca-certificates curl gnupg2 software-properties-common
@@ -103,15 +121,12 @@
 	sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/debian $(lsb_release -cs) stable"
 	sudo apt-get update
 	sudo apt-get install docker-ce -y
-	
+
 	#Install Nginx
 	sudo apt-get install nginx -y
 
 	#NMAP
 	sudo apt-get install -y nmap
-
-	#For headless selenium testing
-	sudo apt-get install -y xvfb
 
 	#NCBI Blast (legacy blastall)
 	mkdir /home/$USERNAME/blast
@@ -137,7 +152,6 @@
 	else
 	    echo "SKIPPING slurm CONFIG FOR production user"
 	fi
-	#sudo sh -c "cp /vagrant/config/slurm.conf /etc/slurm-lnll/ "
 	    
 	sudo chmod 777 /var/spool/
 	sudo mkdir /var/spool/slurmstate
@@ -157,31 +171,24 @@
 
 	#Install lsof for viewing open file connections
 	sudo apt-get install lsof -y
-	
+
 	#Install imagemagick
 	sudo apt-get install imagemagick -y
 
-	#Install barebones gnome GUI
-	sudo apt-get install gnome-core -y
-	sudo apt-get install gnome-terminal -y
-	sudo apt-get install -y gnome-shell gnome-screensaver gnome-tweak-tool gnome-shell-extensions
-
-	#Install full gnome (takes forever)
-	# sudo apt-get install gnome -y
-
-	#Permit any user to start the GUI
-	sudo sed -i s/allowed_users=console/allowed_users=anybody/ /etc/X11/Xwrapper.config
-
 	if [ $USERNAME != 'production' ]
 	then
-	#Enable automatic gnome login for vagrant user
+		#Permit any user to start the GUI
+		sudo sed -i s/allowed_users=console/allowed_users=anybody/ /etc/X11/Xwrapper.config
+
+		#Enable automatic gnome login for vagrant user
 	    sudo sed -i s/\#\ \ AutomaticLoginEnable\ =\ true/AutomaticLoginEnable\ =\ true/ /etc/gdm3/daemon.conf
 	    sudo sed -i s/\#\ \ AutomaticLogin\ =\ user1/AutomaticLogin\ =\ vagrant/ /etc/gdm3/daemon.conf
+
+		#Start GNOME GUI
+		sudo /etc/init.d/gdm3 start
+	else
+		echo "SKIPPING gnome GUI login setup and GUI start for production user"
 	fi
-
-	#Start GNOME GUI
-	sudo /etc/init.d/gdm3 start
-
 
 	#Make and populate cxgn directory
 	sudo mkdir /home/$USERNAME/cxgn
@@ -201,7 +208,6 @@
 	git clone https://github.com/solgenomics/Tea.git
 	git clone https://github.com/solgenomics/art.git
 	git clone https://github.com/solgenomics/VIGS.git
-	git clone https://github.com/solgenomics/fixture.git
 	git clone https://github.com/solgenomics/SGN_vagrant.git
 	git clone https://github.com/solgenomics/starmachine.git
 
@@ -289,7 +295,7 @@
 	sudo cpanm -L ../local-lib/ Spreadsheet::ParseExcel
 	sudo cpanm -L ../local-lib/ MooseX::Types::URI
 	sudo cpanm -L ../local-lib/ Bio::Graphics::FeatureFile --force
-	sudo cpanm -L ../local-lib/ Mail::Sendmail
+	sudo cpanm -L ../local-lib/ Mail::Sendmail --force
 	sudo cpanm -L ../local-lib/ Array::Compare
 	sudo cpanm -L ../local-lib/ GD::Graph::lines
 	sudo cpanm -L ../local-lib/ GD::Graph::Map
@@ -304,6 +310,7 @@
 	sudo cpanm -L ../local-lib/ XML::Generator
 	sudo apt-get install libpq-dev -y
 	sudo cpanm -L ../local-lib/ DBD::Pg
+	sudo apt-get install libmoosex-runnable-perl -y
 	sudo cpanm -L ../local-lib/ MooseX::Runnable@0.09
 	sudo cpanm -L ../local-lib/ XML::Feed
 	sudo cpanm -L ../local-lib/ Parse::Deb::Control
@@ -342,66 +349,93 @@
 	sudo cpanm -L ../local-lib/ LWP::UserAgent
 	sudo cpanm -L ../local-lib/ Set::Product
 	sudo cpanm -L ../local-lib/ Server::Starter
-	sudo cpanm -L ../local-lib/ Net::Server::SS::PreFork
+	#sudo cpanm -L ../local-lib/ Net::Server::SS::PreFork --force
 	sudo cpanm -L ../local-lib/ Catalyst::Plugin::Assets --force
+	sudo cpanm -L ../local-lib/ PDF::API2
+	sudo cpanm -L ../local-lib/ CAM::PDF
 
-	sudo mkdir /export
-	sudo mkdir /export/prod
-	sudo mkdir /export/prod/public
-	sudo mkdir /export/prod/public/sgn_static_content
-	sudo mkdir /export/prod/tmp
-	sudo mkdir /export/prod/tmp/solgs
-	sudo mkdir /data
-	sudo mkdir /data/prod
-	sudo mkdir /data/prod/archive
-	sudo mkdir /export/prod/public/images
-	sudo mkdir /export/prod/public/images/image_files
-	sudo mkdir /data/shared
-	sudo mkdir /data/shared/tmp
+	#ISSUE WITH module..... not sure why cpanm wont work
+	wget http://search.cpan.org/CPAN/authors/id/K/KA/KAZUHO/Net-Server-SS-PreFork-0.05.tar.gz
+	tar -zxvf Net-Server-SS-PreFork-0.05.tar.gz
+	cd Net-Server-SS-PreFork-0.05
+	perl Makefile.PL
+	sudo make
+	sudo make install
+	
+	if [ $USERNAME != 'production' ]
+	then
+		sudo mkdir /export
+		sudo mkdir /export/prod
+		sudo mkdir /export/prod/public
+		sudo mkdir /export/prod/public/sgn_static_content
+		sudo mkdir /export/prod/tmp
+		sudo mkdir /export/prod/tmp/solgs
+		sudo mkdir /data
+		sudo mkdir /data/prod
+		sudo mkdir /data/prod/archive
+		sudo mkdir /export/prod/public/images
+		sudo mkdir /export/prod/public/images/image_files
+		sudo mkdir /data/shared
+		sudo mkdir /data/shared/tmp
+
+		sudo chown -R $USERNAME:$USERNAME /data/prod/
+		sudo chown -R $USERNAME:$USERNAME /export/prod/
+	else
+		echo "SKIPPING creation of export and data directories for production user, because these shold be mounted"
+	fi
+
 	sudo mkdir /etc/starmachine
 	sudo mkdir /var/log/sgn
 
-	sudo chown -R $USERNAME:$USERNAME /data/prod/
-	sudo chown -R $USERNAME:$USERNAME /export/prod/
-
 	if [ $USERNAME != "production" ]
 	then
-	#Add starmachine.conf to /etc/starmachine/, copied from shared config directory
+		#Add starmachine.conf to /etc/starmachine/, copied from shared config directory
 	    sudo cp /vagrant/config/starmachine.conf /etc/starmachine
-	#Add sgn_local.conf to sgn directory, copied from shared config directory
+		#Add sgn_local.conf to sgn directory, copied from shared config directory
 	    sudo cp /vagrant/config/sgn_local.conf /home/vagrant/cxgn/sgn
+	else
+		echo "SKIPPING adding starmachine.conf and sgn_local.conf for production user"
 	fi
 	
 	sudo chown -R $USERNAME:$USERNAME /home/$USERNAME/cxgn/
 
-	#Install postgres 9.4
-	#sudo apt-get install postgresql-9.4 -y
-	#sudo apt-get install postgresql-contrib-9.4 -y
-
-	#Install postgres 9.5
-	sudo su -c "echo 'deb http://apt.postgresql.org/pub/repos/apt/ jessie-pgdg main 9.5' > /etc/apt/sources.list.d/postgresql.list"
+	#Install postgres 10
+	sudo su -c "echo 'deb http://apt.postgresql.org/pub/repos/apt/ jessie-pgdg main' >> /etc/apt/sources.list.d/postgresql.list"
 	wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
 	sudo apt-get update -y
-	sudo apt-get install postgresql-9.5 -y
+	sudo apt-get install postgresql-10 -y
 
-	#Configure trust connection for psql postgres user and create web_usr .
-	sudo sed -i s/peer/trust/ /etc/postgresql/9.5/main/pg_hba.conf
-	sudo /etc/init.d/postgresql restart
-	#Create web_usr role with password web_usr
-	yes web_usr | createuser -U postgres -P web_usr
-	#Change postgres role password to postgres
-	echo "ALTER ROLE postgres WITH PASSWORD 'postgres';" | psql -U postgres
-	sudo /etc/init.d/postgresql restart
+	if [ $USERNAME != "production" ]
+	then
+		#Configure trust connection for psql postgres user and create web_usr .
+		sudo sed -i s/peer/trust/ /etc/postgresql/10/main/pg_hba.conf
+		sudo /etc/init.d/postgresql restart
+		#Create web_usr role with password web_usr
+		yes web_usr | createuser -U postgres -P web_usr
+		#Change postgres role password to postgres
+		echo "ALTER ROLE postgres WITH PASSWORD 'postgres';" | psql -U postgres
+		sudo /etc/init.d/postgresql restart
 
-	#Create sandbox_cassava db and load dump from shared config folder.
-	#sudo -u postgres createdb -E UTF8 --locale en_US.utf8 -T template0 sandbox_cassava
-	#gunzip -c /vagrant/config/sandbox_cassava.pgsql.gz | sudo psql -U postgres sandbox_cassava
+		#Create sandbox_cassava db and load dump from shared config folder.
+		#sudo -u postgres createdb -E UTF8 --locale en_US.utf8 -T template0 sandbox_cassava
+		#gunzip -c /vagrant/config/sandbox_cassava.pgsql.gz | sudo psql -U postgres sandbox_cassava
 
-	#Create fixture db and load fixture.sql
-	sudo -u postgres createdb -E UTF8 --locale en_US.utf8 -T template0 fixture
-	sudo psql -U postgres -d fixture -f /home/$USERNAME/cxgn/fixture/cxgn_fixture.sql
-	#echo "GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO web_usr;" | psql -U postgres -d fixture
-	#echo "GRANT USAGE, SELECT ON ALL SEQUENCES IN SCHEMA public TO web_usr;" | psql -U postgres -d fixture
+		#Create fixture db and load fixture.sql
+		sudo -u postgres createdb -E UTF8 --locale en_US.utf8 -T template0 fixture
+		sudo psql -U postgres -d fixture -f /home/$USERNAME/cxgn/fixture/cxgn_fixture.sql
+		#echo "GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO web_usr;" | psql -U postgres -d fixture
+		#echo "GRANT USAGE, SELECT ON ALL SEQUENCES IN SCHEMA public TO web_usr;" | psql -U postgres -d fixture
+		#echo "GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA sgn TO web_usr;" | psql -U postgres -d fixture
+		#echo "GRANT USAGE, SELECT ON ALL SEQUENCES IN SCHEMA sgn TO web_usr;" | psql -U postgres -d fixture
+		#echo "GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA phenome TO web_usr;" | psql -U postgres -d fixture
+		#echo "GRANT USAGE, SELECT ON ALL SEQUENCES IN SCHEMA phenome TO web_usr;" | psql -U postgres -d fixture
+		#echo "GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA metadata TO web_usr;" | psql -U postgres -d fixture
+		#echo "GRANT USAGE, SELECT ON ALL SEQUENCES IN SCHEMA metadata TO web_usr;" | psql -U postgres -d fixture
+		#echo "GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA sgn_people TO web_usr;" | psql -U postgres -d fixture
+		#echo "GRANT USAGE, SELECT ON ALL SEQUENCES IN SCHEMA sgn_people TO web_usr;" | psql -U postgres -d fixture
+	else
+	    echo "SKIPPING fixture database creation production user"
+	fi
 
 	#Install R
 	sudo apt-get install apt-transport-https -y
@@ -409,12 +443,14 @@
 	sudo apt-key adv --keyserver keys.gnupg.net --recv-key 381BA480
 	sudo apt-get update -y
 	sudo DEBIAN_FRONTEND=noninteractive apt-get -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" dist-upgrade
-	sudo apt-get install r-base r-base-dev libxml2-dev -y
+	sudo apt-get install r-base r-base-dev -y
 	#Better performance on linear algebra ops
 	sudo apt-get install libatlas3-base -y
 	sudo apt-get install libcurl4-openssl-dev -y --force-yes
+	sudo apt-get install libnlopt-dev -y
 	#Install R packages
 	#qtl (>= 1.24-9), gplots (>= 2.10.1), ltm (>= 0.9-7), RColorBrewer (>= 1.0.5), rrBLUP (>= 3.8), plyr (>= 1.7.1), mail(>= 1.0), rjson(>= 0.2.12), agricolae (>= 1.2-1),  gtools (>= 2.6.2), gdata (>= 2.8.2), bitops (>= 1.0-4.1), caTools (>= 1.13), KernSmooth (>= 2.23-7), msm (>= 1.1.1), mvtnorm (>= 0.9.9992), polycor (>= 0.7-8), sfsmisc (>= 1.0-24), nlme (>= 3.1-103), irlba (>= 1.0.3), lme4 (>= 1.1-7), randomForest (>= 4.6-10), data.table (>= 1.9.6)
+	sudo R -e "install.packages('devtools', dependencies=TRUE, repos='http://cran.rstudio.com/')"
 	sudo R -e "install.packages('qtl', dependencies=TRUE, repos='http://cran.rstudio.com/')"
 	sudo R -e "install.packages('randomForest', dependencies=TRUE, repos='http://cran.rstudio.com/')"
 	sudo R -e "install.packages('lme4', dependencies=TRUE, repos='http://cran.rstudio.com/')"
@@ -441,11 +477,11 @@
 	sudo R -e "install.packages('d3heatmap', dependencies=TRUE, repos='http://cran.rstudio.com/')"
 	sudo R -e "install.packages('tidyr', dependencies=TRUE, repos='http://cran.rstudio.com/')"
 	sudo R -e "install.packages('ggplot2', dependencies=TRUE, repos='http://cran.rstudio.com/')"
-	sudo R -e "install.packages('devtools', dependencies=TRUE, repos='http://cran.rstudio.com/')"
 	sudo R -e "install.packages('bioconductor', dependencies=TRUE, repos='http://cran.rstudio.com/')"
 	sudo R -e "install.packages('caret', dependencies=TRUE, repos='http://cran.rstudio.com/')"
+	sudo R -e "install.packages('R.oo', dependencies=TRUE, repos='http://cran.rstudio.com/')"
 	sudo R -e 'source("http://bioconductor.org/biocLite.R");biocLite();biocLite("gdsfmt");biocLite("SNPRelate")'
-	sudo R -e 'library("devtools");install_github("solgenomics/rPackages/genoDataFilter");install_github("solgenomics/rPackages/phenoAnalysis")'
+	sudo R -e 'library("devtools");install_github("cran/R.methodsS3");install_github("solgenomics/rPackages/genoDataFilter");install_github("solgenomics/rPackages/phenoAnalysis");install_github("reyzaguirre/st4gi")'
 
 	cd /home/$USERNAME/cxgn
 
@@ -454,14 +490,14 @@
 
 	if [ $USERNAME != "production" ]
 	then
-	    
-	#Jbrowse Setup
+		#Jbrowse Setup
 	    sudo cp /vagrant/config/sgn_forward /etc/nginx/sites-available/
 	    sudo rm /etc/nginx/sites-enabled/default
 	    sudo ln -s /etc/nginx/sites-available/sgn_forward /etc/nginx/sites-enabled/
 	    sudo /etc/init.d/nginx restart
 	    cd /var/www/
-	    sudo mkdir jbrowse
+	    
+		sudo mkdir jbrowse
 	    cd jbrowse
 	    sudo curl -O http://jbrowse.org/releases/JBrowse-1.12.1.zip
 	    sudo unzip JBrowse-1.12.1.zip
@@ -472,23 +508,30 @@
 	    echo "SKIPPING NGINX AND JBROWSE CONFIG FOR production USER."
 	fi
 
-	#Install Atom text editor and cleanup
-	sudo apt-get install xdg-utils -y
-	wget https://github.com/atom/atom/releases/download/v1.6.0/atom-amd64.deb
-	sudo dpkg --install atom-amd64.deb
-	sudo apt-get -f install -y
-	rm atom-amd64.deb
-	#Install Atom Plugins
-	apm install minimap
-    # configure indent settings
-    sed -i 's/invisibles: {}/invisibles: {}\n\    showIndentGuide: true\n\    tabLength: 4\n\    tabType: "soft"/g' ~/.atom/config.cson
+	if [ $USERNAME != "production" ]
+	then
+		#Install Atom text editor and cleanup
+		sudo apt-get install xdg-utils -y
+		wget https://github.com/atom/atom/releases/download/v1.25.1/atom-amd64.deb
+		
+		sudo dpkg --install atom-amd64.deb
+		sudo apt-get -f install -y
+		rm atom-amd64.deb
+		#Install Atom Plugins
+		apm install minimap
+	    apm install language-mason
+		apm install markdown-preview-enhanced
+	    # configure indent settings
+	    sed -i 's/invisibles: {}/invisibles: {}\n\    showIndentGuide: true\n\    tabLength: 4\n\    tabType: "soft"/g' ~/.atom/config.cson
 
-
-	#Install Chrome and cleanup
-	wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-	sudo dpkg --install google-chrome-stable_current_amd64.deb
-	sudo apt-get -f install -y
-	rm google-chrome-stable_current_amd64.deb
+		#Install Chrome and cleanup
+		wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+		sudo dpkg --install google-chrome-stable_current_amd64.deb
+		sudo apt-get -f install -y
+		rm google-chrome-stable_current_amd64.deb
+	else
+	    echo "SKIPPING Atom and chrome install for production USER."
+	fi
 
 	#Bashrc customization
 	#Add git branch display
@@ -514,5 +557,3 @@
 	sudo mkdir /tmp/$USERNAME/SGN-site
 	cd /tmp/$USERNAME
 	sudo chown -R www-data:www-data SGN-site
-	
-	
