@@ -249,7 +249,6 @@
 	sudo cpanm -L ../local-lib/ PDF::Create
 	sudo cpanm -L ../local-lib/ String::CRC
 	sudo cpanm -L ../local-lib/ Algorithm::Combinatorics
-	sudo cpanm -L ../local-lib/ Catalyst::Controller::HTML::FormFu
 	sudo cpanm -L ../local-lib/ String::Approx
 	sudo apt-get install libcairo2-dev -y
 	sudo cpanm -L ../local-lib/ Cairo
