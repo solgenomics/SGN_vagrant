@@ -132,7 +132,7 @@
 	mkdir /home/$USERNAME/blast
 	cd /home/$USERNAME/blast
 
-	wget ftp://ftp.ncbi.nlm.nih.gov/blast/executables/legacy/2.2.9/blast-2.2.9-amd64-linux.tar.gz
+	wget ftp://ftp.ncbi.nlm.nih.gov/blast/executables/legacy.NOTSUPPORTED/2.2.9/blast-2.2.9-amd64-linux.tar.gz
 	tar zxvpf blast-2.2.9-amd64-linux.tar.gz
 	sudo sed -i '$ a\export PATH="$PATH:/home/$USERNAME/blast/"' /home/$USERNAME/.bashrc
 	rm blast-2.2.9-amd64-linux.tar.gz
