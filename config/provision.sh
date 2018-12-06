@@ -1,23 +1,23 @@
 #!/usr/bin/env bash
 
 
-        # check what type of install we are doing, quit if no
-        # parameter was provided (either production or devel)
-        #
+	# check what type of install we are doing, quit if no
+	# parameter was provided (either production or devel)
+	#
 	if [[ $1 != "production" && $1 != "devel" ]] 
 	then
-	    echo "provide parameter, either 'production' or 'devel'";
-	    exit;
-    fi
-	
+		echo "provide parameter, either 'production' or 'devel'";
+		exit;
+	fi
+
 	#Pre-reqs
 	apt-get install -y sudo
 
 
-    USERNAME=vagrant
-    if [ $1 = "production" ]
+	USERNAME=vagrant
+	if [ $1 = "production" ]
 	then
-        USERNAME=production
+		USERNAME=production
 	fi
 
 	if [ $1 != "production" ]
@@ -26,16 +26,16 @@
 		old=$(hostname)
 		new="sgndev"
 		for file in \
-		   /etc/exim4/update-exim4.conf.conf \
-		   /etc/printcap \
-		   /etc/hostname \
-		   /etc/hosts \
-		   /etc/ssh/ssh_host_rsa_key.pub \
-		   /etc/ssh/ssh_host_dsa_key.pub \
-		   /etc/motd \
-		   /etc/ssmtp/ssmtp.conf
+			/etc/exim4/update-exim4.conf.conf \
+			/etc/printcap \
+			/etc/hostname \
+			/etc/hosts \
+			/etc/ssh/ssh_host_rsa_key.pub \
+			/etc/ssh/ssh_host_dsa_key.pub \
+			/etc/motd \
+			/etc/ssmtp/ssmtp.conf
 		do
-		   sudo [ -f $file ] && sudo sed -i.old -e "s:$old:$new:g" $file
+			sudo [ -f $file ] && sudo sed -i.old -e "s:$old:$new:g" $file
 		done
 		sudo hostname sgndev
 	else
@@ -84,7 +84,7 @@
 	if [ $USERNAME != production ]
 	then
 		#Set Superuser: vagrant user already NOPASSWD superuser
-	    yes vagrant | sudo passwd root
+		yes vagrant | sudo passwd root
 	fi
 
 	#Install curl
@@ -148,9 +148,9 @@
 
 	if [ $USERNAME != "production" ]
 	then
-	    sudo cat /vagrant/config/slurm.conf >> /etc/slurm-llnl/slurm.conf
+		sudo cat /vagrant/config/slurm.conf >> /etc/slurm-llnl/slurm.conf
 	else
-	    echo "SKIPPING COPY OF SLURM CONFIG FOR PRODUCTION USER"
+		echo "SKIPPING COPY OF SLURM CONFIG FOR PRODUCTION USER"
 	fi
 	    
 	sudo chmod 777 /var/spool/
@@ -181,8 +181,8 @@
 		sudo sed -i s/allowed_users=console/allowed_users=anybody/ /etc/X11/Xwrapper.config
 
 		#Enable automatic gnome login for vagrant user
-	    sudo sed -i s/\#\ \ AutomaticLoginEnable\ =\ true/AutomaticLoginEnable\ =\ true/ /etc/gdm3/daemon.conf
-	    sudo sed -i s/\#\ \ AutomaticLogin\ =\ user1/AutomaticLogin\ =\ vagrant/ /etc/gdm3/daemon.conf
+		sudo sed -i s/\#\ \ AutomaticLoginEnable\ =\ true/AutomaticLoginEnable\ =\ true/ /etc/gdm3/daemon.conf
+		sudo sed -i s/\#\ \ AutomaticLogin\ =\ user1/AutomaticLogin\ =\ vagrant/ /etc/gdm3/daemon.conf
 
 		#Start GNOME GUI
 		sudo /etc/init.d/gdm3 start
@@ -226,6 +226,9 @@
 	#This would be the preferred way to install Perl and R dependencies but I can't get it to work...
 		#perl Build manifest
 		#sudo perl Build.pl
+
+	#XML::Simple dependency
+	sudo apt-get install libexpat1-dev -y
 
 	cd /home/$USERNAME/cxgn/sgn
 	#Install Perl Modules
@@ -390,13 +393,13 @@
 	if [ $USERNAME != "production" ]
 	then
 		#Add starmachine.conf to /etc/starmachine/, copied from shared config directory
-	    sudo cp /vagrant/config/starmachine.conf /etc/starmachine
+		sudo cp /vagrant/config/starmachine.conf /etc/starmachine
 		#Add sgn_local.conf to sgn directory, copied from shared config directory
-	    sudo cp /vagrant/config/sgn_local.conf /home/vagrant/cxgn/sgn
+		sudo cp /vagrant/config/sgn_local.conf /home/vagrant/cxgn/sgn
 	else
 		echo "SKIPPING COPYING starmachine.conf AND sgn_local.conf FOR PRODUCTION USER"
 	fi
-	
+
 	sudo chown -R $USERNAME:$USERNAME /home/$USERNAME/cxgn/
 
 	#Install postgres 10
@@ -434,7 +437,7 @@
 		#echo "GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA sgn_people TO web_usr;" | psql -U postgres -d fixture
 		#echo "GRANT USAGE, SELECT ON ALL SEQUENCES IN SCHEMA sgn_people TO web_usr;" | psql -U postgres -d fixture
 	else
-	    echo "SKIPPING fixture DATABASE CREATION FOR PRODUCTION USER"
+		echo "SKIPPING fixture DATABASE CREATION FOR PRODUCTION USER"
 	fi
 
 	#Install R
@@ -491,21 +494,21 @@
 	if [ $USERNAME != "production" ]
 	then
 		#Jbrowse Setup
-	    sudo cp /vagrant/config/sgn_forward /etc/nginx/sites-available/
-	    sudo rm /etc/nginx/sites-enabled/default
-	    sudo ln -s /etc/nginx/sites-available/sgn_forward /etc/nginx/sites-enabled/
-	    sudo /etc/init.d/nginx restart
-	    cd /var/www/
-	    
+		sudo cp /vagrant/config/sgn_forward /etc/nginx/sites-available/
+		sudo rm /etc/nginx/sites-enabled/default
+		sudo ln -s /etc/nginx/sites-available/sgn_forward /etc/nginx/sites-enabled/
+		sudo /etc/init.d/nginx restart
+		cd /var/www/
+
 		sudo mkdir jbrowse
-	    cd jbrowse
-	    sudo curl -O http://jbrowse.org/releases/JBrowse-1.12.1.zip
-	    sudo unzip JBrowse-1.12.1.zip
-	    sudo rm JBrowse-1.12.1.zip
-	    cd JBrowse-1.12.1
-	    sudo ./setup.sh
+		cd jbrowse
+		sudo curl -O http://jbrowse.org/releases/JBrowse-1.12.1.zip
+		sudo unzip JBrowse-1.12.1.zip
+		sudo rm JBrowse-1.12.1.zip
+		cd JBrowse-1.12.1
+		sudo ./setup.sh
 	else
-	    echo "SKIPPING NGINX AND JBROWSE CONFIG FOR PRODUCTION USER."
+		echo "SKIPPING NGINX AND JBROWSE CONFIG FOR PRODUCTION USER."
 	fi
 
 	if [ $USERNAME != "production" ]
@@ -519,10 +522,10 @@
 		rm atom-amd64.deb
 		#Install Atom Plugins
 		apm install minimap
-	    apm install language-mason
+		apm install language-mason
 		apm install markdown-preview-enhanced
-	    # configure indent settings
-	    sed -i 's/invisibles: {}/invisibles: {}\n\    showIndentGuide: true\n\    tabLength: 4\n\    tabType: "soft"/g' ~/.atom/config.cson
+		# configure indent settings
+		sed -i 's/invisibles: {}/invisibles: {}\n\    showIndentGuide: true\n\    tabLength: 4\n\    tabType: "soft"/g' ~/.atom/config.cson
 
 		#Install Chrome and cleanup
 		wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
@@ -530,7 +533,7 @@
 		sudo apt-get -f install -y
 		rm google-chrome-stable_current_amd64.deb
 	else
-	    echo "SKIPPING ATOM AND CHROME INSTALL FOR PRODUCTION USER."
+		echo "SKIPPING ATOM AND CHROME INSTALL FOR PRODUCTION USER."
 	fi
 
 	#Bashrc customization
