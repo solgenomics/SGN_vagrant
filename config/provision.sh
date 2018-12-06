@@ -409,7 +409,7 @@
 	sudo chown -R $USERNAME:$USERNAME /home/$USERNAME/cxgn/
 
 	#Install postgres 10
-	sudo su -c "echo 'deb http://apt.postgresql.org/pub/repos/apt/ jessie-pgdg main' >> /etc/apt/sources.list.d/postgresql.list"
+	sudo su -c "echo 'deb http://apt.postgresql.org/pub/repos/apt/ stretch-pgdg main' >> /etc/apt/sources.list.d/postgresql.list"
 	wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
 	sudo apt-get update -y
 	sudo apt-get install postgresql-10 -y
@@ -448,7 +448,7 @@
 
 	#Install R
 	sudo apt-get install apt-transport-https -y
-	sudo sed -i "\$adeb https://cran.cnr.berkeley.edu/bin/linux/debian jessie-cran3/" /etc/apt/sources.list
+	sudo sed -i "\$adeb https://cran.cnr.berkeley.edu/bin/linux/debian stretch-cran35/" /etc/apt/sources.list
 	sudo apt-key adv --keyserver keys.gnupg.net --recv-key 381BA480
 	sudo apt-get update -y
 	sudo DEBIAN_FRONTEND=noninteractive apt-get -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" dist-upgrade
