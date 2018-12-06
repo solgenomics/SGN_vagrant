@@ -187,6 +187,9 @@
 	#XML::Simple dependency
 	sudo apt-get install libexpat1-dev -y
 
+	#HTML::FormFu
+	sudo apt-get install libcatalyst-controller-html-formfu-perl -y
+
 	cd /home/vagrant/cxgn/sgn
 	#Install Perl Modules
 	sudo cpanm -L ../local-lib/ install Catalyst::ScriptRunner
@@ -238,7 +241,6 @@
 	sudo cpanm -L ../local-lib/ Math::Base36
 	sudo cpanm -L ../local-lib/ Captcha::reCAPTCHA
 	sudo cpanm -L ../local-lib/ Test::Aggregate::Nested --force
-	sudo cpanm -L ../local-lib/ HTML::FormFu
 	sudo cpanm -L ../local-lib/ SVG
 	sudo cpanm -L ../local-lib/ IPC::Run3
 	sudo cpanm -L ../local-lib/ Spreadsheet::WriteExcel
