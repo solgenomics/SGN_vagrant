@@ -152,19 +152,24 @@
 	else
 		echo "SKIPPING COPY OF SLURM CONFIG FOR PRODUCTION USER"
 	fi
-	    
+
 	sudo chmod 777 /var/spool/
 	sudo mkdir /var/spool/slurmstate
 	sudo chown slurm:slurm /var/spool/slurmstate/
 	sudo /usr/sbin/create-munge-key
 	sudo ln -s /var/lib/slurm-llnl /var/lib/slurm
 
-	sudo systemctl enable slurmctld.service
-	sudo systemctl start slurmctld.service
-	sudo systemctl enable slurmd.service
-	sudo systemctl start slurmd.service
-	sudo systemctl enable munge.service
-	sudo systemctl restart munge.service
+	if [ $USERNAME != "production" ]
+	then
+		sudo systemctl enable slurmctld.service
+		sudo systemctl start slurmctld.service
+		sudo systemctl enable slurmd.service
+		sudo systemctl start slurmd.service
+		sudo systemctl enable munge.service
+		sudo systemctl restart munge.service
+	else
+		echo "SKIPPING START SLURM FOR PRODUCTION USER BECAUSE SLURM CONFIG NOT COPIED"
+	fi
 
 	#Install graphviz
 	sudo apt-get install graphviz -y
