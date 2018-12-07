@@ -351,7 +351,7 @@
 	sudo chown -R vagrant:vagrant /home/vagrant/cxgn/
 
 	#Install postgres 10
-	sudo su -c "echo 'deb http://apt.postgresql.org/pub/repos/apt/ jessie-pgdg main' >> /etc/apt/sources.list.d/postgresql.list"
+	sudo su -c "echo 'deb http://apt.postgresql.org/pub/repos/apt/ stretch-pgdg main' >> /etc/apt/sources.list.d/postgresql.list"
 	wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
 	sudo apt-get update -y
 	sudo apt-get install postgresql-10 -y
@@ -385,8 +385,9 @@
 
 	#Install R
 	sudo apt-get install apt-transport-https -y
-	sudo sed -i "\$adeb https://cran.cnr.berkeley.edu/bin/linux/debian jessie-cran3/" /etc/apt/sources.list
-	sudo apt-key adv --keyserver keys.gnupg.net --recv-key 381BA480
+	sudo apt-get install dirmngr --install-recommends -y
+	sudo sed -i "\$adeb https://cran.cnr.berkeley.edu/bin/linux/debian stretch-cran35/" /etc/apt/sources.list
+	sudo apt-key adv --keyserver keys.gnupg.net --recv-key 'E19F5F87128899B192B1A2C2AD5F960A256A04AF'
 	sudo apt-get update -y
 	sudo DEBIAN_FRONTEND=noninteractive apt-get -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" dist-upgrade
 	sudo apt-get install r-base r-base-dev libxml2-dev -y
