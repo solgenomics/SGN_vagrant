@@ -310,19 +310,10 @@
 	sudo cpanm -L ../local-lib/ LWP::UserAgent
 	sudo cpanm -L ../local-lib/ Set::Product
 	sudo cpanm -L ../local-lib/ Server::Starter
-	#sudo cpanm -L ../local-lib/ Net::Server::SS::PreFork --force
+	sudo cpanm -L ../local-lib/ Net::Server::SS::PreFork --force
 	sudo cpanm -L ../local-lib/ Catalyst::Plugin::Assets --force
 	sudo cpanm -L ../local-lib/ PDF::API2
 	sudo cpanm -L ../local-lib/ CAM::PDF
-
-	#ISSUE WITH module..... not sure why cpanm wont work
-	wget http://search.cpan.org/CPAN/authors/id/K/KA/KAZUHO/Net-Server-SS-PreFork-0.05.tar.gz
-	tar -zxvf Net-Server-SS-PreFork-0.05.tar.gz
-	cd Net-Server-SS-PreFork-0.05
-	perl Makefile.PL
-	sudo make
-	sudo make install
-	
 
 	sudo mkdir /export
 	sudo mkdir /export/prod
