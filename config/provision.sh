@@ -47,6 +47,9 @@
 	#make installer
 	sudo apt-get install make xutils-dev -y
 
+	#NFS common
+	sudo apt-get install nfs-common -y
+
 	#filezilla installer
 	#sudo apt-get install filezilla -y
 
