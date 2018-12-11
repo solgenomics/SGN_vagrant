@@ -562,3 +562,10 @@
 	sudo mkdir /tmp/$USERNAME/SGN-site
 	cd /tmp/$USERNAME
 	sudo chown -R www-data:www-data SGN-site
+
+	if [ $USERNAME = 'production' ]
+	then
+		echo "FOR PRODUCTION INSTALL YOU STILL NEED TO SYMLINK cxgn_config FILES (starmachine.conf, slurm.conf, sgn_local.conf, nginx_sgn_forward) TO THEIR PROPER LOCATIONS ON THE MACHINE. ALSO YOU STILL NEED TO MOUNT /export and /data onto the VM"
+	else
+		echo "YOUR VAGRANT VM IS NOW READY"
+	fi
